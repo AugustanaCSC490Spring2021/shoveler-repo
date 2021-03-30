@@ -8,9 +8,12 @@ public class PlayerController : MonoBehaviour
     public float playerSpeed = 0.01f;
 
     public GameObject LookDirection;
+    public GameObject bullet;
+    public GameObject projectileSpawn;
 
     private Camera camera;
     private Rigidbody rb;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -40,21 +43,6 @@ public class PlayerController : MonoBehaviour
             xinput++;
         }
 
-        // Player rotation
-        RaycastHit hit;
-        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-
-        if(Physics.Raycast(ray, out hit))
-        {
-            hit.point = new Vector3(hit.point.x,
-                                    this.transform.position.y,
-                                    hit.point.z
-                );
-            LookDirection.transform.LookAt(hit.point);
-        }
-        
-
-
         zinput *= playerSpeed;
         xinput *= playerSpeed;
 
@@ -67,5 +55,26 @@ public class PlayerController : MonoBehaviour
         // Reset for next loop
         xinput = 0;
         zinput = 0;
+
+        // Player rotation
+        RaycastHit hit;
+        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            hit.point = new Vector3(hit.point.x,
+                                    this.transform.position.y,
+                                    hit.point.z
+                );
+            LookDirection.transform.LookAt(hit.point);
+        }
+
+        // Player weapon fire
+        if(Input.GetMouseButtonDown(0))
+        {
+            Rigidbody newrb = Instantiate(bullet, projectileSpawn.transform.position, projectileSpawn.transform.rotation).GetComponent<Rigidbody>();
+            Vector3 shootDirection = (hit.point - this.transform.position);
+            newrb.velocity = shootDirection.normalized * 25;
+        }
     }
 }
