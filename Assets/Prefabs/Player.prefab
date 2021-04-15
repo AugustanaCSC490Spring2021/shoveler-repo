@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 20320899089186123}
   m_Layer: 0
   m_Name: Arrow
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,12 +105,13 @@ GameObject:
   - component: {fileID: 20320899501880638}
   - component: {fileID: 20320899501880639}
   - component: {fileID: 20320899501880632}
+  - component: {fileID: 20320899501880634}
+  - component: {fileID: 8529208481643496553}
   - component: {fileID: 20320899501880633}
   - component: {fileID: 20320899501880637}
-  - component: {fileID: 20320899501880634}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -178,6 +179,34 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &20320899501880634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20320899501880635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adc6dcc7457a328408b2490637d1ec2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerSpeed: 0.01
+  LookDirection: {fileID: 20320899509846043}
+  bullet: {fileID: 7963739882701601418, guid: 95092e206cbd23447b794c9be14ffc6e, type: 3}
+  projectileSpawn: {fileID: 4251481816986151498}
+--- !u!114 &8529208481643496553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20320899501880635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18d87d1b67d6f7e4da04909cf0195862, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &20320899501880633
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -208,22 +237,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &20320899501880634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 20320899501880635}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adc6dcc7457a328408b2490637d1ec2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerSpeed: 0.01
-  LookDirection: {fileID: 20320899509846043}
-  bullet: {fileID: 0}
-  projectileSpawn: {fileID: 0}
 --- !u!1 &20320899509846043
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,7 +248,7 @@ GameObject:
   - component: {fileID: 20320899509846042}
   m_Layer: 0
   m_Name: LookDirection
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -269,7 +282,7 @@ GameObject:
   - component: {fileID: 20320901020153771}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -350,7 +363,7 @@ GameObject:
   - component: {fileID: 6703081475683365438}
   m_Layer: 0
   m_Name: ProjectileSpawn
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

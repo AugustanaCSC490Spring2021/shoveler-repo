@@ -72,9 +72,15 @@ public class PlayerController : MonoBehaviour
         // Player weapon fire
         if(Input.GetMouseButtonDown(0))
         {
-            Rigidbody newrb = Instantiate(bullet, projectileSpawn.transform.position, projectileSpawn.transform.rotation).GetComponent<Rigidbody>();
+            GameObject bulletInstance = Instantiate(bullet, projectileSpawn.transform.position, projectileSpawn.transform.rotation);
+
+            Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
+            bulletScript.collideWithPlayer = false;
+
+            Rigidbody bulletRB = bulletInstance.GetComponent<Rigidbody>();
+            
             Vector3 shootDirection = (hit.point - this.transform.position);
-            newrb.velocity = shootDirection.normalized * 25;
+            bulletRB.velocity = shootDirection.normalized * 25;
         }
     }
 }

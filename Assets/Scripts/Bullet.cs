@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     private float bulletLife = 0.0f;
+    public bool collideWithPlayer = true;
 
     // Start is called before the first frame update
     void Start()
@@ -14,13 +15,18 @@ public class Bullet : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        Destroy(gameObject);
+        if(collideWithPlayer)
+        {
+            Destroy(gameObject);
+        }else
+        {
+            if(collision.collider.tag != "Player") Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(bulletLife - Time.time);
         if (bulletLife <= Time.time) Destroy(gameObject);
     }
 }
