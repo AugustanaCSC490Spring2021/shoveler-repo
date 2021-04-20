@@ -10,7 +10,7 @@ public class GoombaAI : MonoBehaviour
 
     [SerializeField] private GameObject playerObj = null;
     [SerializeField] private Vector3 playerPos;
-    [SerializeField] private float speed = 1;
+    [SerializeField] private float speed;
     [SerializeField] private NavMeshAgent agent;
 
     #endregion
@@ -21,7 +21,7 @@ public class GoombaAI : MonoBehaviour
     {
 
 
-         agent = GetComponent<NavMeshAgent>();
+        //agent = GetComponent<NavMeshAgent>();
 
         if (playerObj == null)
         {

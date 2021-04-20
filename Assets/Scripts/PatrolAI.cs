@@ -10,9 +10,15 @@ using System.Collections;
 public class PatrolAI : MonoBehaviour
 {
 
-    public Transform[] points;
-    private int destPoint = 0;
-    private NavMeshAgent agent;
+    [SerializeField] private GameObject playerObj = null;
+    [SerializeField] private Vector3 playerPos;
+    [SerializeField] private float radius;
+    [SerializeField] private float speed;
+    [SerializeField] public Transform[] points;
+    [SerializeField] private int destPoint = 0;
+    [SerializeField] private NavMeshAgent agent;
+    [SerializeField] public bool chasingPlayer;
+    [SerializeField] public bool wasChasingPlayer;
 
 
     void Start()
@@ -25,6 +31,7 @@ public class PatrolAI : MonoBehaviour
         agent.autoBraking = false;
 
         GotoNextPoint();
+        wasChasingPlayer = false;
     }
 
 
@@ -45,9 +52,31 @@ public class PatrolAI : MonoBehaviour
 
     void Update()
     {
+
+        if (transform.position.x - playerPos.x < radius &&
+            transform.position.y - playerPos.y < radius &&
+            transform.position.z - playerPos.z < radius)
+        {
+            chasingPlayer = true;
+        }
+
         // Choose the next destination point when the agent gets
         // close to the current one.
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        if (!agent.pathPending && agent.remainingDistance < 0.5f && !chasingPlayer)
+        {
             GotoNextPoint();
+        }
+
+        if (chasingPlayer && !wasChasingPlayer)
+        {
+            agent.ResetPath();
+            wasChasingPlayer = true;
+        }
+           
+
+        if (chasingPlayer)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, playerPos, Time.deltaTime * speed);
+        }
     }
 }

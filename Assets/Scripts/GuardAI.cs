@@ -10,14 +10,14 @@ public class GuardAI : MonoBehaviour
 
     [SerializeField] private GameObject playerObj = null;
     [SerializeField] private Vector3 playerPos;
-    [SerializeField] private float speed = 1;
+    [SerializeField] private float speed;
     //once the enemy starts chasing the player, it will not stop
     [SerializeField] private bool chasingPlayer = false;
     //How far away the player must be in order to get the attention of this enemy
     //not sure what size to make this number
-    [SerializeField] private float radius = 100;
+    [SerializeField] private float radius;
     [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private int health = 8;
+    [SerializeField] private int health;
 
     #endregion
 
@@ -26,7 +26,7 @@ public class GuardAI : MonoBehaviour
     void Start()
     {
 
-        agent = GetComponent<NavMeshAgent>();
+        //agent = GetComponent<NavMeshAgent>();
 
         if (playerObj == null)
         {
@@ -54,7 +54,7 @@ public class GuardAI : MonoBehaviour
         if (chasingPlayer)
         {
             //moves this object towards the players position
-            agent.Move(Vector3.MoveTowards(transform.position, playerPos, Time.deltaTime * speed));
+            transform.position = Vector3.MoveTowards(transform.position, playerPos, Time.deltaTime * speed);
         }
 
     }
