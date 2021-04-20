@@ -107,6 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c3aa6c2c7e01af4092697d3a7034249, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collideWithPlayer: 1
 --- !u!54 &8421598296843718488
 Rigidbody:
   m_ObjectHideFlags: 0

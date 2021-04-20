@@ -15,12 +15,16 @@ public class Bullet : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if(collideWithPlayer)
+        if (collision.collider.tag != "Bullet")
         {
-            Destroy(gameObject);
-        }else
-        {
-            if(collision.collider.tag != "Player") Destroy(gameObject);
+            if (collideWithPlayer)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                if (collision.collider.tag != "Player") Destroy(gameObject);
+            }
         }
     }
 

@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     private float xinput, zinput = 0;
     public float playerSpeed = 100;
+    public float fireRate = 5;
+    private float timeBetweenFire;
 
     public GameObject LookDirection;
     public GameObject bullet;
@@ -54,11 +56,7 @@ public class PlayerController : MonoBehaviour
         // Reset for next loop
         xinput = 0;
         zinput = 0;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
         // Player rotation
         RaycastHit hit;
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);
@@ -72,18 +70,26 @@ public class PlayerController : MonoBehaviour
             LookDirection.transform.LookAt(hit.point);
         }
 
+        Debug.Log(timeBetweenFire - Time.time);
         // Player weapon fire
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0) & timeBetweenFire < Time.time)
         {
+            timeBetweenFire = Time.time + (200 - fireRate) / 1000;
             GameObject bulletInstance = Instantiate(bullet, projectileSpawn.transform.position, projectileSpawn.transform.rotation);
 
             Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
             bulletScript.collideWithPlayer = false;
 
             Rigidbody bulletRB = bulletInstance.GetComponent<Rigidbody>();
-            
+
             Vector3 shootDirection = (hit.point - this.transform.position);
             bulletRB.velocity = shootDirection.normalized * 25;
         }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
     }
 }
