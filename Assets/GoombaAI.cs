@@ -37,6 +37,6 @@ public class GoombaAI : MonoBehaviour
         //gets the players current position
         playerPos = playerObj.transform.position;
         //moves this object towards the players position
-        agent.Move(Vector3.MoveTowards(transform.position, playerPos, Time.deltaTime * speed));
+        agent.SetDestination(playerPos);
     }
 }
