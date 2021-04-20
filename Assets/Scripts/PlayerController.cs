@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private float xinput, zinput = 0;
-    public float playerSpeed = 0.01f;
+    public float playerSpeed = 100;
 
     public GameObject LookDirection;
     public GameObject bullet;
@@ -22,8 +22,7 @@ public class PlayerController : MonoBehaviour
         rb = this.GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
         // WASD controls for player
         if (Input.GetKey("w"))
@@ -43,8 +42,8 @@ public class PlayerController : MonoBehaviour
             xinput++;
         }
 
-        zinput *= playerSpeed;
-        xinput *= playerSpeed;
+        zinput *= (playerSpeed / 1000);
+        xinput *= (playerSpeed / 1000);
 
         Vector3 currentPos = this.transform.position;
         currentPos.z += zinput;
@@ -55,7 +54,11 @@ public class PlayerController : MonoBehaviour
         // Reset for next loop
         xinput = 0;
         zinput = 0;
+    }
 
+    // Update is called once per frame
+    void Update()
+    {
         // Player rotation
         RaycastHit hit;
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);

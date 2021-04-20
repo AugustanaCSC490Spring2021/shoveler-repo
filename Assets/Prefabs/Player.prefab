@@ -89,7 +89,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 20320899089186164}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5000001
   m_Height: 2
   m_Direction: 1
@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc6dcc7457a328408b2490637d1ec2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 0.01
+  playerSpeed: 100
   LookDirection: {fileID: 20320899509846043}
   bullet: {fileID: 7963739882701601418, guid: 95092e206cbd23447b794c9be14ffc6e, type: 3}
   projectileSpawn: {fileID: 4251481816986151498}

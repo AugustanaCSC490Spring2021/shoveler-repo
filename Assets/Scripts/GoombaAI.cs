@@ -19,14 +19,12 @@ public class GoombaAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-
-        //agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
 
         if (playerObj == null)
         {
             //we can substitute "Player" for whatever we name our player character
-            playerObj = GameObject.Find("Player");
+            playerObj = GameObject.FindGameObjectWithTag("Player");
         }
 
     }
@@ -34,9 +32,7 @@ public class GoombaAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //gets the players current position
-        playerPos = playerObj.transform.position;
         //moves this object towards the players position
-        agent.SetDestination(playerPos);
+        agent.SetDestination(playerObj.transform.position);
     }
 }
