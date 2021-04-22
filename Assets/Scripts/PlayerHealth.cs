@@ -21,6 +21,10 @@ public class PlayerHealth : MonoBehaviour
     public void Damage(int damageAmount)
     {
         health -= damageAmount;
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public int GetHealth()

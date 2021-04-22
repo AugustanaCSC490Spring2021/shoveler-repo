@@ -13,8 +13,10 @@ public class PlayerController : MonoBehaviour
     public GameObject bullet;
     public GameObject projectileSpawn;
 
+    private SphereCollider hitSphere;
     private Camera camera;
     private Rigidbody rb;
+    private PlayerHealth playerHealth;
     
 
     // Start is called before the first frame update
@@ -22,6 +24,8 @@ public class PlayerController : MonoBehaviour
     {
         camera = this.GetComponentInChildren<Camera>();
         rb = this.GetComponent<Rigidbody>();
+        hitSphere = this.GetComponent<SphereCollider>();
+        playerHealth = this.GetComponent<PlayerHealth>();
     }
 
     private void FixedUpdate()
@@ -91,5 +95,13 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Enemy")
+        {
+            playerHealth.Damage(20);
+        }
     }
 }

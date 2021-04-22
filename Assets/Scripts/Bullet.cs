@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -17,6 +18,18 @@ public class Bullet : MonoBehaviour
     {
         if (collision.collider.tag != "Bullet")
         {
+            if(collision.collider.tag == "Enemy")
+            {
+                try
+                {
+                    PlayerHealth enemyHealth = collision.gameObject.GetComponent<PlayerHealth>();
+                    enemyHealth.Damage(20);
+                }catch(Exception e)
+                {
+                    //nothing
+                }
+            }
+
             if (collideWithPlayer)
             {
                 Destroy(gameObject);
