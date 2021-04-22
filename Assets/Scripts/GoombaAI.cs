@@ -14,7 +14,7 @@ public class GoombaAI : MonoBehaviour
     [SerializeField] private NavMeshAgent agent;
 
     #endregion
-
+    private float waitTime = 3;
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +32,10 @@ public class GoombaAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //moves this object towards the players position
-        agent.SetDestination(playerObj.transform.position);
+        if (waitTime < Time.time)
+        {
+            //moves this object towards the players position
+            agent.SetDestination(playerObj.transform.position);
+        }
     }
 }

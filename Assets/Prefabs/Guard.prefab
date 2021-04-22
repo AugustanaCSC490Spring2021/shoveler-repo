@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5911776233066727397}
   - component: {fileID: 5911776233066727394}
   - component: {fileID: 5911776233066727395}
+  - component: {fileID: 4138711107959441101}
   m_Layer: 0
   m_Name: Guard
   m_TagString: Untagged
@@ -113,3 +114,25 @@ MonoBehaviour:
   radius: 8
   agent: {fileID: 0}
   health: 8
+--- !u!195 &4138711107959441101
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5911776233066727392}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
