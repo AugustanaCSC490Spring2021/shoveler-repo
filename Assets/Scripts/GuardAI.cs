@@ -8,7 +8,7 @@ public class GuardAI : MonoBehaviour
 
     #region variables
 
-    [SerializeField] private GameObject playerObj = null;
+    [SerializeField] private GameObject playerObj;
     [SerializeField] private Vector3 playerPos;
     [SerializeField] private float speed;
     //once the enemy starts chasing the player, it will not stop
@@ -17,7 +17,8 @@ public class GuardAI : MonoBehaviour
     //not sure what size to make this number
     [SerializeField] private float radius;
     [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private int health;
+    [SerializeField] private Health health;
+    [SerializeField] private int playerDamage;
 
     #endregion
 
@@ -39,6 +40,17 @@ public class GuardAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (health.GetHealth() <= 0)
+        {
+            //temporary line to simply delete the enemy when it is killed.
+            Destroy(gameObject);
+
+            //to-do add some way to broadcast the death of this enemy so that
+            //we might open the doors upon there being no enemies left
+
+        }
+
         //gets the players current position
         playerPos = playerObj.transform.position;
 
@@ -58,4 +70,13 @@ public class GuardAI : MonoBehaviour
         }
 
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        //need to account for when the player is not attacking
+        //if (playerObj.isAttacking()) { health.Damage(playerDamage); }
+
+        health.Damage(playerDamage);
+    }
+
 }

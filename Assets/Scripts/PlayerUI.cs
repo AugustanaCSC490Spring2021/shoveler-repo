@@ -7,7 +7,7 @@ public class PlayerUI : MonoBehaviour
 {
     // Found on gamestart
     private GameObject playerObject; 
-    private PlayerHealth playerHealthScript; 
+    private Health playerHealthScript; 
 
     // Assigned in editor
     public Text healthText;
@@ -17,7 +17,7 @@ public class PlayerUI : MonoBehaviour
     void Start()
     {
         playerObject = GameObject.FindGameObjectWithTag("Player");
-        playerHealthScript = playerObject.GetComponent<PlayerHealth>();
+        playerHealthScript = playerObject.GetComponent<Health>();
     }
 
     // Update is called once per frame

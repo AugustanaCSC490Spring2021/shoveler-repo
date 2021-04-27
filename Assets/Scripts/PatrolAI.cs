@@ -52,6 +52,7 @@ public class PatrolAI : MonoBehaviour
 
     void Update()
     {
+        playerPos = playerObj.transform.position;
 
         if (transform.position.x - playerPos.x < radius &&
             transform.position.y - playerPos.y < radius &&
