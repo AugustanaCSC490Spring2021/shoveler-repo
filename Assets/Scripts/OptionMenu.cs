@@ -9,16 +9,7 @@ public class OptionMenu : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     
     }
-    public void Options()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
-
-    }
-    public void Controls()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 3);
-
-    }
+    
     public void Quit()
     {
         Application.Quit();
