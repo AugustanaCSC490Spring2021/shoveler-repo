@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private PlayerControls playerControls;
+
     private float xinput, zinput = 0;
     public float playerSpeed = 100;
     public float fireRate = 5;
@@ -15,34 +17,36 @@ public class PlayerController : MonoBehaviour
 
     private Camera camera;
     private Rigidbody rb;
-    
 
-    // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
+        playerControls = new PlayerControls();
+
+        // Binds fire function to Fire action
+        playerControls.Land.Fire.performed += ctx => Fire();
+
+        // Grab component from Player
         camera = this.GetComponentInChildren<Camera>();
         rb = this.GetComponent<Rigidbody>();
     }
 
+    private void OnEnable()
+    {
+        playerControls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        playerControls.Disable();
+    }
+
     private void FixedUpdate()
     {
-        // WASD controls for player
-        if (Input.GetKey("w"))
-        {
-            zinput++;
-        }
-        if (Input.GetKey("s"))
-        {
-            zinput--;
-        }
-        if (Input.GetKey("a"))
-        {
-            xinput--;
-        }
-        if (Input.GetKey("d"))
-        {
-            xinput++;
-        }
+        // Grab player input and transform player
+        float zinput = playerControls.Land.MoveForward.ReadValue<float>();
+        float xinput = playerControls.Land.MoveRight.ReadValue<float>();
+        Vector2 firingPosition = playerControls.Land.FiringPosition.ReadValue<Vector2>();
 
         zinput *= (playerSpeed / 1000);
         xinput *= (playerSpeed / 1000);
@@ -58,22 +62,16 @@ public class PlayerController : MonoBehaviour
         zinput = 0;
 
         // Player rotation
-        RaycastHit hit;
-        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
+        LookDirection.transform.LookAt(GetPlayerTarget().point);
+    }
 
-        if (Physics.Raycast(ray, out hit))
+    void Fire()
+    {
+        if (timeBetweenFire < Time.time)
         {
-            hit.point = new Vector3(hit.point.x,
-                                    this.transform.position.y,
-                                    hit.point.z
-                );
-            LookDirection.transform.LookAt(hit.point);
-        }
+            RaycastHit hit = GetPlayerTarget();
 
-        Debug.Log(timeBetweenFire - Time.time);
-        // Player weapon fire
-        if (Input.GetMouseButton(0) & timeBetweenFire < Time.time)
-        {
+            // Limits fire rate
             timeBetweenFire = Time.time + (200 - fireRate) / 1000;
             GameObject bulletInstance = Instantiate(bullet, projectileSpawn.transform.position, projectileSpawn.transform.rotation);
 
@@ -87,9 +85,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    RaycastHit GetPlayerTarget()
     {
+        Vector2 firingPosition = playerControls.Land.FiringPosition.ReadValue<Vector2>();
+        RaycastHit hit;
+        Ray ray = camera.ScreenPointToRay(firingPosition);
 
+        int layerMask = 1 << 8;
+
+        layerMask = ~layerMask;
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+        {
+            hit.point = new Vector3(hit.point.x,
+                                    this.transform.position.y,
+                                    hit.point.z
+                                    );
+            return hit;
+        }
+
+        return new RaycastHit();
     }
 }
