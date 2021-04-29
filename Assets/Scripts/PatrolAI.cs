@@ -10,6 +10,8 @@ using System.Collections;
 public class PatrolAI : MonoBehaviour
 {
 
+    #region variables
+
     [SerializeField] private GameObject playerObj = null;
     [SerializeField] private Vector3 playerPos;
     [SerializeField] private float radius;
@@ -18,66 +20,108 @@ public class PatrolAI : MonoBehaviour
     [SerializeField] private int destPoint = 0;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] public bool chasingPlayer;
-    [SerializeField] public bool wasChasingPlayer;
+    [SerializeField] private Health health;
+    [SerializeField] private float waitTime;
+    [SerializeField] private float elapsedTime;
+    [SerializeField] private Vector3 currentPointPosition;
+    [SerializeField] private int currentPointIndex;
+    [SerializeField] private bool hasStopped;
 
+    #endregion
 
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        playerObj = GameObject.FindGameObjectWithTag("Player");
+        playerPos = playerObj.transform.position;
+        health = new Health();
 
-        // Disabling auto-braking allows for continuous movement
-        // between points (ie, the agent doesn't slow down as it
-        // approaches a destination point).
-        agent.autoBraking = false;
+        //sets our current point to be the first in the array
+        currentPointPosition = points[0].position;
+        currentPointIndex = 0;
 
-        GotoNextPoint();
-        wasChasingPlayer = false;
+        hasStopped = false;
     }
-
-
-    void GotoNextPoint()
-    {
-        // Returns if no points have been set up
-        if (points.Length == 0)
-            return;
-
-        // Set the agent to go to the currently selected destination.
-        agent.destination = points[destPoint].position;
-
-        // Choose the next point in the array as the destination,
-        // cycling to the start if necessary.
-        destPoint = (destPoint + 1) % points.Length;
-    }
-
 
     void Update()
     {
+
+        if (health.GetHealth() <= 0)
+        {
+            //temporary line to simply delete the enemy when it is killed.
+            Destroy(gameObject);
+
+            //to-do add some way to broadcast the death of this enemy so that
+            //we might open the doors upon there being no enemies left
+
+        }
+
         playerPos = playerObj.transform.position;
 
-        if (transform.position.x - playerPos.x < radius &&
-            transform.position.y - playerPos.y < radius &&
-            transform.position.z - playerPos.z < radius)
-        {
-            chasingPlayer = true;
-        }
 
-        // Choose the next destination point when the agent gets
-        // close to the current one.
-        if (!agent.pathPending && agent.remainingDistance < 0.5f && !chasingPlayer)
-        {
-            GotoNextPoint();
-        }
-
-        if (chasingPlayer && !wasChasingPlayer)
-        {
-            agent.ResetPath();
-            wasChasingPlayer = true;
-        }
-           
+        chasingPlayer = inRadius();
+        
 
         if (chasingPlayer)
         {
+            //moves this object towards the players position
             transform.position = Vector3.MoveTowards(transform.position, playerPos, Time.deltaTime * speed);
+        } else
+        {
+            Debug.Log(transform.position - currentPointPosition + "");
+
+            //checks if we have reached the current patrol point
+             if (reachedPoint() && !hasStopped)
+             {
+
+                changeCurrentPoint();
+
+                transform.position = Vector3.MoveTowards(transform.position, currentPointPosition, Time.deltaTime * speed);
+
+                hasStopped = true;
+             } else
+             {
+                //moves us towards the next patrol point
+                transform.position = Vector3.MoveTowards(transform.position, currentPointPosition, Time.deltaTime * speed);
+
+                hasStopped = false;
+             }
+            
         }
+
+    }
+
+    bool inRadius()
+    {
+        return transform.position.x - playerPos.x < radius &&
+               transform.position.y - playerPos.y < radius &&
+               transform.position.z - playerPos.z < radius;
+    }
+
+
+    void changeCurrentPoint()
+    {
+
+        Debug.Log(currentPointIndex + " Index " + points.Length + " Length");
+        //make sure we have not gone beyond the final point
+        if (currentPointIndex < points.Length)
+        {
+            //move our focus to the next point
+            currentPointIndex++;
+
+        } else
+        {
+            //reset our index
+            currentPointIndex = 0;
+        }
+
+        //change our current point to be the next in line
+        currentPointPosition = points[currentPointIndex].position;
+    }
+
+
+    bool reachedPoint()
+    {
+        return Mathf.Abs(transform.position.x - currentPointPosition.x) < .1 &&
+                Mathf.Abs(transform.position.z - currentPointPosition.z) < .1;
     }
 }
