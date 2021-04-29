@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour
     public float fireRate = 5;
     private float timeBetweenFire;
 
-    public GameObject LookDirection;
     public GameObject bullet;
     public GameObject projectileSpawn;
 
@@ -29,6 +28,9 @@ public class PlayerController : MonoBehaviour
         // Grab component from Player
         camera = this.GetComponentInChildren<Camera>();
         rb = this.GetComponent<Rigidbody>();
+
+        // Detact camera so it is not influenced by player rotation
+        camera.transform.SetParent(null);
     }
 
     private void OnEnable()
@@ -55,14 +57,20 @@ public class PlayerController : MonoBehaviour
         currentPos.z += zinput;
         currentPos.x += xinput;
 
+        // Move player to desired position
         this.transform.position = currentPos;
+
+        // Update currentPos to reposition camera as well
+        currentPos.y += 9;
+        currentPos.z += -9;
+        camera.transform.position = currentPos;
 
         // Reset for next loop
         xinput = 0;
         zinput = 0;
 
         // Player rotation
-        LookDirection.transform.LookAt(GetPlayerTarget().point);
+        this.transform.LookAt(GetPlayerTarget().point);
     }
 
     void Fire()
@@ -90,11 +98,16 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         Ray ray = camera.ScreenPointToRay(firingPosition);
 
-        int layerMask = 1 << 8;
+        int layerMask1 = 1 << 8;
+        int layerMask2 = 1 << 9;
 
-        layerMask = ~layerMask;
+        layerMask1 = layerMask1;
+        layerMask2 = layerMask2;
 
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+        int finalMask = layerMask1 | layerMask2;
+        finalMask = ~finalMask;
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, finalMask))
         {
             hit.point = new Vector3(hit.point.x,
                                     this.transform.position.y,
