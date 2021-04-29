@@ -71,10 +71,6 @@ public class PlayerController : MonoBehaviour
         {
             RaycastHit hit = GetPlayerTarget();
 
-        //Debug.Log(timeBetweenFire - Time.time);
-        // Player weapon fire
-        if (Input.GetMouseButton(0) & timeBetweenFire < Time.time)
-        {
             timeBetweenFire = Time.time + (200 - fireRate) / 1000;
             GameObject bulletInstance = Instantiate(bullet, projectileSpawn.transform.position, projectileSpawn.transform.rotation);
 
