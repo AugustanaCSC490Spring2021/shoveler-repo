@@ -192,6 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 100
+  fireRate: 5
   LookDirection: {fileID: 20320899509846043}
   bullet: {fileID: 7963739882701601418, guid: 95092e206cbd23447b794c9be14ffc6e, type: 3}
   projectileSpawn: {fileID: 4251481816986151498}
