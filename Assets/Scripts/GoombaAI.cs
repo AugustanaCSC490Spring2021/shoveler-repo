@@ -9,6 +9,7 @@ public class GoombaAI : MonoBehaviour
     #region variables
 
     [SerializeField] private GameObject playerObj;
+    [SerializeField] private NavMeshAgent navMesgAgent;
     [SerializeField] private Vector3 playerPos;
     [SerializeField] private float speed;
     [SerializeField] private Health health;
@@ -22,7 +23,9 @@ public class GoombaAI : MonoBehaviour
     {
         //we can substitute "Player" for whatever we name our player character
         playerObj = GameObject.FindGameObjectWithTag("Player");
+        //navMesgAgent = GetComponent<NavMeshAgent>();
         playerPos = playerObj.transform.position;
+        health = new Health();
     }
 
     // Update is called once per frame
@@ -39,17 +42,18 @@ public class GoombaAI : MonoBehaviour
         }
 
         playerPos = playerObj.transform.position;
-        Debug.Log("Uodate is running");
+        Debug.Log("Update is running");
 
         //moves this object towards the players position
         transform.position = Vector3.MoveTowards(transform.position, playerPos, Time.deltaTime * speed);
+        //navMesgAgent.Move(Vector3.MoveTowards(transform.position, playerPos, Time.deltaTime * speed));
 
     }
 
-    /*
+    
     private void OnCollisionEnter(Collision collision)
     {
         health.Damage(playerDamage);
     }
-    */
+    
 }

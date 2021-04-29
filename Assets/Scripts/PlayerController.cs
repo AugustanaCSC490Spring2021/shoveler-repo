@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
             LookDirection.transform.LookAt(hit.point);
         }
 
-        Debug.Log(timeBetweenFire - Time.time);
+        //Debug.Log(timeBetweenFire - Time.time);
         // Player weapon fire
         if (Input.GetMouseButton(0) & timeBetweenFire < Time.time)
         {

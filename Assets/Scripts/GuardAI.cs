@@ -29,11 +29,11 @@ public class GuardAI : MonoBehaviour
 
         //agent = GetComponent<NavMeshAgent>();
 
-        if (playerObj == null)
-        {
-            //we can substitute "Player" for whatever we name our player character
-            playerObj = GameObject.Find("Player");
-        }
+        //we can substitute "Player" for whatever we name our player character
+        playerObj = GameObject.Find("Player");
+        playerPos = playerObj.transform.position;
+        health = new Health();
+        
 
     }
 
