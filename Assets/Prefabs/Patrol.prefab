@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6705146009343424108}
   - component: {fileID: 6705146009343424109}
   - component: {fileID: 6705146009343424098}
+  - component: {fileID: 2307890255446733348}
   - component: {fileID: 6705146009343424099}
   m_Layer: 0
   m_Name: Patrol
@@ -117,12 +118,29 @@ MonoBehaviour:
   destPoint: 0
   agent: {fileID: 0}
   chasingPlayer: 0
-  health: {fileID: 0}
+  patrolHealth: {fileID: 0}
+  maxHealth: 0
   waitTime: 0
   elapsedTime: 0
   currentPointPosition: {x: 0, y: 0, z: 0}
   currentPointIndex: 0
   hasStopped: 0
+  playerHealth: {fileID: 0}
+  patrolDamage: 0
+  attackSpeedInSeconds: 0
+  healthBar: {fileID: 0}
+--- !u!114 &2307890255446733348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6705146009343424096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18d87d1b67d6f7e4da04909cf0195862, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!195 &6705146009343424099
 NavMeshAgent:
   m_ObjectHideFlags: 0

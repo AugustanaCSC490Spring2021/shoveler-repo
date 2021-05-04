@@ -1499,6 +1499,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Goomba
       objectReference: {fileID: 0}
+    - target: {fileID: 816065160792837978, guid: ad1fe0d085123ed42947b691fbebd5c4,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 7605466142026633692, guid: ad1fe0d085123ed42947b691fbebd5c4,
         type: 3}
       propertyPath: speed
@@ -1537,6 +1542,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Guard
+      objectReference: {fileID: 0}
+    - target: {fileID: 5911776233066727392, guid: deb6bcbcbabac5d44b924fc6be9c7f03,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 5911776233066727395, guid: deb6bcbcbabac5d44b924fc6be9c7f03,
         type: 3}
@@ -1636,6 +1646,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Patrol
+      objectReference: {fileID: 0}
+    - target: {fileID: 6705146009343424096, guid: 19a3f885a7e465a4395d8517fbfed17f,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 6705146009343424098, guid: 19a3f885a7e465a4395d8517fbfed17f,
         type: 3}
