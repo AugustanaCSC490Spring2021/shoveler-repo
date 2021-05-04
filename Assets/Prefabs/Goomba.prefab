@@ -108,8 +108,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerObj: {fileID: 0}
+  navMesgAgent: {fileID: 0}
   playerPos: {x: 0, y: 0, z: 0}
-  speed: 0
+  speed: 1
   health: {fileID: 0}
   playerDamage: 0
 --- !u!114 &4244703763007156976
