@@ -10,12 +10,16 @@ public class PlayerController : MonoBehaviour
     public float playerSpeed = 100;
     public float fireRate = 5;
     private float timeBetweenFire;
+    private bool canMelee = true;
+    private float meleeTimer = 0;
+    private bool canShoot = false;
 
     public GameObject bullet;
     public GameObject projectileSpawn;
 
     private Camera camera;
     private Rigidbody rb;
+    private SphereCollider meleeCollider;
 
 
     private void Awake()
@@ -28,6 +32,7 @@ public class PlayerController : MonoBehaviour
         // Grab component from Player
         camera = this.GetComponentInChildren<Camera>();
         rb = this.GetComponent<Rigidbody>();
+        meleeCollider = this.GetComponent<SphereCollider>();
 
         // Detact camera so it is not influenced by player rotation
         camera.transform.SetParent(null);
@@ -71,24 +76,39 @@ public class PlayerController : MonoBehaviour
 
         // Player rotation
         this.transform.LookAt(GetPlayerTarget().point);
+
+        // Disable melee after 100 milliseconds
+        if (meleeTimer < Time.time * 1000) meleeCollider.enabled = false;
+        
     }
 
     void Fire()
     {
         if (timeBetweenFire < Time.time)
         {
-            RaycastHit hit = GetPlayerTarget();
-
             timeBetweenFire = Time.time + (200 - fireRate) / 1000;
-            GameObject bulletInstance = Instantiate(bullet, projectileSpawn.transform.position, projectileSpawn.transform.rotation);
+            if (canMelee)
+            {
+                Debug.Log("Swing!");
+                meleeTimer = (Time.time * 1000) + 100;
+                meleeCollider.enabled = true;
+            }
 
-            Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
-            bulletScript.collideWithPlayer = false;
+            // Legacy code. Might reuse later
+            if (canShoot)
+            {
+                RaycastHit hit = GetPlayerTarget();
 
-            Rigidbody bulletRB = bulletInstance.GetComponent<Rigidbody>();
+                GameObject bulletInstance = Instantiate(bullet, projectileSpawn.transform.position, projectileSpawn.transform.rotation);
 
-            Vector3 shootDirection = (hit.point - this.transform.position);
-            bulletRB.velocity = shootDirection.normalized * 25;
+                Bullet bulletScript = bulletInstance.GetComponent<Bullet>();
+                bulletScript.collideWithPlayer = false;
+
+                Rigidbody bulletRB = bulletInstance.GetComponent<Rigidbody>();
+
+                Vector3 shootDirection = (hit.point - this.transform.position);
+                bulletRB.velocity = shootDirection.normalized * 25;
+            }
         }
     }
 
@@ -117,5 +137,13 @@ public class PlayerController : MonoBehaviour
         }
 
         return new RaycastHit();
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            collision.gameObject.GetComponent<Health>().Damage(20);
+        }
     }
 }
