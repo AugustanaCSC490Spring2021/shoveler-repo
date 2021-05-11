@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
             timeBetweenFire = Time.time + (200 - fireRate) / 1000;
             if (canMelee)
             {
-                Debug.Log("Swing!");
+                //Debug.Log("Swing!");
                 animator.Play("Attack");
                 meleeTimer = (Time.time * 1000) + 100;
                 meleeCollider.enabled = true;
