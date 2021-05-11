@@ -41,7 +41,7 @@ public class GuardAI : MonoBehaviour
         playerHealth = playerObj.GetComponent<Health>();
 
         playerPos = playerObj.transform.position;
-        guardHealth = new Health();
+        guardHealth = this.GetComponent<Health>();
         maxHealth = guardHealth.GetHealth();
 
     }

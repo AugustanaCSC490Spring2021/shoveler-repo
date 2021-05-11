@@ -33,7 +33,7 @@ public class GoombaAI : MonoBehaviour
 
         //navMesgAgent = GetComponent<NavMeshAgent>();
         playerPos = playerObj.transform.position;
-        goombaHealth = new Health();
+        goombaHealth = this.GetComponent<Health>();
         maxHealth = goombaHealth.GetHealth();
     }
 

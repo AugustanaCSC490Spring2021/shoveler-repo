@@ -48,7 +48,7 @@ public class PatrolAI : MonoBehaviour
         playerHealth = playerObj.GetComponent<Health>();
 
         playerPos = playerObj.transform.position;
-        patrolHealth = new Health();
+        patrolHealth = this.GetComponent<Health>();
         maxHealth = patrolHealth.GetHealth();
 
         //sets our current point to be the first in the array
