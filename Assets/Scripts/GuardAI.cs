@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class GuardAI : MonoBehaviour
 {
@@ -17,8 +18,14 @@ public class GuardAI : MonoBehaviour
     //not sure what size to make this number
     [SerializeField] private float radius;
     [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private Health health;
+    [SerializeField] private Health guardHealth;
+    [SerializeField] private int maxHealth;
+    [SerializeField] private Health playerHealth;
     [SerializeField] private int playerDamage;
+    [SerializeField] private int guardDamage;
+    [SerializeField] private float attackSpeedInSeconds;
+    [SerializeField] private int goombaDamage;
+    [SerializeField] private Image healthBar;
 
     #endregion
 
@@ -31,17 +38,20 @@ public class GuardAI : MonoBehaviour
 
         //we can substitute "Player" for whatever we name our player character
         playerObj = GameObject.Find("Player");
+        playerHealth = playerObj.GetComponent<Health>();
+
         playerPos = playerObj.transform.position;
-        health = new Health();
-        
+        guardHealth = new Health();
+        maxHealth = guardHealth.GetHealth();
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        healthBar.fillAmount = (float)guardHealth.GetHealth() / maxHealth;
 
-        if (health.GetHealth() <= 0)
+        if (guardHealth.GetHealth() <= 0)
         {
             //temporary line to simply delete the enemy when it is killed.
             Destroy(gameObject);
@@ -76,7 +86,24 @@ public class GuardAI : MonoBehaviour
         //need to account for when the player is not attacking
         //if (playerObj.isAttacking()) { health.Damage(playerDamage); }
 
-        health.Damage(playerDamage);
+        if (collision.gameObject.CompareTag("Player") && (Time.time % attackSpeedInSeconds < .1))
+        {
+
+            playerHealth.Damage(guardDamage);
+            //Debug.Log("Guard Damaging Player!");
+
+            //testing purposes
+            //takeDamage(20);
+        }
     }
 
+    /*
+     * this was before the player handled damaging enemies
+    public void takeDamage(int damage)
+    {
+        guardHealth.Damage(damage);
+        healthBar.fillAmount = (float)guardHealth.GetHealth() / maxHealth;
+        //Debug.Log(guardHealth.GetHealth() + " / " + maxHealth);
+    }
+    */
 }

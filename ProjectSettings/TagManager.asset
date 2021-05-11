@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Bullet
+  - MaterialButtonLayer
+  - MaterialText
+  - Spawnpoint
+  - RoomCollider
+  - MaterialRadioButton
+  - Rooms
   - Enemy
   layers:
   - Default

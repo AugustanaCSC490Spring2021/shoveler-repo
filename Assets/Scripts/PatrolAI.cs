@@ -5,6 +5,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections;
+using UnityEngine.UI;
 
 
 public class PatrolAI : MonoBehaviour
@@ -12,28 +13,43 @@ public class PatrolAI : MonoBehaviour
 
     #region variables
 
-    [SerializeField] private GameObject playerObj = null;
+    [SerializeField] private GameObject playerObj;
     [SerializeField] private Vector3 playerPos;
+
     [SerializeField] private float radius;
     [SerializeField] private float speed;
+
     [SerializeField] public Transform[] points;
     [SerializeField] private int destPoint = 0;
     [SerializeField] private NavMeshAgent agent;
+
     [SerializeField] public bool chasingPlayer;
-    [SerializeField] private Health health;
+
+    [SerializeField] private Health patrolHealth;
+    [SerializeField] private int maxHealth;
+
     [SerializeField] private float waitTime;
     [SerializeField] private float elapsedTime;
+
     [SerializeField] private Vector3 currentPointPosition;
     [SerializeField] private int currentPointIndex;
     [SerializeField] private bool hasStopped;
+
+    [SerializeField] private Health playerHealth;
+    [SerializeField] private int patrolDamage;
+    [SerializeField] private float attackSpeedInSeconds;
+    [SerializeField] private Image healthBar;
 
     #endregion
 
     void Start()
     {
         playerObj = GameObject.FindGameObjectWithTag("Player");
+        playerHealth = playerObj.GetComponent<Health>();
+
         playerPos = playerObj.transform.position;
-        health = new Health();
+        patrolHealth = new Health();
+        maxHealth = patrolHealth.GetHealth();
 
         //sets our current point to be the first in the array
         currentPointPosition = points[0].position;
@@ -44,8 +60,9 @@ public class PatrolAI : MonoBehaviour
 
     void Update()
     {
+        healthBar.fillAmount = (float)patrolHealth.GetHealth() / maxHealth;
 
-        if (health.GetHealth() <= 0)
+        if (patrolHealth.GetHealth() <= 0)
         {
             //temporary line to simply delete the enemy when it is killed.
             Destroy(gameObject);
@@ -67,7 +84,6 @@ public class PatrolAI : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, playerPos, Time.deltaTime * speed);
         } else
         {
-            Debug.Log(transform.position - currentPointPosition + "");
 
             //checks if we have reached the current patrol point
              if (reachedPoint() && !hasStopped)
@@ -124,4 +140,29 @@ public class PatrolAI : MonoBehaviour
         return Mathf.Abs(transform.position.x - currentPointPosition.x) < .1 &&
                 Mathf.Abs(transform.position.z - currentPointPosition.z) < .1;
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        //need to account for when the player is not attacking
+        //if (playerObj.isAttacking()) { health.Damage(playerDamage); }
+
+        if (collision.gameObject.CompareTag("Player") && (Time.time % attackSpeedInSeconds < .1))
+        {
+            playerHealth.Damage(patrolDamage);
+            //Debug.Log("Patrol Damaging Player!");
+
+            //testing purposes
+            //takeDamage(20);
+        }
+    }
+
+    /*
+     * this was before the player handled damaging enemies
+    public void takeDamage(int damage)
+    {
+        patrolHealth.Damage(damage);
+        healthBar.fillAmount = (float)patrolHealth.GetHealth() / maxHealth;
+        Debug.Log(patrolHealth.GetHealth() + " / " + maxHealth);
+    }
+    */
 }
