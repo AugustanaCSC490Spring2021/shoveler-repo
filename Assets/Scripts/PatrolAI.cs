@@ -40,12 +40,15 @@ public class PatrolAI : MonoBehaviour
     [SerializeField] private float attackSpeedInSeconds;
     [SerializeField] private Image healthBar;
 
+    [SerializeField] private float timeLastAttacked;
+
     #endregion
 
     void Start()
     {
         playerObj = GameObject.FindGameObjectWithTag("Player");
         playerHealth = playerObj.GetComponent<Health>();
+        agent = GetComponent<NavMeshAgent>();
 
         playerPos = playerObj.transform.position;
         patrolHealth = this.GetComponent<Health>();
@@ -56,6 +59,7 @@ public class PatrolAI : MonoBehaviour
         currentPointIndex = 0;
 
         hasStopped = false;
+        agent.speed = speed;
     }
 
     void Update()
@@ -81,7 +85,8 @@ public class PatrolAI : MonoBehaviour
         if (chasingPlayer)
         {
             //moves this object towards the players position
-            transform.position = Vector3.MoveTowards(transform.position, playerPos, Time.deltaTime * speed);
+            //transform.position = Vector3.MoveTowards(transform.position, playerPos, Time.deltaTime * speed);
+            agent.SetDestination(playerPos);
         } else
         {
 
@@ -146,13 +151,15 @@ public class PatrolAI : MonoBehaviour
         //need to account for when the player is not attacking
         //if (playerObj.isAttacking()) { health.Damage(playerDamage); }
 
-        if (collision.gameObject.CompareTag("Player") && (Time.time % attackSpeedInSeconds < .1))
+        if (collision.gameObject.CompareTag("Player") && (Time.time - timeLastAttacked > attackSpeedInSeconds))
         {
             playerHealth.Damage(patrolDamage);
             //Debug.Log("Patrol Damaging Player!");
 
             //testing purposes
             //takeDamage(20);
+
+            timeLastAttacked = Time.time;
         }
     }
 

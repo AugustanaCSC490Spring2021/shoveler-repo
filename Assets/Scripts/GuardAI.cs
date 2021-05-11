@@ -18,14 +18,18 @@ public class GuardAI : MonoBehaviour
     //not sure what size to make this number
     [SerializeField] private float radius;
     [SerializeField] private NavMeshAgent agent;
+
     [SerializeField] private Health guardHealth;
     [SerializeField] private int maxHealth;
     [SerializeField] private Health playerHealth;
+
     [SerializeField] private int playerDamage;
     [SerializeField] private int guardDamage;
-    [SerializeField] private float attackSpeedInSeconds;
-    [SerializeField] private int goombaDamage;
+
     [SerializeField] private Image healthBar;
+
+    [SerializeField] private float attackSpeedInSeconds;
+    [SerializeField] private float timeLastAttacked;
 
     #endregion
 
@@ -34,7 +38,7 @@ public class GuardAI : MonoBehaviour
     void Start()
     {
 
-        //agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
 
         //we can substitute "Player" for whatever we name our player character
         playerObj = GameObject.Find("Player");
@@ -76,7 +80,8 @@ public class GuardAI : MonoBehaviour
         if (chasingPlayer)
         {
             //moves this object towards the players position
-            transform.position = Vector3.MoveTowards(transform.position, playerPos, Time.deltaTime * speed);
+            //transform.position = Vector3.MoveTowards(transform.position, playerPos, Time.deltaTime * speed);
+            agent.SetDestination(playerPos);
         }
 
     }
@@ -86,7 +91,7 @@ public class GuardAI : MonoBehaviour
         //need to account for when the player is not attacking
         //if (playerObj.isAttacking()) { health.Damage(playerDamage); }
 
-        if (collision.gameObject.CompareTag("Player") && (Time.time % attackSpeedInSeconds < .1))
+        if (collision.gameObject.CompareTag("Player") && (Time.time - timeLastAttacked > attackSpeedInSeconds))
         {
 
             playerHealth.Damage(guardDamage);
@@ -94,6 +99,8 @@ public class GuardAI : MonoBehaviour
 
             //testing purposes
             //takeDamage(20);
+
+            timeLastAttacked = Time.time;
         }
     }
 

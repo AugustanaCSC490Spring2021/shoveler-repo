@@ -10,19 +10,25 @@ public class GoombaAI : MonoBehaviour
     #region variables
 
     [SerializeField] private GameObject playerObj;
-    [SerializeField] private NavMeshAgent navMeshAgent;
+    [SerializeField] private NavMeshAgent agent;
+
     [SerializeField] private Vector3 playerPos;
     [SerializeField] private float speed;
+
     [SerializeField] private Health goombaHealth;
     [SerializeField] private int maxHealth;
+
     [SerializeField] private int playerDamage;
     [SerializeField] private Health playerHealth;
+
     [SerializeField] private float attackSpeedInSeconds;
     [SerializeField] private int goombaDamage;
+
     [SerializeField] private Image healthBar;
 
-    #endregion
+    [SerializeField] private float timeLastAttacked;
 
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -31,8 +37,10 @@ public class GoombaAI : MonoBehaviour
         playerObj = GameObject.FindGameObjectWithTag("Player");
         playerHealth = playerObj.GetComponent<Health>();
 
-        //navMesgAgent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
+
         playerPos = playerObj.transform.position;
+
         goombaHealth = this.GetComponent<Health>();
         maxHealth = goombaHealth.GetHealth();
     }
@@ -55,17 +63,18 @@ public class GoombaAI : MonoBehaviour
         playerPos = playerObj.transform.position;
 
         //moves this object towards the players position
-        transform.position = Vector3.MoveTowards(transform.position, playerPos, Time.deltaTime * speed);
-        //Vector3 move = Vector3.MoveTowards(transform.position, playerPos, Time.deltaTime * speed);
-        //navMesgAgent.Move(move);
-        //navMeshAgent.destination.Set(playerPos.x, playerPos.y,playerPos.z);
+        //transform.position = Vector3.MoveTowards(transform.position, playerPos, Time.deltaTime * speed);
+        agent.SetDestination(playerPos);
+
+        //this will hard lock the rotation of the whole sprite
+        //this.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
     }
 
-    
+
     private void OnCollisionEnter(Collision collision)
     {
 
-        if (collision.gameObject.CompareTag("Player") && (Time.time % attackSpeedInSeconds < 1))
+        if (collision.gameObject.CompareTag("Player") && (Time.time - timeLastAttacked > attackSpeedInSeconds))
         {
 
             playerHealth.Damage(goombaDamage);
@@ -74,6 +83,7 @@ public class GoombaAI : MonoBehaviour
             //testing purposes
             //takeDamage(20);
 
+            timeLastAttacked = Time.time;
         }
 
     }
