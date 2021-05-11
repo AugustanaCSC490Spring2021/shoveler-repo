@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     private Camera camera;
     private Rigidbody rb;
     private SphereCollider meleeCollider;
+    private Animator animator;
 
 
     private void Awake()
@@ -36,6 +37,8 @@ public class PlayerController : MonoBehaviour
 
         // Detact camera so it is not influenced by player rotation
         camera.transform.SetParent(null);
+
+        animator = this.GetComponentInChildren<Animator>();
     }
 
     private void OnEnable()
@@ -79,7 +82,6 @@ public class PlayerController : MonoBehaviour
 
         // Disable melee after 100 milliseconds
         if (meleeTimer < Time.time * 1000) meleeCollider.enabled = false;
-        
     }
 
     void Fire()
@@ -90,6 +92,7 @@ public class PlayerController : MonoBehaviour
             if (canMelee)
             {
                 Debug.Log("Swing!");
+                animator.Play("Attack");
                 meleeTimer = (Time.time * 1000) + 100;
                 meleeCollider.enabled = true;
             }
