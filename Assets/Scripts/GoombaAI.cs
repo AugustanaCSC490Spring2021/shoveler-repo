@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class GoombaAI : MonoBehaviour
 {
@@ -9,29 +10,47 @@ public class GoombaAI : MonoBehaviour
     #region variables
 
     [SerializeField] private GameObject playerObj;
-    [SerializeField] private NavMeshAgent navMesgAgent;
+    [SerializeField] private NavMeshAgent agent;
+
     [SerializeField] private Vector3 playerPos;
     [SerializeField] private float speed;
-    [SerializeField] private Health health;
+
+    [SerializeField] private Health goombaHealth;
+    [SerializeField] private int maxHealth;
+
     [SerializeField] private int playerDamage;
+    [SerializeField] private Health playerHealth;
+
+    [SerializeField] private float attackSpeedInSeconds;
+    [SerializeField] private int goombaDamage;
+
+    [SerializeField] private Image healthBar;
+
+    [SerializeField] private float timeLastAttacked;
 
     #endregion
-
 
     // Start is called before the first frame update
     void Start()
     {
         //we can substitute "Player" for whatever we name our player character
         playerObj = GameObject.FindGameObjectWithTag("Player");
-        //navMesgAgent = GetComponent<NavMeshAgent>();
+        playerHealth = playerObj.GetComponent<Health>();
+
+        agent = GetComponent<NavMeshAgent>();
+
         playerPos = playerObj.transform.position;
-        health = new Health();
+
+        goombaHealth = this.GetComponent<Health>();
+        maxHealth = goombaHealth.GetHealth();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (health.GetHealth() <= 0)
+        healthBar.fillAmount = (float)goombaHealth.GetHealth() / maxHealth;
+
+        if (goombaHealth.GetHealth() <= 0)
         {
             //temporary line to simply delete the enemy when it is killed.
             Destroy(gameObject);
@@ -42,18 +61,40 @@ public class GoombaAI : MonoBehaviour
         }
 
         playerPos = playerObj.transform.position;
-        Debug.Log("Update is running");
 
         //moves this object towards the players position
-        transform.position = Vector3.MoveTowards(transform.position, playerPos, Time.deltaTime * speed);
-        //navMesgAgent.Move(Vector3.MoveTowards(transform.position, playerPos, Time.deltaTime * speed));
+        //transform.position = Vector3.MoveTowards(transform.position, playerPos, Time.deltaTime * speed);
+        agent.SetDestination(playerPos);
 
+        //this will hard lock the rotation of the whole sprite
+        //this.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
     }
 
-    
+
     private void OnCollisionEnter(Collision collision)
     {
-        health.Damage(playerDamage);
+
+        if (collision.gameObject.CompareTag("Player") && (Time.time - timeLastAttacked > attackSpeedInSeconds))
+        {
+
+            playerHealth.Damage(goombaDamage);
+            //Debug.Log("Goomba Damaging Player!");
+
+            //testing purposes
+            //takeDamage(20);
+
+            timeLastAttacked = Time.time;
+        }
+
     }
-    
+
+    /*
+     * this was before the player handled damaging enemies
+    public void takeDamage(int damage)
+    {
+        goombaHealth.Damage(damage);
+        healthBar.fillAmount = (float)goombaHealth.GetHealth() / maxHealth;
+        //Debug.Log(goombaHealth.GetHealth() + " / " + maxHealth);
+    }
+    */
 }
