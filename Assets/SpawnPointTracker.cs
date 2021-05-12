@@ -10,7 +10,6 @@ public class SpawnPointTracker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject.Find("DungeonManager").GetComponent<DungeonManager>().spawnpointsList.Add(gameObject);
     }
 
     // Update is called once per frame
@@ -21,9 +20,9 @@ public class SpawnPointTracker : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Deleted " + gameObject);
         if (other.CompareTag("RoomCollider")) {
             GameObject.Find("DungeonManager").GetComponent<DungeonManager>().spawnpointsList.Remove(gameObject);
+            GetComponentInParent<RoomManager>().removeSpawnpoint(gameObject);
             Destroy(gameObject);
         }
     }
