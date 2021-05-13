@@ -312,7 +312,8 @@ MonoBehaviour:
   spawnpointsList: []
   roomPrefab: {fileID: 2604689119658238362, guid: f24b7ef73e4cd544d844e3d991fd19d3,
     type: 3}
-  seed: 5550
+  rooms: []
+  seed: 89
 --- !u!4 &286725154195301349
 Transform:
   m_ObjectHideFlags: 0
