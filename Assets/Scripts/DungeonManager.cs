@@ -14,6 +14,8 @@ public class DungeonManager : MonoBehaviour
 
     [SerializeField]
     private GameObject roomPrefab;
+    [SerializeField]
+    private List<GameObject> rooms;
 
 
     [SerializeField]
@@ -27,7 +29,7 @@ public class DungeonManager : MonoBehaviour
         GameObject temp = Instantiate(roomPrefab, new Vector3(0, 0, 0), roomPrefab.transform.rotation);
         temp.name = "EntryRoom";
         temp.GetComponent<RoomManager>().enableEntryRoomIndicator();
-
+        rooms.Add(temp);
 
     }
 
@@ -50,7 +52,6 @@ public class DungeonManager : MonoBehaviour
             GameObject temp = spawnpointsList[randSpawnpoint];
             int doorDir = temp.GetComponent<SpawnPointTracker>().doorNeeded;
             spawnRoom(doorDir, temp);
-
         }
         else if (spawnpointsList.Count > 0 && numRooms == maxRooms)
         {
@@ -61,7 +62,9 @@ public class DungeonManager : MonoBehaviour
                 spawnpointsList.RemoveAt(0);
                 Destroy(temp);
             }
+            rooms[rooms.Count - 1].GetComponent<RoomManager>().enableExitRoomIndicator();
         }
+
     }
 
     void spawnRoom(int doorDir, GameObject spawnpoint)
@@ -73,6 +76,7 @@ public class DungeonManager : MonoBehaviour
         temp.GetComponent<RoomManager>().enableDoor(doorDir);
         temp.GetComponentInParent<RoomManager>().chooseWallPreset();
         numRooms++;
+        rooms.Add(temp);
 
 
     }
