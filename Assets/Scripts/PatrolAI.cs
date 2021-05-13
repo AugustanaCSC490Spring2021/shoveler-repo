@@ -18,6 +18,7 @@ public class PatrolAI : MonoBehaviour
 
     [SerializeField] private float radius;
     [SerializeField] private float speed;
+    [SerializeField] private float acceleration;
 
     [SerializeField] public Transform[] points;
     [SerializeField] private int destPoint = 0;
@@ -60,6 +61,7 @@ public class PatrolAI : MonoBehaviour
 
         hasStopped = false;
         agent.speed = speed;
+        agent.acceleration = acceleration;
     }
 
     void Update()
@@ -96,13 +98,15 @@ public class PatrolAI : MonoBehaviour
 
                 changeCurrentPoint();
 
-                transform.position = Vector3.MoveTowards(transform.position, currentPointPosition, Time.deltaTime * speed);
+                //transform.position = Vector3.MoveTowards(transform.position, currentPointPosition, Time.deltaTime * speed);
+                agent.SetDestination(currentPointPosition);
 
                 hasStopped = true;
              } else
              {
                 //moves us towards the next patrol point
-                transform.position = Vector3.MoveTowards(transform.position, currentPointPosition, Time.deltaTime * speed);
+                //transform.position = Vector3.MoveTowards(transform.position, currentPointPosition, Time.deltaTime * speed);
+                agent.SetDestination(currentPointPosition);
 
                 hasStopped = false;
              }
@@ -113,9 +117,9 @@ public class PatrolAI : MonoBehaviour
 
     bool inRadius()
     {
-        return transform.position.x - playerPos.x < radius &&
-               transform.position.y - playerPos.y < radius &&
-               transform.position.z - playerPos.z < radius;
+        return Mathf.Abs(transform.position.x - playerPos.x) < radius &&
+               Mathf.Abs(transform.position.y - playerPos.y) < radius &&
+               Mathf.Abs(transform.position.z - playerPos.z) < radius;
     }
 
 
@@ -161,6 +165,12 @@ public class PatrolAI : MonoBehaviour
 
             timeLastAttacked = Time.time;
         }
+    }
+
+    public void setPoints (Transform point1, Transform point2)
+    {
+        points[1] = point1;
+        points[2] = point2;
     }
 
     /*

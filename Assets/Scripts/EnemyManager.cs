@@ -9,6 +9,11 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private GameObject guard;
     [SerializeField] private GameObject patrol;
 
+    [SerializeField] private GameObject[] enemies;
+
+    //maybe we can use this to open the doors?
+    [SerializeField] private GameObject doors;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,14 +21,48 @@ public class EnemyManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         
+        //this can open the doors, but we might handle it another way
+        if (enemies.Length == 0)
+        {
+            Destroy(doors);
+        }
+
     }
 
     public GameObject[] generateEnemies(GameObject[] spawnPositions)
     {
-        return null;
+
+        int random;
+        int index = 0;
+
+        foreach (GameObject spawn in spawnPositions) 
+        {
+            random = Random.Range(1, 3);
+
+            if (random == 1)
+            {
+                enemies[index] = Instantiate(goomba, spawn.transform);
+            } else if (random == 2) {
+                enemies[index] = Instantiate(guard, spawn.transform);
+            } else if (random == 3)
+            {
+                enemies[index] = Instantiate(patrol, spawn.transform);
+                if (index == 0)
+                {
+                    enemies[index].GetComponent<PatrolAI>().setPoints(enemies[index].transform, enemies[index + 1].transform);
+                } else
+                {
+                    enemies[index].GetComponent<PatrolAI>().setPoints(enemies[index].transform, enemies[index - 1].transform);
+                }
+            }
+
+            index++;
+        }
+
+        return enemies;
     }
 
 }

@@ -952,6 +952,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Patrol
       objectReference: {fileID: 0}
+    - target: {fileID: 6705146009343424098, guid: 19a3f885a7e465a4395d8517fbfed17f,
+        type: 3}
+      propertyPath: points.Array.data[0]
+      value: 
+      objectReference: {fileID: 662343052}
+    - target: {fileID: 6705146009343424098, guid: 19a3f885a7e465a4395d8517fbfed17f,
+        type: 3}
+      propertyPath: points.Array.data[1]
+      value: 
+      objectReference: {fileID: 538137113}
+    - target: {fileID: 6705146009343424098, guid: 19a3f885a7e465a4395d8517fbfed17f,
+        type: 3}
+      propertyPath: points.Array.data[2]
+      value: 
+      objectReference: {fileID: 916605861}
     - target: {fileID: 6705146009343424110, guid: 19a3f885a7e465a4395d8517fbfed17f,
         type: 3}
       propertyPath: m_RootOrder
