@@ -64,11 +64,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5e4a71f663025ff45bb2d464e561ae68, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a6d1654f7c7d4b74cb810034de31fd3b, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 0
+  m_FillMethod: 4
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -101,7 +101,7 @@ RectTransform:
   m_GameObject: {fileID: 5582350056399868308}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.4, y: 8, z: 1}
   m_Children:
   - {fileID: 5510198150032220180}
   m_Father: {fileID: 5955043127248221167}
@@ -109,7 +109,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 45.000008}
+  m_AnchoredPosition: {x: -7, y: 197}
   m_SizeDelta: {x: 0, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6173935578703529634
@@ -139,7 +139,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: a6d1654f7c7d4b74cb810034de31fd3b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -261,9 +261,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerObj: {fileID: 0}
   playerPos: {x: 0, y: 0, z: 0}
-  speed: 8
+  speed: 10
+  acceleration: 5
   chasingPlayer: 0
-  radius: 6
+  radius: 8
   agent: {fileID: 0}
   guardHealth: {fileID: 0}
   maxHealth: 0
@@ -333,17 +334,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7587890733505723057}
-  m_LocalRotation: {x: 0.2588191, y: -0, z: -0, w: 0.9659258}
-  m_LocalPosition: {x: 0, y: 0, z: 0.4000001}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: -0.146}
   m_LocalScale: {x: 0.0025, y: 0.0025, z: 0.024999999}
   m_Children:
   - {fileID: 1526168172195391749}
   m_Father: {fileID: 5911776233066727399}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: -0.436}
   m_SizeDelta: {x: 508.27277, y: 280.21002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &5249410450744856294

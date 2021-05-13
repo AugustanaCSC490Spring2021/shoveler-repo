@@ -14,6 +14,7 @@ public class GoombaAI : MonoBehaviour
 
     [SerializeField] private Vector3 playerPos;
     [SerializeField] private float speed;
+    [SerializeField] private float acceleration;
 
     [SerializeField] private Health goombaHealth;
     [SerializeField] private int maxHealth;
@@ -43,6 +44,9 @@ public class GoombaAI : MonoBehaviour
 
         goombaHealth = this.GetComponent<Health>();
         maxHealth = goombaHealth.GetHealth();
+
+        agent.speed = speed;
+        agent.acceleration = acceleration;
     }
 
     // Update is called once per frame

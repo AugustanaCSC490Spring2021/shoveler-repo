@@ -21,17 +21,28 @@ public class DungeonManager : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         Random.InitState(seed);
         GameObject temp = Instantiate(roomPrefab, new Vector3(0, 0, 0), roomPrefab.transform.rotation);
         temp.name = "EntryRoom";
         temp.GetComponent<RoomManager>().enableEntryRoomIndicator();
 
+
     }
 
     // Update is called once per frame
     void Update()
+    {
+
+    }
+
+    private void FixedUpdate()
+    {
+        creatingDungeon();
+    }
+
+    void creatingDungeon()
     {
         if (spawnpointsList.Count != 0 && numRooms != maxRooms)
         {
@@ -39,7 +50,6 @@ public class DungeonManager : MonoBehaviour
             GameObject temp = spawnpointsList[randSpawnpoint];
             int doorDir = temp.GetComponent<SpawnPointTracker>().doorNeeded;
             spawnRoom(doorDir, temp);
-
 
         }
         else if (spawnpointsList.Count > 0 && numRooms == maxRooms)
@@ -52,11 +62,7 @@ public class DungeonManager : MonoBehaviour
                 Destroy(temp);
             }
         }
-
-
-
     }
-
 
     void spawnRoom(int doorDir, GameObject spawnpoint)
     {
@@ -65,6 +71,7 @@ public class DungeonManager : MonoBehaviour
         spawnpoint.GetComponentInParent<RoomManager>().enableDoor(doorOpposites[doorDir]);
         GameObject temp = Instantiate(roomPrefab, spawnpoint.transform.position, roomPrefab.transform.rotation);
         temp.GetComponent<RoomManager>().enableDoor(doorDir);
+        temp.GetComponentInParent<RoomManager>().chooseWallPreset();
         numRooms++;
 
 

@@ -12,6 +12,8 @@ public class GuardAI : MonoBehaviour
     [SerializeField] private GameObject playerObj;
     [SerializeField] private Vector3 playerPos;
     [SerializeField] private float speed;
+    [SerializeField] private float acceleration;
+
     //once the enemy starts chasing the player, it will not stop
     [SerializeField] private bool chasingPlayer = false;
     //How far away the player must be in order to get the attention of this enemy
@@ -48,6 +50,8 @@ public class GuardAI : MonoBehaviour
         guardHealth = this.GetComponent<Health>();
         maxHealth = guardHealth.GetHealth();
 
+        agent.speed = speed;
+        agent.acceleration = acceleration;
     }
 
     // Update is called once per frame
