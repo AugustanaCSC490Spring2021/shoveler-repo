@@ -13,11 +13,17 @@ public class HealthBar : MonoBehaviour
     private GameObject playerObject;
     private Health playerHealthScript;
 
-    //playerObject = GameObject.FindGameObjectWithTag("Player");
-    //playerHealthScript = playerObject.GetComponent<Health>();
+    private void Awake()
+    {
+        playerObject = GameObject.FindGameObjectWithTag("Player");
+        playerHealthScript = playerObject.GetComponent<Health>();
+    }
 
+    private void FixedUpdate()
+    {
+        slider.value = playerHealthScript.GetHealth();
+    }
 
-    
     // Start is called before the first frame update
     public void SetMaxHealth(int health) {
         slider.maxValue = health;
