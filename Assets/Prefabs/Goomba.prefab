@@ -123,6 +123,7 @@ MonoBehaviour:
   goombaDamage: 20
   healthBar: {fileID: 3271673881120256082}
   timeLastAttacked: 0
+  covidFacts: []
 --- !u!114 &4244703763007156976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,6 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18d87d1b67d6f7e4da04909cf0195862, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthBar: {fileID: 0}
 --- !u!195 &-458638476447578913
 NavMeshAgent:
   m_ObjectHideFlags: 0
