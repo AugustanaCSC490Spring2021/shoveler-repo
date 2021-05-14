@@ -12,6 +12,8 @@ using UnityEngine.SceneManagement;
 
 public class ClientScript : MonoBehaviour
 {
+    GameObject PlayerObject;
+
     Profile profile;
     bool finished = false;
     long enemyTime = 0;
@@ -22,9 +24,12 @@ public class ClientScript : MonoBehaviour
 
     private void Start()
     {
+        PlayerObject = GameObject.FindGameObjectWithTag("Player");
+        PlayerObject.SetActive(false);
+
         if (bool.Parse(PlayerPrefs.GetString("isHost")))
         {
-            StartGame("TEMPROOMCODE");
+            CreateLobby(PlayerPrefs.GetString("name"));
         }else
         {
             ConnectToLobby(PlayerPrefs.GetString("name"), PlayerPrefs.GetString("roomCode"));
@@ -60,6 +65,8 @@ public class ClientScript : MonoBehaviour
             roomCode = serverJSONResponse.GetValue("roomCode").ToString()
         };
 
+        StartGame(profile.roomCode);
+
         //Debug.Log(profile.roomCode);
     }
 
@@ -79,7 +86,7 @@ public class ClientScript : MonoBehaviour
             SceneManager.LoadScene("Lobby");
         }else
         {
-            Profile profile = new Profile
+            profile = new Profile
             {
                 id = long.Parse(serverJSONResponse.GetValue("id").ToString()),
                 name = name,
@@ -87,6 +94,8 @@ public class ClientScript : MonoBehaviour
                 seed = int.Parse(serverJSONResponse.GetValue("seed").ToString()),
                 roomCode = roomCode
             };
+
+            StartGame(profile.roomCode);
         }
 
         //Debug.Log(profile.seed);
@@ -111,7 +120,7 @@ public class ClientScript : MonoBehaviour
         }else
         {
             GameObject.Find("DungeonManager").GetComponent<DungeonManager>().beginDungeonGeneration(profile.seed, 3);
-
+            PlayerObject.SetActive(true);
         }
     }
 
@@ -130,6 +139,8 @@ public class ClientScript : MonoBehaviour
         else
         {
             // TODO: Load level and start game 
+            GameObject.Find("DungeonManager").GetComponent<DungeonManager>().beginDungeonGeneration(profile.seed, 3);
+            PlayerObject.SetActive(true);
         }
     }
 
@@ -181,7 +192,7 @@ public class ClientScript : MonoBehaviour
 
     public static String SendServerMessage(String toSend)
     {
-        IPEndPoint serverAddress = new IPEndPoint(IPAddress.Parse("173.30.84.123"), 25566);
+        IPEndPoint serverAddress = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 25566);
 
         Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         clientSocket.Connect(serverAddress);

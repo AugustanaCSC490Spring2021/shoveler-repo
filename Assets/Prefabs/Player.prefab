@@ -352,7 +352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   start: 0
-  textBox: {fileID: 1586914669526713701}
+  timerText: {fileID: 1586914669526713701}
 --- !u!95 &3650166386103718839
 Animator:
   serializedVersion: 3

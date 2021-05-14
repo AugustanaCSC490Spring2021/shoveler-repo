@@ -30,14 +30,14 @@ public class LobbyUI : MonoBehaviour
     {
         PlayerPrefs.SetString("name", nameJoin.text);
         PlayerPrefs.SetString("roomCode", roomCode.text);
-        PlayerPrefs.SetString("isHost", "true");
+        PlayerPrefs.SetString("isHost", "false");
         SceneManager.LoadScene("GameStart");
     }
 
     public void StartNewLobby()
     {
         PlayerPrefs.SetString("name", nameJoin.text);
-        PlayerPrefs.SetString("isHost", "false");
+        PlayerPrefs.SetString("isHost", "true");
         SceneManager.LoadScene("GameStart");
     }
 }
