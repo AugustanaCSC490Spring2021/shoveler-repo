@@ -33,13 +33,13 @@ public class GuardAI : MonoBehaviour
     [SerializeField] private float attackSpeedInSeconds;
     [SerializeField] private float timeLastAttacked;
 
+    [SerializeField] private string[] covidFacts;
     #endregion
 
 
     // Start is called before the first frame update
     void Start()
     {
-
         agent = GetComponent<NavMeshAgent>();
 
         //we can substitute "Player" for whatever we name our player character
@@ -52,6 +52,8 @@ public class GuardAI : MonoBehaviour
 
         agent.speed = speed;
         agent.acceleration = acceleration;
+
+        covidFactGenerator();
     }
 
     // Update is called once per frame
@@ -90,7 +92,7 @@ public class GuardAI : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         //need to account for when the player is not attacking
         //if (playerObj.isAttacking()) { health.Damage(playerDamage); }
@@ -108,13 +110,36 @@ public class GuardAI : MonoBehaviour
         }
     }
 
-    /*
-     * this was before the player handled damaging enemies
-    public void takeDamage(int damage)
+    void covidFactGenerator()
     {
-        guardHealth.Damage(damage);
-        healthBar.fillAmount = (float)guardHealth.GetHealth() / maxHealth;
-        //Debug.Log(guardHealth.GetHealth() + " / " + maxHealth);
+
+        /*
+         * Sources:
+         * https://www.cdc.gov/coronavirus/2019-ncov/faq.html
+         * https://www.cdc.gov/coronavirus/2019-ncov/symptoms-testing/symptoms.html
+         * https://www.cdc.gov/coronavirus/2019-ncov/prevent-getting-sick/prevention.html
+         */
+
+        covidFacts[0] = "To slow the spread of COVID-19, you should wear\n" +
+                        "a mask if you are around other people.";
+        covidFacts[1] = "Even when wearing a mask, you should continue to\n" +
+                        "socially distance (at least 6ft!).";
+        covidFacts[2] = "There are several vaccines available for COVID-19.\n" +
+                        "Getting the vaccine will help you fight off the virus!";
+        covidFacts[3] = "It is good to wash your hands with soap and water as\n" +
+                        "often as possible. Bring hand sanitizer when going out!";
+        covidFacts[4] = "If you must be around others, it is better to be\n" +
+                        "outside, and in well ventilated spaces.";
+        covidFacts[5] = "If you have to cough or sneeze, don't lower you mask!\n" +
+                        "Just change into a clean mask as soon as possible.";
+        covidFacts[6] = "You should clean and disinfect high touch surfaces daily.\n" +
+                        "This includes doorknobs, phones, keyboards, and many others.";
+        covidFacts[7] = "Be on the lookout for symptoms! Don't brush potential\n" +
+                        "symptoms aside, and take your tempeartue if you feel unwell.";
+        covidFacts[8] = "If you test positive for COVID-19, you should self\n" +
+                        "quarantine as soon as possible.";
+        covidFacts[9] = "If you have been exposed to COVID-19, you should self\n" +
+                        "quarantine for 14 days, and be on the lookout for symptoms.";
     }
-    */
+
 }

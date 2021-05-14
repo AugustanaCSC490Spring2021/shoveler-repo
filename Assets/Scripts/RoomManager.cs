@@ -18,7 +18,8 @@ public class RoomManager : MonoBehaviour
     [SerializeField]
     private List<GameObject> spawnpoints;
 
-    private bool greg; 
+    //
+    private bool playerInRoom; 
 
     private void Awake()
     {
@@ -26,6 +27,7 @@ public class RoomManager : MonoBehaviour
         {
             GameObject.Find("DungeonManager").GetComponent<DungeonManager>().spawnpointsList.Add(spawnpoints[i]);
         }
+        playerInRoom = false;
     }
 
 

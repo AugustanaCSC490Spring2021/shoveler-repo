@@ -44,6 +44,10 @@ public class DungeonManager : MonoBehaviour
         creatingDungeon();
     }
 
+    /// <summary>
+    /// creates rooms using the array of spawnpoints that is added to whenever a room is spawned, chooses a random room and calls to create
+    /// a new room at that position using createRoom()
+    /// </summary>
     void creatingDungeon()
     {
         if (spawnpointsList.Count != 0 && numRooms != maxRooms)
@@ -67,6 +71,11 @@ public class DungeonManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// creates room at the transform.position of the spawnpoint that was given, along with the direction of the door that should be enabled.
+    /// </summary>
+    /// <param name="doorDir"></param> - direction door should be enabled in room
+    /// <param name="spawnpoint"></param> - position where the new room should be made
     void spawnRoom(int doorDir, GameObject spawnpoint)
     {
 

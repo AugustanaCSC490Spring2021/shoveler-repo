@@ -28,6 +28,7 @@ public class GoombaAI : MonoBehaviour
     [SerializeField] private Image healthBar;
 
     [SerializeField] private float timeLastAttacked;
+    [SerializeField] private string[] covidFacts;
 
 
     #endregion
@@ -48,6 +49,8 @@ public class GoombaAI : MonoBehaviour
 
         agent.speed = speed;
         agent.acceleration = acceleration;
+
+        covidFactGenerator();
     }
 
     // Update is called once per frame
@@ -57,11 +60,11 @@ public class GoombaAI : MonoBehaviour
 
         if (goombaHealth.GetHealth() <= 0)
         {
-            //temporary line to simply delete the enemy when it is killed.
-            Destroy(gameObject);
+            gameObject.SetActive(false);
 
-            //to-do add some way to broadcast the death of this enemy so that
-            //we might open the doors upon there being no enemies left
+            //to do: display covid factoid for period of time and then delete the enemy
+
+            Destroy(gameObject);
 
         }
 
@@ -76,7 +79,7 @@ public class GoombaAI : MonoBehaviour
     }
 
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
 
         if (collision.gameObject.CompareTag("Player") && (Time.time - timeLastAttacked > attackSpeedInSeconds))
@@ -93,13 +96,36 @@ public class GoombaAI : MonoBehaviour
 
     }
 
-    /*
-     * this was before the player handled damaging enemies
-    public void takeDamage(int damage)
+    void covidFactGenerator()
     {
-        goombaHealth.Damage(damage);
-        healthBar.fillAmount = (float)goombaHealth.GetHealth() / maxHealth;
-        //Debug.Log(goombaHealth.GetHealth() + " / " + maxHealth);
+
+        /*
+         * Sources:
+         * https://www.worldometers.info/coronavirus/?utm_campaign=homeAdUOA?Si
+         * https://www.goodrx.com/blog/flu-vs-coronavirus-mortality-and-death-rates-by-year/
+         * https://www.cdc.gov/coronavirus/2019-ncov/symptoms-testing/symptoms.html
+         */
+
+        covidFacts[0] = "COVID-19 spreads mainly through respiratory\n" +
+                        "droplets produced from sneezes and coughs.";
+        covidFacts[1] = "COVID-19 is much more likely to spread when\n" +
+                        "people are within 6ft of one another.";
+        covidFacts[2] = "COVID-19 spreads easily from person to person.\n" +
+                        "More so than Influenza, but less so than measles.";
+        covidFacts[3] = "Community spread can occur when several people\n" +
+                        "in an area are infected, and some are not sure how!";
+        covidFacts[4] = "COVID-19 spreads mainly from person to person.\n" +
+                        "It does not travel through mosquitos and ticks.";
+        covidFacts[5] = "There have been 160 million cases of COIVD-19\n" +
+                        "reported worldwide as of May, 2021.";
+        covidFacts[6] = "COVID-19 has a mortality rate of roughly 3%,\n" +
+                        "while Influenza(The Flu) sits at around 0.1%!";
+        covidFacts[7] = "COVID-19 can cause you to temporarily lose\n" +
+                        "your sense of smell!";
+        covidFacts[8] = "Some common symptoms of COVID-19 are:\n" +
+                        "fever, cough, shortness of breath, and headaches.";
+        covidFacts[9] = "If you are having a lot of trouble breathing or are\n" +
+                        "experiencing chest pain, you should seek medical care.";
     }
-    */
+
 }

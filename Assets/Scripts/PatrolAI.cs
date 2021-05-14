@@ -43,6 +43,7 @@ public class PatrolAI : MonoBehaviour
 
     [SerializeField] private float timeLastAttacked;
 
+    [SerializeField] private string[] covidFacts;
     #endregion
 
     void Start()
@@ -62,6 +63,8 @@ public class PatrolAI : MonoBehaviour
         hasStopped = false;
         agent.speed = speed;
         agent.acceleration = acceleration;
+
+        covidFactGenerator();
     }
 
     void Update()
@@ -150,7 +153,7 @@ public class PatrolAI : MonoBehaviour
                 Mathf.Abs(transform.position.z - currentPointPosition.z) < .1;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         //need to account for when the player is not attacking
         //if (playerObj.isAttacking()) { health.Damage(playerDamage); }
@@ -173,13 +176,34 @@ public class PatrolAI : MonoBehaviour
         points[2] = point2;
     }
 
-    /*
-     * this was before the player handled damaging enemies
-    public void takeDamage(int damage)
+    void covidFactGenerator()
     {
-        patrolHealth.Damage(damage);
-        healthBar.fillAmount = (float)patrolHealth.GetHealth() / maxHealth;
-        Debug.Log(patrolHealth.GetHealth() + " / " + maxHealth);
+        /*
+         * Sources:
+         * https://www.goodrx.com/blog/how-the-immune-system-fights-covid-19/
+         * https://www.nebraskamed.com/COVID/what-the-coronavirus-does-to-your-body#:~:text=As%20the%20body%20tries%20to,can%20lead%20to%20pneumonia.
+         */
+
+        covidFacts[0] = "As your body tries to fight an infection, your immune\n" +
+                        "system can cause inflamation which leads to your symptoms.";
+        covidFacts[1] = "Viruses spread through your body by making copies\n" +
+                        "of themselves.";
+        covidFacts[2] = "The immune system is comprised of 2 parts:\n" +
+                        "The Innate Immune System and The Adaptive Immune System.";
+        covidFacts[3] = "The Innate Immune System is your first line of defense\n" +
+                        "against viruses. It provides a general defense against invaders.";
+        covidFacts[4] = "The Adaptive Immune System develops antibodies and white blood\n" +
+                        "cells (that's you!) to both fight and remember the virus.";
+        covidFacts[5] = "White blood cells (that's you!) create antibodies which bind\n" +
+                        "to the virus and aid in destroying it.";
+        covidFacts[6] = "Some white blood cells (that's you!) are stored as memory of the\n" +
+                        "virus so that the body can fight it better in the future.";
+        covidFacts[7] = "Vaccines stimulate your body to create long lasting memory cells.\n" +
+                        "These cells help your body fight off future infections much better.";
+        covidFacts[8] = "Severe symptoms from COVID-19 are often the result of an out of sync\n" +
+                        "immune system. Your body inflames to fight, but never destroys the virus.";
+        covidFacts[9] = "There are ways to boost your immune system! For example:\n" +
+                        "Getting proper sleep, a healthy diet, and exercise.";
     }
-    */
+
 }
