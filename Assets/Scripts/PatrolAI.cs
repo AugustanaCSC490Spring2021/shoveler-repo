@@ -16,6 +16,8 @@ public class PatrolAI : MonoBehaviour
     [SerializeField] private GameObject playerObj;
     [SerializeField] private Vector3 playerPos;
 
+    [SerializeField] private Canvas messageCanvas;
+
     [SerializeField] private float radius;
     [SerializeField] private float speed;
     [SerializeField] private float acceleration;
@@ -73,12 +75,19 @@ public class PatrolAI : MonoBehaviour
 
         if (patrolHealth.GetHealth() <= 0)
         {
-            //temporary line to simply delete the enemy when it is killed.
+            //display covid factoid for period of time and then delete the enemy
+            Canvas newMessage = Instantiate(messageCanvas);
+            newMessage.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 4, this.transform.position.z);
+            newMessage.transform.eulerAngles = new Vector3(30, 0, 0);
+            newMessage.GetComponent<MessageManager>().SetEnemyType(2);
+
+            int randomFact = Random.Range(0, 9);
+            newMessage.GetComponentInChildren<Text>().text = covidFacts[randomFact];
+
+            agent.SetDestination(new Vector3(0, -5, 0));
+            this.transform.position = new Vector3(0, -5, 0);
+
             Destroy(gameObject);
-
-            //to-do add some way to broadcast the death of this enemy so that
-            //we might open the doors upon there being no enemies left
-
         }
 
         playerPos = playerObj.transform.position;
@@ -184,25 +193,27 @@ public class PatrolAI : MonoBehaviour
          * https://www.nebraskamed.com/COVID/what-the-coronavirus-does-to-your-body#:~:text=As%20the%20body%20tries%20to,can%20lead%20to%20pneumonia.
          */
 
-        covidFacts[0] = "As your body tries to fight an infection, your immune\n" +
+        covidFacts = new string[9];
+
+        covidFacts[0] = "As your body tries to fight an infection, your immune " +
                         "system can cause inflamation which leads to your symptoms.";
-        covidFacts[1] = "Viruses spread through your body by making copies\n" +
+        covidFacts[1] = "Viruses spread through your body by making copies " +
                         "of themselves.";
-        covidFacts[2] = "The immune system is comprised of 2 parts:\n" +
+        covidFacts[2] = "The immune system is comprised of 2 parts: " +
                         "The Innate Immune System and The Adaptive Immune System.";
-        covidFacts[3] = "The Innate Immune System is your first line of defense\n" +
+        covidFacts[3] = "The Innate Immune System is your first line of defense " +
                         "against viruses. It provides a general defense against invaders.";
-        covidFacts[4] = "The Adaptive Immune System develops antibodies and white blood\n" +
+        covidFacts[4] = "The Adaptive Immune System develops antibodies and white blood " +
                         "cells (that's you!) to both fight and remember the virus.";
-        covidFacts[5] = "White blood cells (that's you!) create antibodies which bind\n" +
+        covidFacts[5] = "White blood cells (that's you!) create antibodies which bind " +
                         "to the virus and aid in destroying it.";
-        covidFacts[6] = "Some white blood cells (that's you!) are stored as memory of the\n" +
+        covidFacts[6] = "Some white blood cells (that's you!) are stored as memory of the " +
                         "virus so that the body can fight it better in the future.";
-        covidFacts[7] = "Vaccines stimulate your body to create long lasting memory cells.\n" +
+        covidFacts[7] = "Vaccines stimulate your body to create long lasting memory cells. " +
                         "These cells help your body fight off future infections much better.";
-        covidFacts[8] = "Severe symptoms from COVID-19 are often the result of an out of sync\n" +
+        covidFacts[8] = "Severe symptoms from COVID-19 are often the result of an out of sync " +
                         "immune system. Your body inflames to fight, but never destroys the virus.";
-        covidFacts[9] = "There are ways to boost your immune system! For example:\n" +
+        covidFacts[9] = "There are ways to boost your immune system! For example: " +
                         "Getting proper sleep, a healthy diet, and exercise.";
     }
 

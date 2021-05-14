@@ -112,6 +112,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerObj: {fileID: 0}
   agent: {fileID: 0}
+  messageCanvas: {fileID: 3658236380218514318, guid: 9087eae215698cd4bbe00a7efb7340ca,
+    type: 3}
   playerPos: {x: 0, y: 0, z: 0}
   speed: 1
   acceleration: 10

@@ -360,6 +360,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerObj: {fileID: 0}
   playerPos: {x: 0, y: 0, z: 0}
+  messageCanvas: {fileID: 3658236380218514318, guid: 9087eae215698cd4bbe00a7efb7340ca,
+    type: 3}
   radius: 5
   speed: 5
   acceleration: 10
@@ -381,6 +383,7 @@ MonoBehaviour:
   attackSpeedInSeconds: 0.5
   healthBar: {fileID: 5378050805438255654}
   timeLastAttacked: 0
+  covidFacts: []
 --- !u!114 &2307890255446733348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -393,6 +396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18d87d1b67d6f7e4da04909cf0195862, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthBar: {fileID: 0}
 --- !u!195 &6705146009343424099
 NavMeshAgent:
   m_ObjectHideFlags: 0

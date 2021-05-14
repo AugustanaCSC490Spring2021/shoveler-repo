@@ -260,9 +260,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerObj: {fileID: 0}
+  messageCanvas: {fileID: 3658236380218514318, guid: 9087eae215698cd4bbe00a7efb7340ca,
+    type: 3}
   playerPos: {x: 0, y: 0, z: 0}
-  speed: 10
-  acceleration: 5
+  speed: 8
+  acceleration: 4
   chasingPlayer: 0
   radius: 8
   agent: {fileID: 0}
@@ -274,6 +276,7 @@ MonoBehaviour:
   healthBar: {fileID: 8560573928806229420}
   attackSpeedInSeconds: 0.5
   timeLastAttacked: 0
+  covidFacts: []
 --- !u!114 &8686605885479204657
 MonoBehaviour:
   m_ObjectHideFlags: 0

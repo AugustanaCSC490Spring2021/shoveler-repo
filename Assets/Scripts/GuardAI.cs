@@ -10,6 +10,8 @@ public class GuardAI : MonoBehaviour
     #region variables
 
     [SerializeField] private GameObject playerObj;
+    [SerializeField] private Canvas messageCanvas;
+
     [SerializeField] private Vector3 playerPos;
     [SerializeField] private float speed;
     [SerializeField] private float acceleration;
@@ -63,11 +65,19 @@ public class GuardAI : MonoBehaviour
 
         if (guardHealth.GetHealth() <= 0)
         {
-            //temporary line to simply delete the enemy when it is killed.
-            Destroy(gameObject);
+            //display covid factoid for period of time and then delete the enemy
+            Canvas newMessage = Instantiate(messageCanvas);
+            newMessage.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 4, this.transform.position.z);
+            newMessage.transform.eulerAngles = new Vector3(30, 0, 0);
+            newMessage.GetComponent<MessageManager>().SetEnemyType(1);
 
-            //to-do add some way to broadcast the death of this enemy so that
-            //we might open the doors upon there being no enemies left
+            int randomFact = Random.Range(0, 9);
+            newMessage.GetComponentInChildren<Text>().text = covidFacts[randomFact];
+
+            agent.SetDestination(new Vector3(0, -5, 0));
+            this.transform.position = new Vector3(0, -5, 0);
+
+            Destroy(gameObject);
 
         }
 
@@ -120,25 +130,27 @@ public class GuardAI : MonoBehaviour
          * https://www.cdc.gov/coronavirus/2019-ncov/prevent-getting-sick/prevention.html
          */
 
-        covidFacts[0] = "To slow the spread of COVID-19, you should wear\n" +
+        covidFacts = new string[9];
+
+        covidFacts[0] = "To slow the spread of COVID-19, you should wear " +
                         "a mask if you are around other people.";
-        covidFacts[1] = "Even when wearing a mask, you should continue to\n" +
+        covidFacts[1] = "Even when wearing a mask, you should continue to " +
                         "socially distance (at least 6ft!).";
-        covidFacts[2] = "There are several vaccines available for COVID-19.\n" +
+        covidFacts[2] = "There are several vaccines available for COVID-19. " +
                         "Getting the vaccine will help you fight off the virus!";
-        covidFacts[3] = "It is good to wash your hands with soap and water as\n" +
+        covidFacts[3] = "It is good to wash your hands with soap and water as " +
                         "often as possible. Bring hand sanitizer when going out!";
-        covidFacts[4] = "If you must be around others, it is better to be\n" +
+        covidFacts[4] = "If you must be around others, it is better to be " +
                         "outside, and in well ventilated spaces.";
-        covidFacts[5] = "If you have to cough or sneeze, don't lower you mask!\n" +
+        covidFacts[5] = "If you have to cough or sneeze, don't lower you mask! " +
                         "Just change into a clean mask as soon as possible.";
-        covidFacts[6] = "You should clean and disinfect high touch surfaces daily.\n" +
+        covidFacts[6] = "You should clean and disinfect high touch surfaces daily. " +
                         "This includes doorknobs, phones, keyboards, and many others.";
-        covidFacts[7] = "Be on the lookout for symptoms! Don't brush potential\n" +
+        covidFacts[7] = "Be on the lookout for symptoms! Don't brush potential " +
                         "symptoms aside, and take your tempeartue if you feel unwell.";
-        covidFacts[8] = "If you test positive for COVID-19, you should self\n" +
+        covidFacts[8] = "If you test positive for COVID-19, you should self " +
                         "quarantine as soon as possible.";
-        covidFacts[9] = "If you have been exposed to COVID-19, you should self\n" +
+        covidFacts[9] = "If you have been exposed to COVID-19, you should self " +
                         "quarantine for 14 days, and be on the lookout for symptoms.";
     }
 
