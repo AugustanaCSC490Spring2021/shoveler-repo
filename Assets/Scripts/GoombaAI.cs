@@ -12,6 +12,7 @@ public class GoombaAI : MonoBehaviour
     [SerializeField] private GameObject playerObj;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Canvas messageCanvas;
+    [SerializeField] private RoomManager myRoomManager;
 
     [SerializeField] private Vector3 playerPos;
     [SerializeField] private float speed;
@@ -61,6 +62,8 @@ public class GoombaAI : MonoBehaviour
 
         if (goombaHealth.GetHealth() <= 0)
         {
+            myRoomManager.removeDeadEnemy(gameObject);
+
             //display covid factoid for period of time and then delete the enemy
             Canvas newMessage = Instantiate(messageCanvas);
             newMessage.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 4, this.transform.position.z);
@@ -137,6 +140,11 @@ public class GoombaAI : MonoBehaviour
                         "fever, cough, shortness of breath, and headaches.";
         covidFacts[9] = "If you are having a lot of trouble breathing or are " +
                         "experiencing chest pain, you should seek medical care.";
+    }
+
+    public void setRoomManager(RoomManager roomManager)
+    {
+        myRoomManager = roomManager;
     }
 
 }

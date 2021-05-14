@@ -17,6 +17,7 @@ public class PatrolAI : MonoBehaviour
     [SerializeField] private Vector3 playerPos;
 
     [SerializeField] private Canvas messageCanvas;
+    [SerializeField] private RoomManager myRoomManager;
 
     [SerializeField] private float radius;
     [SerializeField] private float speed;
@@ -75,6 +76,8 @@ public class PatrolAI : MonoBehaviour
 
         if (patrolHealth.GetHealth() <= 0)
         {
+            myRoomManager.removeDeadEnemy(gameObject);
+
             //display covid factoid for period of time and then delete the enemy
             Canvas newMessage = Instantiate(messageCanvas);
             newMessage.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 4, this.transform.position.z);
@@ -215,6 +218,11 @@ public class PatrolAI : MonoBehaviour
                         "immune system. Your body inflames to fight, but never destroys the virus.";
         covidFacts[9] = "There are ways to boost your immune system! For example: " +
                         "Getting proper sleep, a healthy diet, and exercise.";
+    }
+
+    public void setRoomManager(RoomManager roomManager)
+    {
+        myRoomManager = roomManager;
     }
 
 }

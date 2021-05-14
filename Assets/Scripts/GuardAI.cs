@@ -11,6 +11,7 @@ public class GuardAI : MonoBehaviour
 
     [SerializeField] private GameObject playerObj;
     [SerializeField] private Canvas messageCanvas;
+    [SerializeField] private RoomManager myRoomManager;
 
     [SerializeField] private Vector3 playerPos;
     [SerializeField] private float speed;
@@ -65,6 +66,8 @@ public class GuardAI : MonoBehaviour
 
         if (guardHealth.GetHealth() <= 0)
         {
+            myRoomManager.removeDeadEnemy(gameObject);
+
             //display covid factoid for period of time and then delete the enemy
             Canvas newMessage = Instantiate(messageCanvas);
             newMessage.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 4, this.transform.position.z);
@@ -152,6 +155,11 @@ public class GuardAI : MonoBehaviour
                         "quarantine as soon as possible.";
         covidFacts[9] = "If you have been exposed to COVID-19, you should self " +
                         "quarantine for 14 days, and be on the lookout for symptoms.";
+    }
+
+    public void setRoomManager(RoomManager roomManager)
+    {
+        myRoomManager = roomManager;
     }
 
 }
