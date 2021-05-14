@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using UnityEngine.SceneManagement;
 
 public class ClientScript : MonoBehaviour
 {
@@ -21,17 +22,21 @@ public class ClientScript : MonoBehaviour
 
     private void Start()
     {
-        CreateLobby("ServerMan");
+        if (bool.Parse(PlayerPrefs.GetString("isHost")))
+        {
+            StartGame("TEMPROOMCODE");
+        }else
+        {
+            ConnectToLobby(PlayerPrefs.GetString("name"), PlayerPrefs.GetString("roomCode"));
+        }
 
+
+        /*CreateLobby("ServerMan");
         StartGame("TEMPROOMCODE");
-
         ConnectToLobby("ClientMan", "TEMPROOMCODE");
-
         StartGame("TEMPROOMCODE");
-
         SendScore("ServerMan", true, profile.id, 999, 99999, "TEMPROOMCODE");
-
-        SendScore("ClientMan", false, profile.id, 420, 1337, "TEMPROOMCODE");
+        SendScore("ClientMan", false, profile.id, 420, 1337, "TEMPROOMCODE");*/
 
     }
 
@@ -69,14 +74,20 @@ public class ClientScript : MonoBehaviour
         String serverResponse = SendServerMessage(Message);
         JObject serverJSONResponse = JObject.Parse(serverResponse);
 
-        Profile profile = new Profile
+        if(serverJSONResponse.GetValue("response").ToString() == "Missing")
         {
-            id = long.Parse(serverJSONResponse.GetValue("id").ToString()),
-            name = name,
-            isHost = true,
-            seed = int.Parse(serverJSONResponse.GetValue("seed").ToString()),
-            roomCode = roomCode
-        };
+            SceneManager.LoadScene("Lobby");
+        }else
+        {
+            Profile profile = new Profile
+            {
+                id = long.Parse(serverJSONResponse.GetValue("id").ToString()),
+                name = name,
+                isHost = true,
+                seed = int.Parse(serverJSONResponse.GetValue("seed").ToString()),
+                roomCode = roomCode
+            };
+        }
 
         //Debug.Log(profile.seed);
         //Debug.Log(profile.roomCode);
@@ -99,7 +110,8 @@ public class ClientScript : MonoBehaviour
             stupidFix2(Message);
         }else
         {
-            // TODO: Load level and start game
+            GameObject.Find("DungeonManager").GetComponent<DungeonManager>().beginDungeonGeneration(profile.seed, 3);
+
         }
     }
 
@@ -169,7 +181,7 @@ public class ClientScript : MonoBehaviour
 
     public static String SendServerMessage(String toSend)
     {
-        IPEndPoint serverAddress = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 25566);
+        IPEndPoint serverAddress = new IPEndPoint(IPAddress.Parse("173.30.84.123"), 25566);
 
         Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         clientSocket.Connect(serverAddress);
