@@ -33,7 +33,6 @@ public class DungeonManager : MonoBehaviour
 
     private void Start()
     {
-        beginDungeonGeneration(1031, 1);
     }
     // Update is called once per frame
     void Update()
