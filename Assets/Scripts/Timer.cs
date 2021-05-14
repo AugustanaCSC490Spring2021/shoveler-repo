@@ -29,7 +29,7 @@ public class Timer : MonoBehaviour
         return start;
     }
 
-    public void setTimer() {
-        start = 0;
+    public void setTimer(float min) {
+        start = min;
     }
 }
