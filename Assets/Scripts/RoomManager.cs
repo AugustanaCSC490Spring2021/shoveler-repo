@@ -34,7 +34,7 @@ public class RoomManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -69,11 +69,10 @@ public class RoomManager : MonoBehaviour
 
     public void chooseWallPreset()
     {
-        int whichPreset = Random.Range(-3, insideWallPresets.Length);
+        int whichPreset = Random.Range(-5, insideWallPresets.Length);
         if (whichPreset >= 0)
              insideWallPresets[whichPreset].SetActive(true);
     }
-
 
 
 

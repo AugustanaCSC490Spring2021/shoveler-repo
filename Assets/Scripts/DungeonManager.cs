@@ -5,6 +5,9 @@ using UnityEngine;
 public class DungeonManager : MonoBehaviour
 {
 
+
+    private bool startDunGen;
+
     [SerializeField]
     private int maxRooms;
     private int numRooms = 1;
@@ -17,7 +20,6 @@ public class DungeonManager : MonoBehaviour
     [SerializeField]
     private List<GameObject> rooms;
 
-
     [SerializeField]
     private int seed;
 
@@ -25,14 +27,14 @@ public class DungeonManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        Random.InitState(seed);
-        GameObject temp = Instantiate(roomPrefab, new Vector3(0, 0, 0), roomPrefab.transform.rotation);
-        temp.name = "EntryRoom";
-        temp.GetComponent<RoomManager>().enableEntryRoomIndicator();
-        rooms.Add(temp);
+        startDunGen = false;
 
     }
 
+    private void Start()
+    {
+        beginDungeonGeneration(1031, 1);
+    }
     // Update is called once per frame
     void Update()
     {
@@ -41,7 +43,8 @@ public class DungeonManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        creatingDungeon();
+        if (startDunGen)
+            creatingDungeon();
     }
 
     /// <summary>
@@ -67,6 +70,7 @@ public class DungeonManager : MonoBehaviour
                 Destroy(temp);
             }
             rooms[rooms.Count - 1].GetComponent<RoomManager>().enableExitRoomIndicator();
+            startDunGen = false;
         }
 
     }
@@ -87,6 +91,29 @@ public class DungeonManager : MonoBehaviour
         numRooms++;
         rooms.Add(temp);
 
+
+    }
+
+
+    /// <summary>
+    /// Allows the dungeon generator to beign generating the dungeon, setting the max rooms based on what level the player is on,
+    /// and setting the seed to a given seed
+    /// </summary>
+    /// <param name="seed"></param>
+    /// <param name="level"></param>
+    public void beginDungeonGeneration(int seed, int level)
+    {
+        startDunGen = true;
+        this.seed = seed;
+        Random.InitState(seed);
+        maxRooms = level * 3 + 5;
+        if (maxRooms > 20)
+            maxRooms = 20;
+
+        GameObject temp = Instantiate(roomPrefab, new Vector3(0, 0, 0), roomPrefab.transform.rotation);
+        temp.name = "EntryRoom";
+        temp.GetComponent<RoomManager>().enableEntryRoomIndicator();
+        rooms.Add(temp);
 
     }
 
