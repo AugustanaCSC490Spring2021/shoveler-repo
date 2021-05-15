@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tempo : MonoBehaviour
+public class HealthSpeedPack : MonoBehaviour
 {
 
     private GameObject playerObject;

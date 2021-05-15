@@ -21,7 +21,7 @@ public class Timer : MonoBehaviour
         start += Time.deltaTime;
         string minutes = ((int)start / 60).ToString();
         string seconds = (start % 60).ToString("f0");
-        timerText.text = minutes + "\n"+ seconds;
+        timerText.text = "Time" + "\n" + minutes + ":"+ seconds;
         
     }
 
