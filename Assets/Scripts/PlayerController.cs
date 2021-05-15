@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,15 +14,16 @@ public class PlayerController : MonoBehaviour
     private bool canMelee = true;
     private float meleeTimer = 0;
     private bool canShoot = false;
+    private bool canMove = true;
 
     public GameObject bullet;
     public GameObject projectileSpawn;
+    public TMP_Text roomCodeDisplay;
 
     private Camera camera;
     private Rigidbody rb;
     private SphereCollider meleeCollider;
     private Animator animator;
-
 
     private void Awake()
     {
@@ -39,6 +41,15 @@ public class PlayerController : MonoBehaviour
         camera.transform.SetParent(null);
 
         animator = this.GetComponentInChildren<Animator>();
+    }
+
+    private void Start()
+    {
+        string roomCode = PlayerPrefs.GetString("roomCode");
+        if (roomCode != "")
+        {
+            roomCodeDisplay.text = "Give this to your partner: " + roomCode;
+        }
     }
 
     private void OnEnable()
@@ -66,7 +77,10 @@ public class PlayerController : MonoBehaviour
         currentPos.x += xinput;
 
         // Move player to desired position
-        this.transform.position = currentPos;
+        if (canMove)
+        {
+            this.transform.position = currentPos;
+        }
 
         // Update currentPos to reposition camera as well
         currentPos.y += 9;
@@ -82,6 +96,12 @@ public class PlayerController : MonoBehaviour
 
         // Disable melee after 100 milliseconds
         if (meleeTimer < Time.time * 1000) meleeCollider.enabled = false;
+
+        string roomCode = PlayerPrefs.GetString("roomCode");
+        if (roomCode == "")
+        {
+            roomCodeDisplay.text = "";
+        }
     }
 
     void Fire()
@@ -147,6 +167,19 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             collision.gameObject.GetComponent<Health>().Damage(20);
+        }
+    }
+
+    public void setMove(bool shouldMove)
+    {
+        if(shouldMove)
+        {
+            rb.useGravity = true;
+            canMove = true;
+        }else
+        {
+            rb.useGravity = false;
+            canMove = false;
         }
     }
 }

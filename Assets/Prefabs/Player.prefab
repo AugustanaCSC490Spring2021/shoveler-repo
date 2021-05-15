@@ -199,6 +199,7 @@ MonoBehaviour:
   fireRate: 5
   bullet: {fileID: 7963739882701601418, guid: 95092e206cbd23447b794c9be14ffc6e, type: 3}
   projectileSpawn: {fileID: 4251481816986151498}
+  roomCodeDisplay: {fileID: 7549610062414179518}
 --- !u!114 &8529208481643496553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,7 +212,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18d87d1b67d6f7e4da04909cf0195862, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 0}
 --- !u!135 &1750474865
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -505,6 +505,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 20320899501880638}
     m_Modifications:
+    - target: {fileID: 456456865349010352, guid: 6c1daeb326cff5c4ca9a96839d5c7402,
+        type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8689107483497921858, guid: 6c1daeb326cff5c4ca9a96839d5c7402,
         type: 3}
       propertyPath: m_Name
@@ -653,5 +658,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7549610062414179518 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 456456865349010352, guid: 6c1daeb326cff5c4ca9a96839d5c7402,
+    type: 3}
+  m_PrefabInstance: {fileID: 7966924107575193358}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

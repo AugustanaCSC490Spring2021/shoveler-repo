@@ -13,6 +13,7 @@ public class LobbyUI : MonoBehaviour
     public TMP_InputField nameJoin;
     public TMP_InputField roomCode;
     public TMP_InputField nameCreate;
+    public TMP_InputField roomSeed;
 
     public void ChangeToJoin()
     {
@@ -38,6 +39,7 @@ public class LobbyUI : MonoBehaviour
     {
         PlayerPrefs.SetString("name", nameJoin.text);
         PlayerPrefs.SetString("isHost", "true");
+        PlayerPrefs.SetString("seed", roomSeed.text);
         SceneManager.LoadScene("GameStart");
     }
 }

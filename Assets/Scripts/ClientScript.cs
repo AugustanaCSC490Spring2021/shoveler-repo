@@ -13,6 +13,7 @@ using UnityEngine.SceneManagement;
 public class ClientScript : MonoBehaviour
 {
     GameObject PlayerObject;
+    PlayerController playerController;
 
     Profile profile;
     bool finished = false;
@@ -22,14 +23,14 @@ public class ClientScript : MonoBehaviour
     long personalTime = 0;
     long personalScore = 0;
 
-    private void Start()
+    private void Awake()
     {
         PlayerObject = GameObject.FindGameObjectWithTag("Player");
-        PlayerObject.SetActive(false);
+        playerController = PlayerObject.GetComponent<PlayerController>();
 
         if (bool.Parse(PlayerPrefs.GetString("isHost")))
         {
-            CreateLobby(PlayerPrefs.GetString("name"));
+            CreateLobby( PlayerPrefs.GetString("name"), int.Parse(PlayerPrefs.GetString("seed")) );
         }else
         {
             ConnectToLobby(PlayerPrefs.GetString("name"), PlayerPrefs.GetString("roomCode"));
@@ -65,6 +66,9 @@ public class ClientScript : MonoBehaviour
             roomCode = serverJSONResponse.GetValue("roomCode").ToString()
         };
 
+        PlayerPrefs.SetString("roomCode", profile.roomCode);
+
+        playerController.setMove(false);
         StartGame(profile.roomCode);
 
         //Debug.Log(profile.roomCode);
@@ -95,6 +99,7 @@ public class ClientScript : MonoBehaviour
                 roomCode = roomCode
             };
 
+            playerController.setMove(false);
             StartGame(profile.roomCode);
         }
 
@@ -120,7 +125,9 @@ public class ClientScript : MonoBehaviour
         }else
         {
             GameObject.Find("DungeonManager").GetComponent<DungeonManager>().beginDungeonGeneration(profile.seed, 3);
-            PlayerObject.SetActive(true);
+            PlayerPrefs.SetString("roomCode", "");
+            playerController.setMove(true);
+            Debug.Log(int.Parse(PlayerPrefs.GetString("seed")));
         }
     }
 
@@ -140,7 +147,9 @@ public class ClientScript : MonoBehaviour
         {
             // TODO: Load level and start game 
             GameObject.Find("DungeonManager").GetComponent<DungeonManager>().beginDungeonGeneration(profile.seed, 3);
-            PlayerObject.SetActive(true);
+            PlayerPrefs.SetString("roomCode", "");
+            playerController.setMove(true);
+            Debug.Log(int.Parse(PlayerPrefs.GetString("seed")));
         }
     }
 
@@ -192,6 +201,7 @@ public class ClientScript : MonoBehaviour
 
     public static String SendServerMessage(String toSend)
     {
+        // Google VM 34.121.188.103
         IPEndPoint serverAddress = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 25566);
 
         Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
