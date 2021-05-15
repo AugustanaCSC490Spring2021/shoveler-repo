@@ -3707,7 +3707,7 @@ GameObject:
   - component: {fileID: 2604689119101470867}
   - component: {fileID: 2604689119101470864}
   - component: {fileID: 5349968721417370488}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Collider
   m_TagString: RoomCollider
   m_Icon: {fileID: 0}

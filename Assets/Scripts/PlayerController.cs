@@ -148,17 +148,19 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         Ray ray = camera.ScreenPointToRay(firingPosition);
 
-        int layerMask1 = 1 << 8;
-        int layerMask2 = 1 << 9;
+        int layerMask1 = 1 << 2;
+        int layerMask2 = 1 << 8;
+        int layerMask3 = 1 << 9;
 
-        layerMask1 = layerMask1;
-        layerMask2 = layerMask2;
+        //layerMask1 = layerMask1;
+        //layerMask2 = layerMask2;
 
-        int finalMask = layerMask1 | layerMask2;
+        int finalMask = layerMask1 | layerMask2 | layerMask3;
         finalMask = ~finalMask;
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, finalMask))
         {
+            //Debug.Log(hit.collider.);
             hit.point = new Vector3(hit.point.x,
                                     this.transform.position.y,
                                     hit.point.z
