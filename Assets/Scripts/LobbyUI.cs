@@ -37,7 +37,7 @@ public class LobbyUI : MonoBehaviour
 
     public void StartNewLobby()
     {
-        PlayerPrefs.SetString("name", nameJoin.text);
+        PlayerPrefs.SetString("name", nameCreate.text);
         PlayerPrefs.SetString("isHost", "true");
         PlayerPrefs.SetString("seed", roomSeed.text);
         SceneManager.LoadScene("GameStart");

@@ -30,6 +30,16 @@ public class ClientScript : MonoBehaviour
 
         if (bool.Parse(PlayerPrefs.GetString("isHost")))
         {
+            String seed = PlayerPrefs.GetString("seed");
+
+            if(seed == "")
+            {
+                CreateLobby( PlayerPrefs.GetString("name") );
+            }else
+            {
+                CreateLobby( PlayerPrefs.GetString("name"), int.Parse(PlayerPrefs.GetString("seed")) );
+            }
+
             CreateLobby( PlayerPrefs.GetString("name"), int.Parse(PlayerPrefs.GetString("seed")) );
         }else
         {
