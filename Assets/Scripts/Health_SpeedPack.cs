@@ -17,6 +17,7 @@ public class Tempo : MonoBehaviour
     private void OnTriggerEnter(Collider collision)
     {
         Healing(collision);
+        speedBoost(collision);
     }
 
     private void OnTriggerExit(Collider collision) {
@@ -38,7 +39,8 @@ public class Tempo : MonoBehaviour
         }
     }
 
-    private void HealthBoost(Collider collision) {
+    private void speedBoost(Collider collision) {
+        Debug.Log(collision.gameObject.GetComponent<PlayerController>().playerSpeed);
         if (collision.gameObject.tag == "Player") {
             playerMovement = collision.gameObject.GetComponent<PlayerController>();
             playerMovement.playerSpeed += speedBoostAmount;

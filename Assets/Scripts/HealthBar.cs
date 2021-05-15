@@ -8,7 +8,6 @@ public class HealthBar : MonoBehaviour
     public Gradient gradient;
     public Slider slider;
     private Image healthBarFI;
-    int health = 100;
 
     private GameObject playerObject;
     private Health playerHealthScript;
