@@ -39,8 +39,6 @@ public class ClientScript : MonoBehaviour
             {
                 CreateLobby( PlayerPrefs.GetString("name"), int.Parse(PlayerPrefs.GetString("seed")) );
             }
-
-            CreateLobby( PlayerPrefs.GetString("name"), int.Parse(PlayerPrefs.GetString("seed")) );
         }else
         {
             ConnectToLobby(PlayerPrefs.GetString("name"), PlayerPrefs.GetString("roomCode"));

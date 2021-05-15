@@ -35,11 +35,23 @@ public class LobbyUI : MonoBehaviour
         SceneManager.LoadScene("GameStart");
     }
 
+    public void JoinLobbyBack()
+    {
+        Decision.SetActive(true);
+        JoinLobbyObject.SetActive(false);
+    }
+
     public void StartNewLobby()
     {
         PlayerPrefs.SetString("name", nameCreate.text);
         PlayerPrefs.SetString("isHost", "true");
         PlayerPrefs.SetString("seed", roomSeed.text);
         SceneManager.LoadScene("GameStart");
+    }
+
+    public void StartNewLobbyBack()
+    {
+        Decision.SetActive(true);
+        CreateLobby.SetActive(false);
     }
 }
