@@ -6,7 +6,9 @@ public class RoomManager : MonoBehaviour
 {
 
     [SerializeField]
-    private GameObject[] doors;
+    private GameObject[] openDoors;
+    [SerializeField]
+    private GameObject[] lockedDoors;
     [SerializeField]
     private GameObject[] walls;
     [SerializeField]
@@ -21,17 +23,18 @@ public class RoomManager : MonoBehaviour
     private GameObject[] enemySpawnPoints;
     [SerializeField]
     private List<GameObject> enemies;
-
-    //
+    private bool roomCleared;
     private bool playerInRoom; 
 
     private void Awake()
     {
+        playerInRoom = false;
+        roomCleared = false;
         for (int i = 0; i < spawnpoints.Count; i++)
         {
             GameObject.Find("DungeonManager").GetComponent<DungeonManager>().spawnpointsList.Add(spawnpoints[i]);
         }
-        playerInRoom = false;
+        
     }
 
 
@@ -44,17 +47,16 @@ public class RoomManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemiesAllDead())
+        if (enemiesAllDead() && playerInRoom)
         {
-            //to-do: open doors here
-
+            playerClearedRoom();
         }
     }
 
     //enables door facing in int direction, 0 for up, 1 for down, 2 for left, 3 for right
     public void enableDoor(int direction)
     {
-        doors[direction].SetActive(true);
+        openDoors[direction].SetActive(true);
         walls[direction].SetActive(false);
 
     }
@@ -101,6 +103,59 @@ public class RoomManager : MonoBehaviour
     public void removeDeadEnemy(GameObject enemy)
     {
         enemies.Remove(enemy);
+    }
+
+    public void playerEnteredRoom()
+    {
+        playerInRoom = true;
+        if (!roomCleared)
+        {
+            for (int i = 0; i < openDoors.Length; i++)
+            {
+                if (openDoors[i].activeInHierarchy)
+                {
+                    lockedDoors[i].SetActive(true);
+                    openDoors[i].SetActive(false);
+                }
+            }
+            spawnEnemies();
+        }
+    }
+
+    public void playerClearedRoom()
+    {
+        roomCleared = true;
+        for (int i = 0; i < lockedDoors.Length; i++)
+        {
+            if (lockedDoors[i].activeInHierarchy)
+            {
+                openDoors[i].SetActive(true);
+                lockedDoors[i].SetActive(false);
+            }
+        }
+    }
+
+
+
+
+
+    public bool getRoomCleared()
+    {
+        return roomCleared;
+    }
+
+    public void setRoomCleared(bool temp)
+    {
+        roomCleared = temp;
+    }
+
+    public bool getPlayerInRoom()
+    {
+        return playerInRoom;
+    }
+    public void setPlayerInRoom(bool temp)
+    {
+        playerInRoom = temp;
     }
 
 }

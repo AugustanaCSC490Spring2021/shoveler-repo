@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DungeonManager : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class DungeonManager : MonoBehaviour
     void Awake()
     {
         startDunGen = false;
-
+        beginDungeonGeneration(1004, 1);
     }
 
     private void Start()
@@ -70,6 +71,7 @@ public class DungeonManager : MonoBehaviour
             }
             rooms[rooms.Count - 1].GetComponent<RoomManager>().enableExitRoomIndicator();
             startDunGen = false;
+            rooms[0].GetComponent<NavMeshSurface>().BuildNavMesh();
         }
 
     }
@@ -112,6 +114,7 @@ public class DungeonManager : MonoBehaviour
         GameObject temp = Instantiate(roomPrefab, new Vector3(0, 0, 0), roomPrefab.transform.rotation);
         temp.name = "EntryRoom";
         temp.GetComponent<RoomManager>().enableEntryRoomIndicator();
+        temp.GetComponent<RoomManager>().setRoomCleared(true);
         rooms.Add(temp);
 
     }

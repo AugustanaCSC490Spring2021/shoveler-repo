@@ -32,20 +32,19 @@ public class EnemyManager : MonoBehaviour
         foreach (GameObject spawn in spawnPositions) 
         {
             random = Random.Range(1, 3);
-
             if (random == 1)
             {
                 //creates a goomba and passes it the room its in
-                enemies.Add(Instantiate(goomba, spawn.transform));
+                enemies.Add(Instantiate(goomba, spawn.transform.position, spawn.transform.rotation));
                 enemies[index].GetComponent<GoombaAI>().setRoomManager(roomManager);
             } else if (random == 2) {
                 //creates a guard and passes it the room its in
-                enemies.Add(Instantiate(guard, spawn.transform));
+                enemies.Add(Instantiate(guard, spawn.transform.position, spawn.transform.rotation));
                 enemies[index].GetComponent<GuardAI>().setRoomManager(roomManager);
             } else if (random == 3)
             {
                 //creates a patrol and passes it the room its in
-                enemies.Add(Instantiate(patrol, spawn.transform));
+                enemies.Add(Instantiate(patrol, spawn.transform.position,spawn.transform.rotation));
                 enemies[index].GetComponent<PatrolAI>().setRoomManager(roomManager);
 
                 //sets the patrol point of the patrol to be bewteen two spawn points
