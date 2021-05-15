@@ -23,7 +23,7 @@ public class ClientScript : MonoBehaviour
     long personalTime = 0;
     long personalScore = 0;
 
-    private void Awake()
+    private void Start()
     {
         PlayerObject = GameObject.FindGameObjectWithTag("Player");
         playerController = PlayerObject.GetComponent<PlayerController>();
