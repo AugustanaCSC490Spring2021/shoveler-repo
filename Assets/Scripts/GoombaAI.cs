@@ -11,6 +11,8 @@ public class GoombaAI : MonoBehaviour
 
     [SerializeField] private GameObject playerObj;
     [SerializeField] private NavMeshAgent agent;
+    [SerializeField] private Canvas messageCanvas;
+    [SerializeField] private RoomManager myRoomManager;
 
     [SerializeField] private Vector3 playerPos;
     [SerializeField] private float speed;
@@ -60,9 +62,19 @@ public class GoombaAI : MonoBehaviour
 
         if (goombaHealth.GetHealth() <= 0)
         {
-            gameObject.SetActive(false);
+            myRoomManager.removeDeadEnemy(gameObject);
 
-            //to do: display covid factoid for period of time and then delete the enemy
+            //display covid factoid for period of time and then delete the enemy
+            Canvas newMessage = Instantiate(messageCanvas);
+            newMessage.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 4, this.transform.position.z);
+            newMessage.transform.eulerAngles = new Vector3(30,0,0);
+            newMessage.GetComponent<MessageManager>().SetEnemyType(0);
+
+            int randomFact = Random.Range(0, 9);
+            newMessage.GetComponentInChildren<Text>().text = covidFacts[randomFact];
+
+            agent.SetDestination(new Vector3(0, -5, 0));
+            this.transform.position = new Vector3(0, -5, 0);
 
             Destroy(gameObject);
 
@@ -96,7 +108,7 @@ public class GoombaAI : MonoBehaviour
 
     }
 
-    void covidFactGenerator()
+    private void covidFactGenerator()
     {
 
         /*
@@ -106,26 +118,33 @@ public class GoombaAI : MonoBehaviour
          * https://www.cdc.gov/coronavirus/2019-ncov/symptoms-testing/symptoms.html
          */
 
-        covidFacts[0] = "COVID-19 spreads mainly through respiratory\n" +
+        covidFacts = new string[9];
+
+        covidFacts[0] = "COVID-19 spreads mainly through respiratory " +
                         "droplets produced from sneezes and coughs.";
-        covidFacts[1] = "COVID-19 is much more likely to spread when\n" +
+        covidFacts[1] = "COVID-19 is much more likely to spread when " +
                         "people are within 6ft of one another.";
-        covidFacts[2] = "COVID-19 spreads easily from person to person.\n" +
+        covidFacts[2] = "COVID-19 spreads easily from person to person. " +
                         "More so than Influenza, but less so than measles.";
-        covidFacts[3] = "Community spread can occur when several people\n" +
+        covidFacts[3] = "Community spread can occur when several people " +
                         "in an area are infected, and some are not sure how!";
-        covidFacts[4] = "COVID-19 spreads mainly from person to person.\n" +
+        covidFacts[4] = "COVID-19 spreads mainly from person to person. " +
                         "It does not travel through mosquitos and ticks.";
-        covidFacts[5] = "There have been 160 million cases of COIVD-19\n" +
+        covidFacts[5] = "There have been 160 million cases of COIVD-19 " +
                         "reported worldwide as of May, 2021.";
-        covidFacts[6] = "COVID-19 has a mortality rate of roughly 3%,\n" +
+        covidFacts[6] = "COVID-19 has a mortality rate of roughly 3%, " +
                         "while Influenza(The Flu) sits at around 0.1%!";
-        covidFacts[7] = "COVID-19 can cause you to temporarily lose\n" +
+        covidFacts[7] = "COVID-19 can cause you to temporarily lose " +
                         "your sense of smell!";
-        covidFacts[8] = "Some common symptoms of COVID-19 are:\n" +
+        covidFacts[8] = "Some common symptoms of COVID-19 are: " +
                         "fever, cough, shortness of breath, and headaches.";
-        covidFacts[9] = "If you are having a lot of trouble breathing or are\n" +
+        covidFacts[9] = "If you are having a lot of trouble breathing or are " +
                         "experiencing chest pain, you should seek medical care.";
+    }
+
+    public void setRoomManager(RoomManager roomManager)
+    {
+        myRoomManager = roomManager;
     }
 
 }

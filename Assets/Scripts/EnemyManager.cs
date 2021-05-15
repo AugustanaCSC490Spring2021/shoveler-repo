@@ -11,9 +11,6 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField] private List<GameObject> enemies;
 
-    //maybe we can use this to open the doors?
-    [SerializeField] private GameObject doors;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +23,7 @@ public class EnemyManager : MonoBehaviour
 
     }
 
-    public List<GameObject> generateEnemies(GameObject[] spawnPositions)
+    public List<GameObject> generateEnemies(GameObject[] spawnPositions, RoomManager roomManager)
     {
 
         int random;
@@ -38,15 +35,20 @@ public class EnemyManager : MonoBehaviour
 
             if (random == 1)
             {
-                //enemies[index] = Instantiate(goomba, spawn.transform);
+                //creates a goomba and passes it the room its in
                 enemies.Add(Instantiate(goomba, spawn.transform));
+                enemies[index].GetComponent<GoombaAI>().setRoomManager(roomManager);
             } else if (random == 2) {
-                //enemies[index] = Instantiate(guard, spawn.transform);
+                //creates a guard and passes it the room its in
                 enemies.Add(Instantiate(guard, spawn.transform));
+                enemies[index].GetComponent<GuardAI>().setRoomManager(roomManager);
             } else if (random == 3)
             {
-                //enemies[index] = Instantiate(patrol, spawn.transform);
+                //creates a patrol and passes it the room its in
                 enemies.Add(Instantiate(patrol, spawn.transform));
+                enemies[index].GetComponent<PatrolAI>().setRoomManager(roomManager);
+
+                //sets the patrol point of the patrol to be bewteen two spawn points
                 if (index == 0)
                 {
                     enemies[index].GetComponent<PatrolAI>().setPoints(enemies[index].transform, enemies[index + 1].transform);
