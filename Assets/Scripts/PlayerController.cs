@@ -45,11 +45,18 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        string roomCode = PlayerPrefs.GetString("roomCode");
-        if (roomCode != "")
+        if(GameObject.Find("MultiplayerManager") != null)
         {
-            roomCodeDisplay.text = "Give this to your partner: " + roomCode;
+            string roomCode = PlayerPrefs.GetString("roomCode");
+            if (roomCode != "")
+            {
+                roomCodeDisplay.text = "Give this to your partner: " + roomCode;
+            }
+        }else
+        {
+            PlayerPrefs.SetString("roomCode", "");
         }
+        
     }
 
     private void OnEnable()
