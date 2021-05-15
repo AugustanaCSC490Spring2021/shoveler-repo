@@ -102,6 +102,7 @@ public class ClientScript : MonoBehaviour
             {
                 id = long.Parse(serverJSONResponse.GetValue("id").ToString()),
                 name = name,
+                enemyName = serverJSONResponse.GetValue("enemyName").ToString(),
                 isHost = true,
                 seed = int.Parse(serverJSONResponse.GetValue("seed").ToString()),
                 roomCode = roomCode
@@ -126,16 +127,18 @@ public class ClientScript : MonoBehaviour
         String serverResponse = SendServerMessage(Message);
         JObject serverJSONResponse = JObject.Parse(serverResponse);
 
-        //
         if(serverJSONResponse.GetValue("response").ToString() == "No")
         {
             stupidFix2(Message);
         }else
         {
+            if (profile.isHost)
+            {
+                profile.enemyName = serverJSONResponse.GetValue("enemyName").ToString();
+            }
             GameObject.Find("DungeonManager").GetComponent<DungeonManager>().beginDungeonGeneration(profile.seed, 3);
             PlayerPrefs.SetString("roomCode", "");
             playerController.setMove(true);
-            Debug.Log(int.Parse(PlayerPrefs.GetString("seed")));
         }
     }
 
@@ -154,6 +157,10 @@ public class ClientScript : MonoBehaviour
         else
         {
             // TODO: Load level and start game 
+            if (profile.isHost)
+            {
+                profile.enemyName = serverJSONResponse.GetValue("enemyName").ToString();
+            }
             GameObject.Find("DungeonManager").GetComponent<DungeonManager>().beginDungeonGeneration(profile.seed, 3);
             PlayerPrefs.SetString("roomCode", "");
             playerController.setMove(true);
@@ -241,6 +248,7 @@ public class ClientScript : MonoBehaviour
     {
         public long id { get; set; }
         public String name { get; set; }
+        public String enemyName { get; set; }
         public bool isHost { get; set; }
         public int seed { get; set; }
         public String roomCode { get; set; }
