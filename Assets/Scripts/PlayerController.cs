@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     private GameObject doorCollider;
     private GameObject exitCollider;
     private DungeonManager dungeonManager;
+    private ClientScript clientScript;
 
     private void Awake()
     {
@@ -50,6 +51,9 @@ public class PlayerController : MonoBehaviour
         animator = this.GetComponentInChildren<Animator>();
 
         dungeonManager = GameObject.Find("DungeonManager").GetComponent<DungeonManager>();
+
+        clientScript = GameObject.Find("MultiplayerManager").GetComponentInChildren<ClientScript>();
+
     }
 
     private void Start()
@@ -117,6 +121,13 @@ public class PlayerController : MonoBehaviour
         if (roomCode == "")
         {
             roomCodeDisplay.text = "";
+        }
+
+        if(clientScript.finished)
+        {
+            Debug.Log("Results:");
+            Debug.Log(clientScript.enemyTime);
+            Debug.Log(clientScript.enemyScore);
         }
     }
 
@@ -232,9 +243,9 @@ public class PlayerController : MonoBehaviour
         if(exitCollider != null)
         {
             Timer timer = this.GetComponentInChildren<Timer>();
-            ClientScript clientScript = GameObject.Find("MultiplayerManager").GetComponent<ClientScript>();
-            Debug.Log(clientScript);
-            clientScript.SendScore(clientScript.profile, (long) timer.start, 1234);
+
+            Debug.Log(clientScript.profile.ToString());
+            clientScript.SendScore( (long) Time.time, 1234);
         }
     }
 
