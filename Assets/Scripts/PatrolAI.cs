@@ -141,7 +141,7 @@ public class PatrolAI : MonoBehaviour
     void changeCurrentPoint()
     {
 
-        Debug.Log(currentPointIndex + " Index " + points.Length + " Length");
+        //Debug.Log(currentPointIndex + " Index " + points.Length + " Length");
         //make sure we have not gone beyond the final point
         if (currentPointIndex < points.Length)
         {
@@ -196,7 +196,7 @@ public class PatrolAI : MonoBehaviour
          * https://www.nebraskamed.com/COVID/what-the-coronavirus-does-to-your-body#:~:text=As%20the%20body%20tries%20to,can%20lead%20to%20pneumonia.
          */
 
-        covidFacts = new string[9];
+        covidFacts = new string[10];
 
         covidFacts[0] = "As your body tries to fight an infection, your immune " +
                         "system can cause inflamation which leads to your symptoms.";

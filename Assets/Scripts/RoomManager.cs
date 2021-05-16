@@ -28,6 +28,9 @@ public class RoomManager : MonoBehaviour
     [SerializeField]
     private List<GameObject> enemies;
 
+    [SerializeField]
+    private int difficulty;
+
 
     private bool roomCleared;
     private bool playerInRoom; 
@@ -97,7 +100,7 @@ public class RoomManager : MonoBehaviour
 
 
         //takes in an array of spawn points and the RoomManager, and returns a list of enemy GameObjects
-        enemies = this.GetComponent<EnemyManager>().generateEnemies(enemySpawnPoints,this.GetComponent<RoomManager>());
+        enemies = this.GetComponent<EnemyManager>().generateEnemies(enemySpawnPoints,this.GetComponent<RoomManager>(), difficulty);
     }
 
     //checks if all enemies have removed themselves from the list
@@ -163,6 +166,16 @@ public class RoomManager : MonoBehaviour
     public void setPlayerInRoom(bool temp)
     {
         playerInRoom = temp;
+    }
+
+    public int getDifficulty()
+    {
+        return difficulty;
+    }
+
+    public void setDifficulty(int newDifficulty)
+    {
+        difficulty = newDifficulty;
     }
 
 }
