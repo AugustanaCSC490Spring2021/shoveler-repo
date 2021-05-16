@@ -34,13 +34,8 @@ public class HealthSpeedPack : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             playerHealth = collision.gameObject.GetComponent<Health>();
-            if (playerHealth.GetHealth() > 80)
-            {
-                playerHealth.AddHealth((int)Mathf.Min(healingPerColide + playerHealth.GetHealth(), (maxHealth)));
-            }else
-            {
-                playerHealth.SetHealth(100);
-            }
+            playerHealth.SetHealth((int)Mathf.Min(healingPerColide + playerHealth.GetHealth(), (maxHealth)));
+
         }
     }
 

@@ -18,7 +18,7 @@ public class HealthBar : MonoBehaviour
         playerObject = GameObject.FindGameObjectWithTag("Player");
         playerHealth = playerObject.GetComponent<Health>();
         // Landen is settings this for temp testing. We can change later if we need.
-        SetMaxHealth(100);
+        SetMaxHealth(playerHealth.GetHealth());
     }
 
     private void FixedUpdate()
