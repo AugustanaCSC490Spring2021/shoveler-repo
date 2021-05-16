@@ -11,7 +11,7 @@ public class Health : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        healthBar.SetMaxHealth(health);
+        //healthBar.SetMaxHealth(health);
     }
 
     public void Damage(int damageAmount)
@@ -27,5 +27,10 @@ public class Health : MonoBehaviour
     public void AddHealth(int healAmount)
     {
         health += healAmount;
+    }
+
+    public void SetHealth(int health)
+    {
+        this.health = health;
     }
 }

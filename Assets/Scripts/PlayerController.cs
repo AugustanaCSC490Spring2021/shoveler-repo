@@ -25,12 +25,17 @@ public class PlayerController : MonoBehaviour
     private SphereCollider meleeCollider;
     private Animator animator;
 
+    private GameObject doorCollider;
+
     private void Awake()
     {
         playerControls = new PlayerControls();
 
         // Binds fire function to Fire action
         playerControls.Land.Fire.performed += ctx => Fire();
+
+        // Binds e key to inteacting with doors
+        playerControls.Land.Interact.performed += ctx => InteractDoor();
 
         // Grab component from Player
         camera = this.GetComponentInChildren<Camera>();
@@ -45,11 +50,18 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        string roomCode = PlayerPrefs.GetString("roomCode");
-        if (roomCode != "")
+        if(GameObject.Find("MultiplayerManager") != null)
         {
-            roomCodeDisplay.text = "Give this to your partner: " + roomCode;
+            string roomCode = PlayerPrefs.GetString("roomCode");
+            if (roomCode != "")
+            {
+                roomCodeDisplay.text = "Give this to your partner: " + roomCode;
+            }
+        }else
+        {
+            PlayerPrefs.SetString("roomCode", "");
         }
+        
     }
 
     private void OnEnable()
@@ -75,7 +87,7 @@ public class PlayerController : MonoBehaviour
         Vector3 currentPos = this.transform.position;
         currentPos.z += zinput;
         currentPos.x += xinput;
-
+        
         // Move player to desired position
         if (canMove)
         {
@@ -83,8 +95,8 @@ public class PlayerController : MonoBehaviour
         }
 
         // Update currentPos to reposition camera as well
-        currentPos.y += 9;
-        currentPos.z += -9;
+        currentPos.y += 18;
+        currentPos.z -= 4;
         camera.transform.position = currentPos;
 
         // Reset for next loop
@@ -141,17 +153,19 @@ public class PlayerController : MonoBehaviour
         RaycastHit hit;
         Ray ray = camera.ScreenPointToRay(firingPosition);
 
-        int layerMask1 = 1 << 8;
-        int layerMask2 = 1 << 9;
+        int layerMask1 = 1 << 2;
+        int layerMask2 = 1 << 8;
+        int layerMask3 = 1 << 9;
 
-        layerMask1 = layerMask1;
-        layerMask2 = layerMask2;
+        //layerMask1 = layerMask1;
+        //layerMask2 = layerMask2;
 
-        int finalMask = layerMask1 | layerMask2;
+        int finalMask = layerMask1 | layerMask2 | layerMask3;
         finalMask = ~finalMask;
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, finalMask))
         {
+            //Debug.Log(hit.collider.);
             hit.point = new Vector3(hit.point.x,
                                     this.transform.position.y,
                                     hit.point.z
@@ -168,6 +182,18 @@ public class PlayerController : MonoBehaviour
         {
             collision.gameObject.GetComponent<Health>().Damage(20);
         }
+        else if (collision.gameObject.tag == "Door" )
+        {
+            doorCollider = collision.gameObject;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Door")
+        {
+            doorCollider = null;
+        }
     }
 
     public void setMove(bool shouldMove)
@@ -182,4 +208,16 @@ public class PlayerController : MonoBehaviour
             canMove = false;
         }
     }
+
+    void InteractDoor()
+    {
+        if (doorCollider != null && doorCollider.GetComponentInParent<RoomManager>().getRoomCleared())
+        {
+            doorCollider.GetComponent<DoorColliderManager>().movePlayer(gameObject);
+        }
+    }
+
+
+
+
 }

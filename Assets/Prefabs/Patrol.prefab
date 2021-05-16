@@ -362,6 +362,7 @@ MonoBehaviour:
   playerPos: {x: 0, y: 0, z: 0}
   messageCanvas: {fileID: 3658236380218514318, guid: 9087eae215698cd4bbe00a7efb7340ca,
     type: 3}
+  myRoomManager: {fileID: 0}
   radius: 5
   speed: 5
   acceleration: 10
@@ -372,7 +373,7 @@ MonoBehaviour:
   agent: {fileID: 0}
   chasingPlayer: 0
   patrolHealth: {fileID: 0}
-  maxHealth: 0
+  maxHealth: 100
   waitTime: 1
   elapsedTime: 0
   currentPointPosition: {x: 0, y: 0, z: 0}
@@ -396,7 +397,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18d87d1b67d6f7e4da04909cf0195862, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 0}
 --- !u!195 &6705146009343424099
 NavMeshAgent:
   m_ObjectHideFlags: 0

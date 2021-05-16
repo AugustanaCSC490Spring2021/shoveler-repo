@@ -49,6 +49,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""ab5c365c-f8b9-4c08-9106-334cb29c0b91"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -139,6 +147,17 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""FiringPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""95796d1d-d436-4c9d-8339-699730463ee3"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -151,6 +170,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         m_Land_MoveForward = m_Land.FindAction("MoveForward", throwIfNotFound: true);
         m_Land_Fire = m_Land.FindAction("Fire", throwIfNotFound: true);
         m_Land_FiringPosition = m_Land.FindAction("FiringPosition", throwIfNotFound: true);
+        m_Land_Interact = m_Land.FindAction("Interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -204,6 +224,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Land_MoveForward;
     private readonly InputAction m_Land_Fire;
     private readonly InputAction m_Land_FiringPosition;
+    private readonly InputAction m_Land_Interact;
     public struct LandActions
     {
         private @PlayerControls m_Wrapper;
@@ -212,6 +233,7 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         public InputAction @MoveForward => m_Wrapper.m_Land_MoveForward;
         public InputAction @Fire => m_Wrapper.m_Land_Fire;
         public InputAction @FiringPosition => m_Wrapper.m_Land_FiringPosition;
+        public InputAction @Interact => m_Wrapper.m_Land_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Land; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -233,6 +255,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @FiringPosition.started -= m_Wrapper.m_LandActionsCallbackInterface.OnFiringPosition;
                 @FiringPosition.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnFiringPosition;
                 @FiringPosition.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnFiringPosition;
+                @Interact.started -= m_Wrapper.m_LandActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_LandActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_LandActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_LandActionsCallbackInterface = instance;
             if (instance != null)
@@ -249,6 +274,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @FiringPosition.started += instance.OnFiringPosition;
                 @FiringPosition.performed += instance.OnFiringPosition;
                 @FiringPosition.canceled += instance.OnFiringPosition;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
         }
     }
@@ -259,5 +287,6 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         void OnMoveForward(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnFiringPosition(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }

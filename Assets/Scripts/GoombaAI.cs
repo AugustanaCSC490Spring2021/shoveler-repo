@@ -67,7 +67,7 @@ public class GoombaAI : MonoBehaviour
             //display covid factoid for period of time and then delete the enemy
             Canvas newMessage = Instantiate(messageCanvas);
             newMessage.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 4, this.transform.position.z);
-            newMessage.transform.eulerAngles = new Vector3(30,0,0);
+            newMessage.transform.eulerAngles = new Vector3(90,0,0);
             newMessage.GetComponent<MessageManager>().SetEnemyType(0);
 
             int randomFact = Random.Range(0, 9);
@@ -118,7 +118,7 @@ public class GoombaAI : MonoBehaviour
          * https://www.cdc.gov/coronavirus/2019-ncov/symptoms-testing/symptoms.html
          */
 
-        covidFacts = new string[9];
+        covidFacts = new string[10];
 
         covidFacts[0] = "COVID-19 spreads mainly through respiratory " +
                         "droplets produced from sneezes and coughs.";
@@ -142,9 +142,63 @@ public class GoombaAI : MonoBehaviour
                         "experiencing chest pain, you should seek medical care.";
     }
 
+    #region setters and getters
+
     public void setRoomManager(RoomManager roomManager)
     {
         myRoomManager = roomManager;
     }
+
+    public float getGoombaSpeed()
+    {
+        return speed;
+    }
+
+    public void setGoomaSpeed(float newSpeed)
+    {
+        speed = newSpeed;
+    }
+
+    public float getGoombaAccel()
+    {
+        return acceleration;
+    }
+
+    public void setGoombaAccel(float newAccel)
+    {
+        acceleration = newAccel;
+    }
+
+    public int getGoombaMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public void setGoombaMaxHealth(int newMax)
+    {
+        maxHealth = newMax;
+    }
+
+    public float getAttackSpeedInSeconds()
+    {
+        return attackSpeedInSeconds;
+    }
+
+    public void setAttackSpeedInSeconds(float newAttackSpeed)
+    {
+        attackSpeedInSeconds = newAttackSpeed;
+    }
+
+    public int getGoombaDamage()
+    {
+        return goombaDamage;
+    }
+
+    public void setGoombaDamage(int newDamage)
+    {
+        goombaDamage = newDamage;
+    }
+
+    #endregion
 
 }

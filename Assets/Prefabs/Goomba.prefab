@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: -458638476447578913}
   m_Layer: 0
   m_Name: Goomba
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -114,11 +114,12 @@ MonoBehaviour:
   agent: {fileID: 0}
   messageCanvas: {fileID: 3658236380218514318, guid: 9087eae215698cd4bbe00a7efb7340ca,
     type: 3}
+  myRoomManager: {fileID: 0}
   playerPos: {x: 0, y: 0, z: 0}
   speed: 1
   acceleration: 10
   goombaHealth: {fileID: 0}
-  maxHealth: 0
+  maxHealth: 100
   playerDamage: 0
   playerHealth: {fileID: 0}
   attackSpeedInSeconds: 0.5
@@ -138,7 +139,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18d87d1b67d6f7e4da04909cf0195862, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 0}
 --- !u!195 &-458638476447578913
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -23,7 +23,7 @@ public class ClientScript : MonoBehaviour
     long personalTime = 0;
     long personalScore = 0;
 
-    private void Awake()
+    private void Start()
     {
         PlayerObject = GameObject.FindGameObjectWithTag("Player");
         playerController = PlayerObject.GetComponent<PlayerController>();
@@ -31,19 +31,36 @@ public class ClientScript : MonoBehaviour
         if (bool.Parse(PlayerPrefs.GetString("isHost")))
         {
             String seed = PlayerPrefs.GetString("seed");
+            String difficulty = PlayerPrefs.GetString("difficulty");
 
-            if(seed == "")
+            if (seed == "")
             {
-                CreateLobby( PlayerPrefs.GetString("name") );
+                if (difficulty == "")
+                {
+                    CreateLobby( PlayerPrefs.GetString("name") );
+                }else
+                {
+                    CreateLobby( PlayerPrefs.GetString("name"), 
+                                 difficulty:int.Parse(difficulty));
+                }
             }else
             {
-                CreateLobby( PlayerPrefs.GetString("name"), int.Parse(PlayerPrefs.GetString("seed")) );
+                if (difficulty == "")
+                {
+                    CreateLobby( PlayerPrefs.GetString("name"), 
+                                 seed:int.Parse(PlayerPrefs.GetString("seed")));
+                }
+                else
+                {
+                    CreateLobby( PlayerPrefs.GetString("name"), 
+                                 seed:int.Parse(PlayerPrefs.GetString("seed")), 
+                                 difficulty: int.Parse(difficulty));
+                }
             }
         }else
         {
             ConnectToLobby(PlayerPrefs.GetString("name"), PlayerPrefs.GetString("roomCode"));
         }
-
 
         /*CreateLobby("ServerMan");
         StartGame("TEMPROOMCODE");
@@ -54,12 +71,13 @@ public class ClientScript : MonoBehaviour
 
     }
 
-    public void CreateLobby(String name, int seed = 123)
+    public void CreateLobby(String name, int seed = 123, int difficulty = 5)
     {
         NewLobby newLobby = new NewLobby
         {
             name = name,
-            seed = seed
+            seed = seed,
+            difficulty = difficulty
         };
         string Message = JsonConvert.SerializeObject(newLobby, Formatting.Indented);
         String serverResponse = SendServerMessage(Message);
@@ -71,6 +89,7 @@ public class ClientScript : MonoBehaviour
             name = name,
             isHost = true,
             seed = seed,
+            difficulty = difficulty,
             roomCode = serverJSONResponse.GetValue("roomCode").ToString()
         };
 
@@ -78,8 +97,6 @@ public class ClientScript : MonoBehaviour
 
         playerController.setMove(false);
         StartGame(profile.roomCode);
-
-        //Debug.Log(profile.roomCode);
     }
 
     public void ConnectToLobby(String name, String roomCode)
@@ -102,17 +119,16 @@ public class ClientScript : MonoBehaviour
             {
                 id = long.Parse(serverJSONResponse.GetValue("id").ToString()),
                 name = name,
-                isHost = true,
+                enemyName = serverJSONResponse.GetValue("enemyName").ToString(),
+                isHost = false,
                 seed = int.Parse(serverJSONResponse.GetValue("seed").ToString()),
+                difficulty = int.Parse(serverJSONResponse.GetValue("difficulty").ToString()),
                 roomCode = roomCode
             };
 
             playerController.setMove(false);
             StartGame(profile.roomCode);
         }
-
-        //Debug.Log(profile.seed);
-        //Debug.Log(profile.roomCode);
     }
 
     public void StartGame(String roomCode)
@@ -126,16 +142,19 @@ public class ClientScript : MonoBehaviour
         String serverResponse = SendServerMessage(Message);
         JObject serverJSONResponse = JObject.Parse(serverResponse);
 
-        //
         if(serverJSONResponse.GetValue("response").ToString() == "No")
         {
             stupidFix2(Message);
         }else
         {
+            if (profile.isHost)
+            {
+                profile.enemyName = serverJSONResponse.GetValue("enemyName").ToString();
+            }
             GameObject.Find("DungeonManager").GetComponent<DungeonManager>().beginDungeonGeneration(profile.seed, 3);
             PlayerPrefs.SetString("roomCode", "");
             playerController.setMove(true);
-            Debug.Log(int.Parse(PlayerPrefs.GetString("seed")));
+            //Debug.Log(profile.ToString());
         }
     }
 
@@ -154,10 +173,14 @@ public class ClientScript : MonoBehaviour
         else
         {
             // TODO: Load level and start game 
+            if (profile.isHost)
+            {
+                profile.enemyName = serverJSONResponse.GetValue("enemyName").ToString();
+            }
             GameObject.Find("DungeonManager").GetComponent<DungeonManager>().beginDungeonGeneration(profile.seed, 3);
             PlayerPrefs.SetString("roomCode", "");
             playerController.setMove(true);
-            Debug.Log(int.Parse(PlayerPrefs.GetString("seed")));
+            //Debug.Log(profile.ToString());
         }
     }
 
@@ -187,7 +210,6 @@ public class ClientScript : MonoBehaviour
     IEnumerator CheckIfFinished (string Message)
     {
         yield return new WaitForSecondsRealtime(3);
-        //Debug.Log("Waiting for other player to finish...");
 
         String serverResponse = SendServerMessage(Message);
         JObject serverJSONResponse = JObject.Parse(serverResponse);
@@ -199,8 +221,6 @@ public class ClientScript : MonoBehaviour
         {
             enemyTime = long.Parse(serverJSONResponse.GetValue("enemyTime").ToString());
             enemyScore = long.Parse(serverJSONResponse.GetValue("enemyScore").ToString());
-            //Debug.Log("Enemy Time: " + enemyTime);
-            //Debug.Log("Enemy Score: " + enemyScore);
             finished = true;
         }
     }
@@ -209,8 +229,9 @@ public class ClientScript : MonoBehaviour
 
     public static String SendServerMessage(String toSend)
     {
-        // Google VM 34.121.188.103
-        IPEndPoint serverAddress = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 25566);
+        // Google VM 35.209.36.147
+        // Local host 127.0.0.1
+        IPEndPoint serverAddress = new IPEndPoint(IPAddress.Parse("35.209.36.147"), 25566);
 
         Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         clientSocket.Connect(serverAddress);
@@ -241,9 +262,21 @@ public class ClientScript : MonoBehaviour
     {
         public long id { get; set; }
         public String name { get; set; }
+        public String enemyName { get; set; }
         public bool isHost { get; set; }
         public int seed { get; set; }
+        public int difficulty { get; set; }
         public String roomCode { get; set; }
+
+        public String ToString()
+        {
+            return "ID: "      + this.id + "\n" +
+                "Name: "       + this.name + "\n" +
+                "Enemy Name: " + this.enemyName + "\n" +
+                "Is Host: "    + this.isHost + "\n" +
+                "Difficulty: " + this.difficulty + "\n" +
+                "Room Code: "  + this.roomCode + "\n";
+        }
     }
 
     public class NewLobby
@@ -251,6 +284,7 @@ public class ClientScript : MonoBehaviour
         public String action = "NewLobby";
         public String name { get; set; }
         public int seed { get; set; }
+        public int difficulty { get; set; }
     }
 
     public class JoinRoom

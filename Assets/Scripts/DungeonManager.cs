@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DungeonManager : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class DungeonManager : MonoBehaviour
     void Awake()
     {
         startDunGen = false;
-
+        beginDungeonGeneration(1004, 1);
     }
 
     private void Start()
@@ -68,8 +69,9 @@ public class DungeonManager : MonoBehaviour
                 spawnpointsList.RemoveAt(0);
                 Destroy(temp);
             }
-            rooms[rooms.Count - 1].GetComponent<RoomManager>().enableExitRoomIndicator();
+            rooms[rooms.Count - 1].GetComponent<RoomManager>().enableExitRoom();
             startDunGen = false;
+            rooms[0].GetComponent<NavMeshSurface>().BuildNavMesh();
         }
 
     }
@@ -112,10 +114,19 @@ public class DungeonManager : MonoBehaviour
         GameObject temp = Instantiate(roomPrefab, new Vector3(0, 0, 0), roomPrefab.transform.rotation);
         temp.name = "EntryRoom";
         temp.GetComponent<RoomManager>().enableEntryRoomIndicator();
+        temp.GetComponent<RoomManager>().setRoomCleared(true);
         rooms.Add(temp);
 
     }
 
-
+    public bool checkIfLevelCleared()
+    {
+        for (int i = 0; i < rooms.Count; i++)
+        {
+            if (!rooms[i].GetComponent<RoomManager>().getRoomCleared())
+                return false;
+        }
+        return true;
+    }
 
 }
