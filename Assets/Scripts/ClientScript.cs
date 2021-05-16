@@ -151,7 +151,7 @@ public class ClientScript : MonoBehaviour
             {
                 profile.enemyName = serverJSONResponse.GetValue("enemyName").ToString();
             }
-            GameObject.Find("DungeonManager").GetComponent<DungeonManager>().beginDungeonGeneration(profile.seed, -1);
+            GameObject.Find("DungeonManager").GetComponent<DungeonManager>().beginDungeonGeneration(profile.seed, profile.difficulty);
             PlayerPrefs.SetString("roomCode", "");
             playerController.setMove(true);
             //Debug.Log(profile.ToString());
@@ -177,7 +177,7 @@ public class ClientScript : MonoBehaviour
             {
                 profile.enemyName = serverJSONResponse.GetValue("enemyName").ToString();
             }
-            GameObject.Find("DungeonManager").GetComponent<DungeonManager>().beginDungeonGeneration(profile.seed, -1);
+            GameObject.Find("DungeonManager").GetComponent<DungeonManager>().beginDungeonGeneration(profile.seed, profile.difficulty);
             PlayerPrefs.SetString("roomCode", "");
             playerController.setMove(true);
             //Debug.Log(profile.ToString());
@@ -237,7 +237,7 @@ public class ClientScript : MonoBehaviour
     {
         // Google VM 35.209.36.147
         // Local host 127.0.0.1
-        IPEndPoint serverAddress = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 25566);
+        IPEndPoint serverAddress = new IPEndPoint(IPAddress.Parse("35.209.36.147"), 25566);
 
         Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         clientSocket.Connect(serverAddress);
