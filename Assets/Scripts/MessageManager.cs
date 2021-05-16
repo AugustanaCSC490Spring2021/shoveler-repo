@@ -20,7 +20,6 @@ public class MessageManager : MonoBehaviour
 
         foreach (Image BG in this.GetComponentsInChildren<Image>())
         {
-            Debug.Log("Lowering alpha of " + BG.name);
             BG.color = new Color(BG.color.r, BG.color.g, BG.color.b, 0);
         }
 
@@ -36,7 +35,6 @@ public class MessageManager : MonoBehaviour
         {
             foreach (Image BG in this.GetComponentsInChildren<Image>())
             {
-                Debug.Log("Lowering alpha of " + BG.name);
                 BG.color = new Color(BG.color.r, BG.color.g, BG.color.b, BG.color.a + .0015f);
             }
 
@@ -50,7 +48,6 @@ public class MessageManager : MonoBehaviour
         {
             foreach (Image BG in this.GetComponentsInChildren<Image>())
             {
-                Debug.Log("Lowering alpha of " + BG.name);
                 BG.color = new Color(BG.color.r, BG.color.g, BG.color.b, BG.color.a - .008f);
             }
 

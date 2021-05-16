@@ -133,7 +133,7 @@ public class GuardAI : MonoBehaviour
          * https://www.cdc.gov/coronavirus/2019-ncov/prevent-getting-sick/prevention.html
          */
 
-        covidFacts = new string[9];
+        covidFacts = new string[10];
 
         covidFacts[0] = "To slow the spread of COVID-19, you should wear " +
                         "a mask if you are around other people.";

@@ -118,7 +118,7 @@ public class GoombaAI : MonoBehaviour
          * https://www.cdc.gov/coronavirus/2019-ncov/symptoms-testing/symptoms.html
          */
 
-        covidFacts = new string[9];
+        covidFacts = new string[10];
 
         covidFacts[0] = "COVID-19 spreads mainly through respiratory " +
                         "droplets produced from sneezes and coughs.";
