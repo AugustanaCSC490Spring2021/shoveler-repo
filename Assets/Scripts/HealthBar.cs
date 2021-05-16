@@ -11,6 +11,7 @@ public class HealthBar : MonoBehaviour
     public Slider slider;
     public Gradient gradient;
     public Image Fill;
+    public Text HealthText;
 
     private void Awake()
     {
@@ -22,6 +23,7 @@ public class HealthBar : MonoBehaviour
 
     private void FixedUpdate()
     {
+        HealthText.text = playerHealth.GetHealth().ToString();
         slider.value = playerHealth.GetHealth();
         Fill.color = gradient.Evaluate(slider.normalizedValue);
         //Debug.Log(playerHealth.GetHealth());
