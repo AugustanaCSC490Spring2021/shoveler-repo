@@ -51,15 +51,14 @@ public class PlayerController : MonoBehaviour
         animator = this.GetComponentInChildren<Animator>();
 
         dungeonManager = GameObject.Find("DungeonManager").GetComponent<DungeonManager>();
-
-        clientScript = GameObject.Find("MultiplayerManager").GetComponentInChildren<ClientScript>();
-
     }
 
     private void Start()
     {
         if(GameObject.Find("MultiplayerManager") != null)
         {
+            clientScript = GameObject.Find("MultiplayerManager").GetComponentInChildren<ClientScript>();
+
             string roomCode = PlayerPrefs.GetString("roomCode");
             if (roomCode != "")
             {
@@ -243,8 +242,6 @@ public class PlayerController : MonoBehaviour
         if(exitCollider != null)
         {
             Timer timer = this.GetComponentInChildren<Timer>();
-
-            Debug.Log(clientScript.profile.ToString());
             clientScript.SendScore( (long) Time.time, 1234);
         }
     }
