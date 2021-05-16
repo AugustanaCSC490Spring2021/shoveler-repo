@@ -97,10 +97,20 @@ public class RoomManager : MonoBehaviour
     public void spawnEnemies()
     {
         //to-do make an array based on the difficulty settings so that there are more/less spawn points each time
+        GameObject[] spawnSelection;
 
+        //picks a number of enemies to spawn based on the difficulty
+        int numberOfSpawns = Random.Range(difficulty, difficulty + 3);
+        spawnSelection = new GameObject[numberOfSpawns];
+
+        //assigns a spawn point for each enemy we have chosen to spawn
+        for (int index = 0; index < numberOfSpawns; index++)
+        {
+            spawnSelection[index] = enemySpawnPoints[Random.Range(0, enemySpawnPoints.Length - 1)];
+        } 
 
         //takes in an array of spawn points and the RoomManager, and returns a list of enemy GameObjects
-        enemies = this.GetComponent<EnemyManager>().generateEnemies(enemySpawnPoints,this.GetComponent<RoomManager>(), difficulty);
+        enemies = this.GetComponent<EnemyManager>().generateEnemies(spawnSelection,this.GetComponent<RoomManager>(), difficulty);
     }
 
     //checks if all enemies have removed themselves from the list
