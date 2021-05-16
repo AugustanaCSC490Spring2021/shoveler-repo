@@ -119,6 +119,14 @@ public class DungeonManager : MonoBehaviour
 
     }
 
-
+    public bool checkIfLevelCleared()
+    {
+        for (int i = 0; i < rooms.Count; i++)
+        {
+            if (!rooms[i].GetComponent<RoomManager>().getRoomCleared())
+                return false;
+        }
+        return true;
+    }
 
 }
