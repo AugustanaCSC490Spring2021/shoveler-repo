@@ -16,12 +16,15 @@ public class HealthBar : MonoBehaviour
     {
         playerObject = GameObject.FindGameObjectWithTag("Player");
         playerHealth = playerObject.GetComponent<Health>();
+        // Landen is settings this for temp testing. We can change later if we need.
+        SetMaxHealth(100);
     }
 
     private void FixedUpdate()
     {
         slider.value = playerHealth.GetHealth();
         Fill.color = gradient.Evaluate(slider.normalizedValue);
+        Debug.Log(playerHealth.GetHealth());
     }
     public void SetMaxHealth(int maxHealth)
     {

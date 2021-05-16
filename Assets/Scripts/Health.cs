@@ -28,4 +28,9 @@ public class Health : MonoBehaviour
     {
         health += healAmount;
     }
+
+    public void SetHealth(int health)
+    {
+        this.health = health;
+    }
 }
