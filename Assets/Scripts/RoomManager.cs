@@ -73,7 +73,7 @@ public class RoomManager : MonoBehaviour
         entryRoomIndicator.SetActive(true);
     }
 
-    public void enableExitRoomIndicator()
+    public void enableExitRoom()
     {
         exitRoomIndicator.SetActive(true);
     }

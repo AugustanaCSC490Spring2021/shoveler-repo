@@ -69,7 +69,7 @@ public class DungeonManager : MonoBehaviour
                 spawnpointsList.RemoveAt(0);
                 Destroy(temp);
             }
-            rooms[rooms.Count - 1].GetComponent<RoomManager>().enableExitRoomIndicator();
+            rooms[rooms.Count - 1].GetComponent<RoomManager>().enableExitRoom();
             startDunGen = false;
             rooms[0].GetComponent<NavMeshSurface>().BuildNavMesh();
         }
