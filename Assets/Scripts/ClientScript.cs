@@ -231,7 +231,7 @@ public class ClientScript : MonoBehaviour
     {
         // Google VM 35.209.36.147
         // Local host 127.0.0.1
-        IPEndPoint serverAddress = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 25566);
+        IPEndPoint serverAddress = new IPEndPoint(IPAddress.Parse("35.209.36.147"), 25566);
 
         Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         clientSocket.Connect(serverAddress);
