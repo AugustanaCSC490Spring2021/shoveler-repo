@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
 
     private GameObject doorCollider;
+    private GameObject exitCollider;
+    private DungeonManager dungeonManager;
 
     private void Awake()
     {
@@ -35,7 +37,7 @@ public class PlayerController : MonoBehaviour
         playerControls.Land.Fire.performed += ctx => Fire();
 
         // Binds e key to inteacting with doors
-        playerControls.Land.Interact.performed += ctx => InteractDoor();
+        playerControls.Land.Interact.performed += ctx => Interact();
 
         // Grab component from Player
         camera = this.GetComponentInChildren<Camera>();
@@ -46,6 +48,8 @@ public class PlayerController : MonoBehaviour
         camera.transform.SetParent(null);
 
         animator = this.GetComponentInChildren<Animator>();
+
+        dungeonManager = GameObject.Find("DungeonManager").GetComponent<DungeonManager>();
     }
 
     private void Start()
@@ -178,21 +182,30 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.tag == "Enemy")
+        switch (collision.gameObject.tag)
         {
-            collision.gameObject.GetComponent<Health>().Damage(20);
-        }
-        else if (collision.gameObject.tag == "Door" )
-        {
-            doorCollider = collision.gameObject;
+            case "Enemy":
+                collision.gameObject.GetComponent<Health>().Damage(20);
+                break;
+            case "Door":
+                doorCollider = collision.gameObject;
+                break;
+            case "Exit":
+                exitCollider = collision.gameObject;
+                break;
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider collision)
     {
-        if (other.gameObject.tag == "Door")
+        switch(collision.gameObject.tag)
         {
-            doorCollider = null;
+            case "Door":
+                doorCollider = null;
+                break;
+            case "Exit":
+                exitCollider = null;
+                break;
         }
     }
 
@@ -209,11 +222,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void InteractDoor()
+    void Interact()
     {
         if (doorCollider != null && doorCollider.GetComponentInParent<RoomManager>().getRoomCleared())
         {
             doorCollider.GetComponent<DoorColliderManager>().movePlayer(gameObject);
+        }
+
+        if(exitCollider != null)
+        {
+            Timer timer = this.GetComponentInChildren<Timer>();
+            ClientScript clientScript = GameObject.Find("MultiplayerManager").GetComponent<ClientScript>();
+            Debug.Log(clientScript);
+            clientScript.SendScore(clientScript.profile, (long) timer.start, 1234);
         }
     }
 
