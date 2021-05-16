@@ -81,7 +81,7 @@ public class PatrolAI : MonoBehaviour
             //display covid factoid for period of time and then delete the enemy
             Canvas newMessage = Instantiate(messageCanvas);
             newMessage.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 4, this.transform.position.z);
-            newMessage.transform.eulerAngles = new Vector3(30, 0, 0);
+            newMessage.transform.eulerAngles = new Vector3(90, 0, 0);
             newMessage.GetComponent<MessageManager>().SetEnemyType(2);
 
             int randomFact = Random.Range(0, 9);
@@ -220,9 +220,63 @@ public class PatrolAI : MonoBehaviour
                         "Getting proper sleep, a healthy diet, and exercise.";
     }
 
+    #region setters and getters
+
     public void setRoomManager(RoomManager roomManager)
     {
         myRoomManager = roomManager;
     }
+
+    public float getPatrolSpeed()
+    {
+        return speed;
+    }
+
+    public void setPatrolSpeed(float newSpeed)
+    {
+        speed = newSpeed;
+    }
+
+    public float getPatrolAccel()
+    {
+        return acceleration;
+    }
+
+    public void setPatrolAccel(float newAccel)
+    {
+        acceleration = newAccel;
+    }
+
+    public int getPatrolMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public void setPatrolMaxHealth(int newMax)
+    {
+        maxHealth = newMax;
+    }
+
+    public float getAttackSpeedInSeconds()
+    {
+        return attackSpeedInSeconds;
+    }
+
+    public void setAttackSpeedInSeconds(float newAttackSpeed)
+    {
+        attackSpeedInSeconds = newAttackSpeed;
+    }
+
+    public int getPatrolDamage()
+    {
+        return patrolDamage;
+    }
+
+    public void setPatrolDamage(int newDamage)
+    {
+        patrolDamage = newDamage;
+    }
+
+    #endregion
 
 }
