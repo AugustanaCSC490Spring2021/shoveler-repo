@@ -25,12 +25,17 @@ public class PlayerController : MonoBehaviour
     private SphereCollider meleeCollider;
     private Animator animator;
 
+    private GameObject doorCollider;
+
     private void Awake()
     {
         playerControls = new PlayerControls();
 
         // Binds fire function to Fire action
         playerControls.Land.Fire.performed += ctx => Fire();
+
+        // Binds e key to inteacting with doors
+        playerControls.Land.Interact.performed += ctx => InteractDoor();
 
         // Grab component from Player
         camera = this.GetComponentInChildren<Camera>();
@@ -82,7 +87,7 @@ public class PlayerController : MonoBehaviour
         Vector3 currentPos = this.transform.position;
         currentPos.z += zinput;
         currentPos.x += xinput;
-
+        
         // Move player to desired position
         if (canMove)
         {
@@ -177,6 +182,18 @@ public class PlayerController : MonoBehaviour
         {
             collision.gameObject.GetComponent<Health>().Damage(20);
         }
+        else if (collision.gameObject.tag == "Door" )
+        {
+            doorCollider = collision.gameObject;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Door")
+        {
+            doorCollider = null;
+        }
     }
 
     public void setMove(bool shouldMove)
@@ -191,4 +208,16 @@ public class PlayerController : MonoBehaviour
             canMove = false;
         }
     }
+
+    void InteractDoor()
+    {
+        if (doorCollider != null && doorCollider.GetComponentInParent<RoomManager>().getRoomCleared())
+        {
+            doorCollider.GetComponent<DoorColliderManager>().movePlayer(gameObject);
+        }
+    }
+
+
+
+
 }

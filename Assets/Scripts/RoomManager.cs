@@ -10,11 +10,15 @@ public class RoomManager : MonoBehaviour
     [SerializeField]
     private GameObject[] lockedDoors;
     [SerializeField]
+    private GameObject[] doorColliders;
+    [SerializeField]
     private GameObject[] walls;
+
     [SerializeField]
     private GameObject entryRoomIndicator;
     [SerializeField]
     private GameObject exitRoomIndicator;
+    
     [SerializeField]
     private GameObject[] insideWallPresets;
     [SerializeField]
@@ -23,6 +27,8 @@ public class RoomManager : MonoBehaviour
     private GameObject[] enemySpawnPoints;
     [SerializeField]
     private List<GameObject> enemies;
+
+
     private bool roomCleared;
     private bool playerInRoom; 
 
@@ -58,6 +64,7 @@ public class RoomManager : MonoBehaviour
     {
         openDoors[direction].SetActive(true);
         walls[direction].SetActive(false);
+        doorColliders[direction].SetActive(true);
 
     }
 

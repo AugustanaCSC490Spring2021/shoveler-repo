@@ -12,6 +12,8 @@ TagManager:
   - MaterialRadioButton
   - Rooms
   - Enemy
+  - Room
+  - Door
   layers:
   - Default
   - TransparentFX
