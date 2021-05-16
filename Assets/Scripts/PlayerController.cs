@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Update currentPos to reposition camera as well
-        currentPos.y += 12;
+        currentPos.y += 18;
         currentPos.z -= 4;
         camera.transform.position = currentPos;
 

@@ -71,7 +71,7 @@ public class GuardAI : MonoBehaviour
             //display covid factoid for period of time and then delete the enemy
             Canvas newMessage = Instantiate(messageCanvas);
             newMessage.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 4, this.transform.position.z);
-            newMessage.transform.eulerAngles = new Vector3(30, 0, 0);
+            newMessage.transform.eulerAngles = new Vector3(90, 0, 0);
             newMessage.GetComponent<MessageManager>().SetEnemyType(1);
 
             int randomFact = Random.Range(0, 9);
@@ -157,9 +157,63 @@ public class GuardAI : MonoBehaviour
                         "quarantine for 14 days, and be on the lookout for symptoms.";
     }
 
+    #region setters and getters
+
     public void setRoomManager(RoomManager roomManager)
     {
         myRoomManager = roomManager;
     }
+
+    public float getGuardSpeed()
+    {
+        return speed;
+    }
+
+    public void setGuardSpeed(float newSpeed)
+    {
+        speed = newSpeed;
+    }
+
+    public float getGuardAccel()
+    {
+        return acceleration;
+    }
+
+    public void setGuardAccel(float newAccel)
+    {
+        acceleration = newAccel;
+    }
+
+    public int getGuardMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public void setGuardMaxHealth(int newMax)
+    {
+        maxHealth = newMax;
+    }
+
+    public float getAttackSpeedInSeconds()
+    {
+        return attackSpeedInSeconds;
+    }
+
+    public void setAttackSpeedInSeconds(float newAttackSpeed)
+    {
+        attackSpeedInSeconds = newAttackSpeed;
+    }
+
+    public int getGuardDamage()
+    {
+        return guardDamage;
+    }
+
+    public void setGuardDamage(int newDamage)
+    {
+        guardDamage = newDamage;
+    }
+
+    #endregion
 
 }
