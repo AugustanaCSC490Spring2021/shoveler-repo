@@ -15,13 +15,13 @@ public class ClientScript : MonoBehaviour
     GameObject PlayerObject;
     PlayerController playerController;
 
-    Profile profile;
-    bool finished = false;
-    long enemyTime = 0;
-    long enemyScore = 0;
+    public Profile profile;
+    public bool finished = false;
+    public long enemyTime = 0;
+    public long enemyScore = 0;
 
-    long personalTime = 0;
-    long personalScore = 0;
+    public long personalTime = 0;
+    public long personalScore = 0;
 
     private void Start()
     {
@@ -151,7 +151,7 @@ public class ClientScript : MonoBehaviour
             {
                 profile.enemyName = serverJSONResponse.GetValue("enemyName").ToString();
             }
-            GameObject.Find("DungeonManager").GetComponent<DungeonManager>().beginDungeonGeneration(profile.seed, 3);
+            GameObject.Find("DungeonManager").GetComponent<DungeonManager>().beginDungeonGeneration(profile.seed, -1);
             PlayerPrefs.SetString("roomCode", "");
             playerController.setMove(true);
             //Debug.Log(profile.ToString());
@@ -177,23 +177,24 @@ public class ClientScript : MonoBehaviour
             {
                 profile.enemyName = serverJSONResponse.GetValue("enemyName").ToString();
             }
-            GameObject.Find("DungeonManager").GetComponent<DungeonManager>().beginDungeonGeneration(profile.seed, 3);
+            GameObject.Find("DungeonManager").GetComponent<DungeonManager>().beginDungeonGeneration(profile.seed, -1);
             PlayerPrefs.SetString("roomCode", "");
             playerController.setMove(true);
             //Debug.Log(profile.ToString());
         }
     }
 
-    public void SendScore(String name, bool isHost, long id, long time, long score, String roomCode)
+    //public void SendScore(String name, bool isHost, long id, long time, long score, String roomCode)
+    public void SendScore(long time, long score)
     {
         SubmitScore submitScore = new SubmitScore
         {
-            name = name,
-            isHost = isHost,
-            id = id,
+            name = profile.name,
+            isHost = profile.isHost,
+            id = profile.id,
             time = time,
             score = score,
-            roomCode = roomCode
+            roomCode = profile.roomCode
         };
         string Message = JsonConvert.SerializeObject(submitScore, Formatting.Indented);
         String serverResponse = SendServerMessage(Message);
@@ -203,6 +204,11 @@ public class ClientScript : MonoBehaviour
         if (serverJSONResponse.GetValue("response").ToString() == "NotDone") 
         {
             stupidFix(Message);
+        } else
+        {
+            enemyTime = long.Parse(serverJSONResponse.GetValue("enemyTime").ToString());
+            enemyScore = long.Parse(serverJSONResponse.GetValue("enemyScore").ToString());
+            finished = true;
         }
     }
 
@@ -231,7 +237,7 @@ public class ClientScript : MonoBehaviour
     {
         // Google VM 35.209.36.147
         // Local host 127.0.0.1
-        IPEndPoint serverAddress = new IPEndPoint(IPAddress.Parse("35.209.36.147"), 25566);
+        IPEndPoint serverAddress = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 25566);
 
         Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         clientSocket.Connect(serverAddress);

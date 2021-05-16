@@ -26,7 +26,7 @@ public class HealthBar : MonoBehaviour
         HealthText.text = playerHealth.GetHealth().ToString();
         slider.value = playerHealth.GetHealth();
         Fill.color = gradient.Evaluate(slider.normalizedValue);
-        Debug.Log(playerHealth.GetHealth());
+        //Debug.Log(playerHealth.GetHealth());
     }
     public void SetMaxHealth(int maxHealth)
     {
