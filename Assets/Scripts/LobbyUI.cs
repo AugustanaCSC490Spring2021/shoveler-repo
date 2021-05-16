@@ -14,6 +14,7 @@ public class LobbyUI : MonoBehaviour
     public TMP_InputField roomCode;
     public TMP_InputField nameCreate;
     public TMP_InputField roomSeed;
+    public TMP_InputField difficulty;
 
     public void ChangeToJoin()
     {
@@ -46,6 +47,7 @@ public class LobbyUI : MonoBehaviour
         PlayerPrefs.SetString("name", nameCreate.text);
         PlayerPrefs.SetString("isHost", "true");
         PlayerPrefs.SetString("seed", roomSeed.text);
+        PlayerPrefs.SetString("difficulty", difficulty.text);
         SceneManager.LoadScene("GameStart");
     }
 
