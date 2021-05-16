@@ -10,7 +10,7 @@ public class HealthSpeedPack : MonoBehaviour
     private Health playerHealth;
     private int count = 0;
     public int howManyHealing = 4;
-    public float healingPerColide;
+    public float healingPerColide = 20;
     public float maxHealth =100;
     public float speedBoostAmount;
 
@@ -22,7 +22,7 @@ public class HealthSpeedPack : MonoBehaviour
 
     private void OnTriggerExit(Collider collision) {
          count += 1;
-        Debug.Log(count);
+        //Debug.Log(count);
         if (collision.gameObject.tag == "Player" && count == howManyHealing) {
             Destroy(this.gameObject); // Makes the health pack disappear.
         }
@@ -30,17 +30,22 @@ public class HealthSpeedPack : MonoBehaviour
 
     // Handls the health pack
     private void Healing( Collider collision) {
-        Debug.Log(collision.gameObject.tag);
+        //Debug.Log(collision.gameObject.tag);
         if (collision.gameObject.tag == "Player")
         {
             playerHealth = collision.gameObject.GetComponent<Health>();
-            playerHealth.AddHealth((int)Mathf.Min(healingPerColide + playerHealth.GetHealth(), (maxHealth)));
-
+            if (playerHealth.GetHealth() > 80)
+            {
+                playerHealth.AddHealth((int)Mathf.Min(healingPerColide + playerHealth.GetHealth(), (maxHealth)));
+            }else
+            {
+                playerHealth.SetHealth(100);
+            }
         }
     }
 
     private void speedBoost(Collider collision) {
-        Debug.Log(collision.gameObject.GetComponent<PlayerController>().playerSpeed);
+        //Debug.Log(collision.gameObject.GetComponent<PlayerController>().playerSpeed);
         if (collision.gameObject.tag == "Player") {
             playerMovement = collision.gameObject.GetComponent<PlayerController>();
             playerMovement.playerSpeed += speedBoostAmount;
