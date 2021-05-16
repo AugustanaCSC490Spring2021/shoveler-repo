@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 6184210170406522109}
   m_Layer: 0
   m_Name: Guard
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -262,6 +262,7 @@ MonoBehaviour:
   playerObj: {fileID: 0}
   messageCanvas: {fileID: 3658236380218514318, guid: 9087eae215698cd4bbe00a7efb7340ca,
     type: 3}
+  myRoomManager: {fileID: 0}
   playerPos: {x: 0, y: 0, z: 0}
   speed: 8
   acceleration: 4
@@ -269,7 +270,7 @@ MonoBehaviour:
   radius: 8
   agent: {fileID: 0}
   guardHealth: {fileID: 0}
-  maxHealth: 0
+  maxHealth: 100
   playerHealth: {fileID: 0}
   playerDamage: 25
   guardDamage: 20
