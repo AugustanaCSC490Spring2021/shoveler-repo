@@ -16,6 +16,13 @@ public class LobbyUI : MonoBehaviour
     public TMP_InputField roomSeed;
     public TMP_InputField difficulty;
 
+    public void Awake()
+    {
+        Decision.SetActive(true);
+        CreateLobby.SetActive(false);
+        JoinLobbyObject.SetActive(false);
+    }
+
     public void ChangeToJoin()
     {
         Decision.SetActive(false);
@@ -34,6 +41,11 @@ public class LobbyUI : MonoBehaviour
         PlayerPrefs.SetString("roomCode", roomCode.text);
         PlayerPrefs.SetString("isHost", "false");
         SceneManager.LoadScene("GameStart");
+    }
+
+    public void ReturnMainMenu ()
+    {
+        SceneManager.LoadScene("Main");
     }
 
     public void JoinLobbyBack()
