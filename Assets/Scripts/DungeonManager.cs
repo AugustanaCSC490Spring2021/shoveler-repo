@@ -29,7 +29,7 @@ public class DungeonManager : MonoBehaviour
     void Awake()
     {
         startDunGen = false;
-        //beginDungeonGeneration(1004, 0);
+        beginDungeonGeneration(1004, 0);
     }
 
     private void Start()

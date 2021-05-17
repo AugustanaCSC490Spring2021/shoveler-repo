@@ -23,7 +23,7 @@ public class PatrolAI : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float acceleration;
 
-    [SerializeField] public Transform[] points;
+    [SerializeField] public Transform[] points = new Transform[2];
     [SerializeField] private int destPoint = 0;
     [SerializeField] private NavMeshAgent agent;
 
@@ -62,7 +62,7 @@ public class PatrolAI : MonoBehaviour
         covidFactGenerator();
 
         //sets our current point to be the first in the array
-        currentPointPosition = points[0].position;
+        //currentPointPosition = points[0].position;
         currentPointIndex = 0;
 
         hasStopped = false;
@@ -189,8 +189,9 @@ public class PatrolAI : MonoBehaviour
 
     public void setPoints (Transform point1, Transform point2)
     {
-        points[1] = point1;
-        points[2] = point2;
+        points[0] = point1;
+        points[1] = point2;
+        
     }
 
     void covidFactGenerator()
