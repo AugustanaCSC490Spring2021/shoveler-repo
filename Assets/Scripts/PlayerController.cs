@@ -147,6 +147,10 @@ public class PlayerController : MonoBehaviour
             PlayerPrefs.SetString("roomCode", "You died!\nWaiting for Combatant to finish...");
             roomCodeDisplay.text = "You died!\nWaiting for Combatant to finish...";
             setMove(false);
+
+            PlayerPrefs.SetInt("yourTime", (int)Time.time);
+            PlayerPrefs.SetInt("yourScore", (int)score);
+            PlayerPrefs.SetString("yourDeath", true.ToString());
             clientScript.SendScore((long)Time.time, score, true);
         }
     }
