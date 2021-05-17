@@ -67,6 +67,7 @@ public class GuardAI : MonoBehaviour
         if (guardHealth.GetHealth() <= 0)
         {
             myRoomManager.removeDeadEnemy(gameObject);
+            playerObj.GetComponent<PlayerController>().score += 8;
 
             //display covid factoid for period of time and then delete the enemy
             Canvas newMessage = Instantiate(messageCanvas);
@@ -77,7 +78,6 @@ public class GuardAI : MonoBehaviour
             int randomFact = Random.Range(0, 9);
             newMessage.GetComponentInChildren<Text>().text = covidFacts[randomFact];
 
-            agent.SetDestination(new Vector3(0, -5, 0));
             this.transform.position = new Vector3(0, -5, 0);
 
             Destroy(gameObject);
