@@ -27,22 +27,22 @@ public class GameEndUI : MonoBehaviour
         if (PlayerPrefs.GetString("enemyDeath") == "Yes")
         {
             enemyDeath = true;
-            enemyDied = "Yes";
+            enemyDied = PlayerPrefs.GetString("enemyDeath");
         }
         else
         {
             enemyDeath = false;
-            enemyDied = "No";
+            enemyDied = PlayerPrefs.GetString("enemyDeath");
         }
         if (PlayerPrefs.GetString("yourDeath") == "Yes")
         {
             yourDeath = true;
-            youDied = "Yes";
+            youDied = PlayerPrefs.GetString("yourDeath");
         }
         else
         {
             yourDeath = false;
-            youDied = "No";
+            youDied = PlayerPrefs.GetString("yourDeath");
         }
 
         enemyScore = PlayerPrefs.GetInt("enemyScore");
