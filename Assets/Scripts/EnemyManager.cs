@@ -30,11 +30,11 @@ public class EnemyManager : MonoBehaviour
         int random;
         int index = 0;
 
-        difficultyMultiplier = (float)(1 + (0.25 * (difficulty - 1)));
+        difficultyMultiplier = (float)(1 + (0.2 * (difficulty - 1)));
 
         foreach (GameObject spawn in spawnPositions) 
         {
-            random = Random.Range(1, 3);
+            random = Random.Range(1, 4);
             if (random == 1)
             {
                 //creates a goomba and passes it the room its in
