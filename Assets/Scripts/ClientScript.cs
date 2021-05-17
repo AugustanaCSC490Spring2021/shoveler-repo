@@ -162,7 +162,7 @@ public class ClientScript : MonoBehaviour
     public void stupidFix2(String Message) { StartCoroutine(CheckIfStart(Message)); }
     IEnumerator CheckIfStart(string Message)
     {
-        yield return new WaitForSecondsRealtime(3);
+        yield return new WaitForSecondsRealtime(0.5f);
 
         String serverResponse = SendServerMessage(Message);
         JObject serverJSONResponse = JObject.Parse(serverResponse);
@@ -219,7 +219,7 @@ public class ClientScript : MonoBehaviour
     public void stupidFix(String Message) { StartCoroutine(CheckIfFinished(Message)); }
     IEnumerator CheckIfFinished (string Message)
     {
-        yield return new WaitForSecondsRealtime(3);
+        yield return new WaitForSecondsRealtime(0.5f);
 
         String serverResponse = SendServerMessage(Message);
         JObject serverJSONResponse = JObject.Parse(serverResponse);
