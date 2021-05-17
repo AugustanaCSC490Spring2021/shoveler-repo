@@ -27,4 +27,13 @@ public class RoomColliderChecker : MonoBehaviour
             parentRoom.GetComponent<RoomManager>().playerEnteredRoom();
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player") && parentRoom.GetComponent<RoomManager>().getPlayerInRoom())
+        {
+            parentRoom.GetComponent<RoomManager>().setPlayerInRoom(false);
+        }
+    }
+
 }
