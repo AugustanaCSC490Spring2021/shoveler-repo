@@ -51,23 +51,24 @@ public class GameEndUI : MonoBehaviour
         yourScore = PlayerPrefs.GetInt("yourScore");
         yourTime = PlayerPrefs.GetInt("yourTime");
 
-        // Here we determine who won.
+        /*// Here we determine who won.
         if (enemyDeath && yourDeath) // Check score & time for winner
         {
             DetermineWinner();
         }
         else if(enemyDeath) // You Win
         {
-            YouWin();
+            DetermineWinner();
         }
         else if(yourDeath) // Enemy Wins
         {
-            YouLose();
+            DetermineWinner();
         }
         else // Check score & time for winner
         {
             DetermineWinner();
-        }
+        }*/
+        DetermineWinner();
 
         // Display Results
         YourResultsText.text = "Score: " + yourScore + "\n" +
@@ -96,32 +97,29 @@ public class GameEndUI : MonoBehaviour
         ResultsText.color = Color.red;
     }
 
+    private void Draw()
+    {
+        ResultsText.text = "Draw!!!";
+        ResultsText.color = Color.yellow;
+    }
+
     private void DetermineWinner()
     {
-        if (enemyScore > yourScore && enemyTime < yourTime) // Enemy Winner
+        if(enemyScore > yourScore)
         {
-            Debug.Log("First");
             YouLose();
-        }
-        else if (yourScore > enemyScore && yourTime < enemyTime) // You win
+        }else if(yourScore > enemyScore)
         {
-            Debug.Log("Second");
             YouWin();
-        }
-        else if (enemyTime < yourTime) // Enemy Wins
+        }else if(enemyTime < yourTime)
         {
-            Debug.Log("Third");
             YouLose();
-        }
-        else if (yourTime < enemyTime) // You Win
+        }else if(yourTime < enemyTime)
         {
-            Debug.Log("Fourth");
             YouWin();
-        }
-        else // Default to win? This should probably be a draw.
+        }else
         {
-            Debug.Log("Fifth");
-            YouWin();
+            Draw();
         }
     } 
 }

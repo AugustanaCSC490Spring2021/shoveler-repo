@@ -264,12 +264,16 @@ public class PlayerController : MonoBehaviour
             doorCollider.GetComponent<DoorColliderManager>().movePlayer(gameObject);
         }
 
-        if(exitCollider != null)
+        if(exitCollider != null && canMove)
         {
             //Timer timer = this.GetComponentInChildren<Timer>();
+            PlayerPrefs.SetString("roomCode", "You finished!\nWaiting for Combatant to finish...");
+            roomCodeDisplay.text = "You finished!\nWaiting for Combatant to finish...";
+
             PlayerPrefs.SetInt("yourTime", (int) Time.time);
             PlayerPrefs.SetInt("yourScore", (int) score);
             PlayerPrefs.SetString("yourDeath", false.ToString());
+            setMove(false);
             clientScript.SendScore( (long) Time.time, score, false );
         }
     }
