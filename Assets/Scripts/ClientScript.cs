@@ -19,6 +19,7 @@ public class ClientScript : MonoBehaviour
     public bool finished = false;
     public long enemyTime = 0;
     public long enemyScore = 0;
+    public bool enemyDeath = false;
 
     public long personalTime = 0;
     public long personalScore = 0;
@@ -185,7 +186,7 @@ public class ClientScript : MonoBehaviour
     }
 
     //public void SendScore(String name, bool isHost, long id, long time, long score, String roomCode)
-    public void SendScore(long time, long score)
+    public void SendScore(long time, long score, bool hasDied)
     {
         SubmitScore submitScore = new SubmitScore
         {
@@ -194,7 +195,8 @@ public class ClientScript : MonoBehaviour
             id = profile.id,
             time = time,
             score = score,
-            roomCode = profile.roomCode
+            roomCode = profile.roomCode,
+            hasDied = hasDied
         };
         string Message = JsonConvert.SerializeObject(submitScore, Formatting.Indented);
         String serverResponse = SendServerMessage(Message);
@@ -208,6 +210,8 @@ public class ClientScript : MonoBehaviour
         {
             enemyTime = long.Parse(serverJSONResponse.GetValue("enemyTime").ToString());
             enemyScore = long.Parse(serverJSONResponse.GetValue("enemyScore").ToString());
+            enemyDeath = Boolean.Parse(serverJSONResponse.GetValue("enemyDeath").ToString());
+            PlayerPrefs.SetString("roomCode", "");
             finished = true;
         }
     }
@@ -237,7 +241,7 @@ public class ClientScript : MonoBehaviour
     {
         // Google VM 35.209.36.147
         // Local host 127.0.0.1
-        IPEndPoint serverAddress = new IPEndPoint(IPAddress.Parse("35.209.36.147"), 25566);
+        IPEndPoint serverAddress = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 25566);
 
         Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         clientSocket.Connect(serverAddress);
@@ -314,6 +318,7 @@ public class ClientScript : MonoBehaviour
         public long id { get; set; }
         public long time { get; set; }
         public long score { get; set; }
+        public bool hasDied { get; set; }
         public String roomCode { get; set; }
     }
 }

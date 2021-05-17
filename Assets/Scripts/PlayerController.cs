@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private float meleeTimer = 0;
     private bool canShoot = false;
     private bool canMove = true;
+    public long score = 0;
 
     public GameObject bullet;
     public GameObject projectileSpawn;
@@ -24,9 +25,11 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private SphereCollider meleeCollider;
     private Animator animator;
+    private Health playerHealth;
 
     private GameObject doorCollider;
     private GameObject exitCollider;
+    private GameObject dungeonManagerGameObject;
     private DungeonManager dungeonManager;
     private ClientScript clientScript;
 
@@ -50,7 +53,13 @@ public class PlayerController : MonoBehaviour
 
         animator = this.GetComponentInChildren<Animator>();
 
-        dungeonManager = GameObject.Find("DungeonManager").GetComponent<DungeonManager>();
+        playerHealth = this.GetComponent<Health>();
+
+        dungeonManagerGameObject = GameObject.Find("DungeonManager");
+        if (dungeonManager != null)
+        {
+            dungeonManager = dungeonManager.GetComponent<DungeonManager>();
+        }
     }
 
     private void Start()
@@ -116,17 +125,27 @@ public class PlayerController : MonoBehaviour
         // Disable melee after 100 milliseconds
         if (meleeTimer < Time.time * 1000) meleeCollider.enabled = false;
 
+        // Clears room code from player screen if empty or if game has started.
         string roomCode = PlayerPrefs.GetString("roomCode");
         if (roomCode == "")
         {
             roomCodeDisplay.text = "";
         }
 
-        if(clientScript.finished)
+        //TODO: Change scenes to show enemy score.
+        if(clientScript != null && clientScript.finished)
         {
-            Debug.Log("Results:");
-            Debug.Log(clientScript.enemyTime);
-            Debug.Log(clientScript.enemyScore);
+            PlayerPrefs.SetInt("enemyTime", (int) clientScript.enemyTime);
+            PlayerPrefs.SetInt("enemyScore", (int) clientScript.enemyScore);
+            PlayerPrefs.SetString("enemyDeath", clientScript.enemyDeath.ToString());
+        }
+
+        if(playerHealth.GetHealth() <= 0 && canMove)
+        {
+            PlayerPrefs.SetString("roomCode", "You died!\nWaiting for Combatant to finish...");
+            roomCodeDisplay.text = "You died!\nWaiting for Combatant to finish...";
+            setMove(false);
+            clientScript.SendScore((long)Time.time, score, true);
         }
     }
 
@@ -241,12 +260,11 @@ public class PlayerController : MonoBehaviour
 
         if(exitCollider != null)
         {
-            Timer timer = this.GetComponentInChildren<Timer>();
-            clientScript.SendScore( (long) Time.time, 1234);
+            //Timer timer = this.GetComponentInChildren<Timer>();
+            PlayerPrefs.SetInt("yourTime", (int) Time.time);
+            PlayerPrefs.SetInt("yourScore", (int) score);
+            PlayerPrefs.SetString("yourDeath", false.ToString());
+            clientScript.SendScore( (long) Time.time, score, false );
         }
     }
-
-
-
-
 }
