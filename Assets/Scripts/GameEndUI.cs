@@ -100,22 +100,27 @@ public class GameEndUI : MonoBehaviour
     {
         if (enemyScore > yourScore && enemyTime < yourTime) // Enemy Winner
         {
+            Debug.Log("First");
             YouLose();
         }
         else if (yourScore > enemyScore && yourTime < enemyTime) // You win
         {
+            Debug.Log("Second");
             YouWin();
         }
         else if (enemyTime < yourTime) // Enemy Wins
         {
+            Debug.Log("Third");
             YouLose();
         }
         else if (yourTime < enemyTime) // You Win
         {
+            Debug.Log("Fourth");
             YouWin();
         }
         else // Default to win? This should probably be a draw.
         {
+            Debug.Log("Fifth");
             YouWin();
         }
     } 
