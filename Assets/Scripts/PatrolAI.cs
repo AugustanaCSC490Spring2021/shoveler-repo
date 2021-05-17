@@ -59,6 +59,8 @@ public class PatrolAI : MonoBehaviour
         patrolHealth = this.GetComponent<Health>();
         maxHealth = patrolHealth.GetHealth();
 
+        covidFactGenerator();
+
         //sets our current point to be the first in the array
         currentPointPosition = points[0].position;
         currentPointIndex = 0;
@@ -67,7 +69,6 @@ public class PatrolAI : MonoBehaviour
         agent.speed = speed;
         agent.acceleration = acceleration;
 
-        covidFactGenerator();
     }
 
     void Update()
@@ -85,7 +86,7 @@ public class PatrolAI : MonoBehaviour
             newMessage.transform.eulerAngles = new Vector3(90, 0, 0);
             newMessage.GetComponent<MessageManager>().SetEnemyType(2);
 
-            int randomFact = Random.Range(0, 9);
+            int randomFact = Random.Range(0, 10);
             newMessage.GetComponentInChildren<Text>().text = covidFacts[randomFact];
 
             this.transform.position = new Vector3(0, -5, 0);

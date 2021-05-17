@@ -71,7 +71,7 @@ public class GoombaAI : MonoBehaviour
             newMessage.transform.eulerAngles = new Vector3(90,0,0);
             newMessage.GetComponent<MessageManager>().SetEnemyType(0);
 
-            int randomFact = Random.Range(0, 9);
+            int randomFact = Random.Range(0, 10);
             newMessage.GetComponentInChildren<Text>().text = covidFacts[randomFact];
 
             this.transform.position = new Vector3(0, -5, 0);
