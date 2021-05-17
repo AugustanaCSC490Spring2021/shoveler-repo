@@ -77,17 +77,20 @@ public class GoombaAI : MonoBehaviour
             this.transform.position = new Vector3(0, -5, 0);
 
             Destroy(gameObject);
+            
+        } else
+        {
 
+            playerPos = playerObj.transform.position;
+
+            //moves this object towards the players position
+            //transform.position = Vector3.MoveTowards(transform.position, playerPos, Time.deltaTime * speed);
+            agent.SetDestination(playerPos);
+
+            //this will hard lock the rotation of the whole sprite
+            //this.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
         }
 
-        playerPos = playerObj.transform.position;
-
-        //moves this object towards the players position
-        //transform.position = Vector3.MoveTowards(transform.position, playerPos, Time.deltaTime * speed);
-        agent.SetDestination(playerPos);
-
-        //this will hard lock the rotation of the whole sprite
-        //this.transform.rotation = new Quaternion(0f, 0f, 0f, 0f);
     }
 
 

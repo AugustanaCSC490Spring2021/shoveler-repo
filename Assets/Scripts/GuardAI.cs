@@ -82,26 +82,29 @@ public class GuardAI : MonoBehaviour
 
             Destroy(gameObject);
 
+        } else
+        {
+
+            //gets the players current position
+            playerPos = playerObj.transform.position;
+
+            //in theory this code creates a bubble around the enemy, and once the player enters
+            //the bubble the enemy will begin to chase
+            if (transform.position.x - playerPos.x < radius &&
+                transform.position.y - playerPos.y < radius &&
+                transform.position.z - playerPos.z < radius)
+            {
+                chasingPlayer = true;
+            }
+
+            if (chasingPlayer)
+            {
+                //moves this object towards the players position
+                //transform.position = Vector3.MoveTowards(transform.position, playerPos, Time.deltaTime * speed);
+                agent.SetDestination(playerPos);
+            }
         }
 
-        //gets the players current position
-        playerPos = playerObj.transform.position;
-
-        //in theory this code creates a bubble around the enemy, and once the player enters
-        //the bubble the enemy will begin to chase
-        if (transform.position.x - playerPos.x < radius &&
-            transform.position.y - playerPos.y < radius &&
-            transform.position.z - playerPos.z < radius)
-        {
-            chasingPlayer = true;
-        }
-        
-        if (chasingPlayer)
-        {
-            //moves this object towards the players position
-            //transform.position = Vector3.MoveTowards(transform.position, playerPos, Time.deltaTime * speed);
-            agent.SetDestination(playerPos);
-        }
 
     }
 

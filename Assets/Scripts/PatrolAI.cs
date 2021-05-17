@@ -91,41 +91,45 @@ public class PatrolAI : MonoBehaviour
             this.transform.position = new Vector3(0, -5, 0);
 
             Destroy(gameObject);
-        }
-
-        playerPos = playerObj.transform.position;
-
-
-        chasingPlayer = inRadius();
-        
-
-        if (chasingPlayer)
-        {
-            //moves this object towards the players position
-            //transform.position = Vector3.MoveTowards(transform.position, playerPos, Time.deltaTime * speed);
-            agent.SetDestination(playerPos);
         } else
         {
 
-            //checks if we have reached the current patrol point
-             if (reachedPoint() && !hasStopped)
-             {
+            playerPos = playerObj.transform.position;
 
-                changeCurrentPoint();
 
-                //transform.position = Vector3.MoveTowards(transform.position, currentPointPosition, Time.deltaTime * speed);
-                agent.SetDestination(currentPointPosition);
+            chasingPlayer = inRadius();
 
-                hasStopped = true;
-             } else
-             {
-                //moves us towards the next patrol point
-                //transform.position = Vector3.MoveTowards(transform.position, currentPointPosition, Time.deltaTime * speed);
-                agent.SetDestination(currentPointPosition);
 
-                hasStopped = false;
-             }
-            
+            if (chasingPlayer)
+            {
+                //moves this object towards the players position
+                //transform.position = Vector3.MoveTowards(transform.position, playerPos, Time.deltaTime * speed);
+                agent.SetDestination(playerPos);
+            }
+            else
+            {
+
+                //checks if we have reached the current patrol point
+                if (reachedPoint() && !hasStopped)
+                {
+
+                    changeCurrentPoint();
+
+                    //transform.position = Vector3.MoveTowards(transform.position, currentPointPosition, Time.deltaTime * speed);
+                    agent.SetDestination(currentPointPosition);
+
+                    hasStopped = true;
+                }
+                else
+                {
+                    //moves us towards the next patrol point
+                    //transform.position = Vector3.MoveTowards(transform.position, currentPointPosition, Time.deltaTime * speed);
+                    agent.SetDestination(currentPointPosition);
+
+                    hasStopped = false;
+                }
+
+            }
         }
 
     }
