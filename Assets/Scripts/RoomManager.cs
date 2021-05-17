@@ -100,7 +100,7 @@ public class RoomManager : MonoBehaviour
         GameObject[] spawnSelection;
 
         //picks a number of enemies to spawn based on the difficulty
-        difficulty = difficulty + 5;
+        difficulty = difficulty + 3;
         int numberOfSpawns = Random.Range(difficulty, difficulty + 3);
         if (numberOfSpawns > enemySpawnPoints.Length)
             numberOfSpawns = enemySpawnPoints.Length;
