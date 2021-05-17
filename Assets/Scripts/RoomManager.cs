@@ -33,7 +33,12 @@ public class RoomManager : MonoBehaviour
 
 
     private bool roomCleared;
-    private bool playerInRoom; 
+    private bool playerInRoom;
+
+    [SerializeField]
+    private GameObject powerUpSpawn;
+    [SerializeField]
+    private GameObject speedUp;
 
     private void Awake()
     {
@@ -56,7 +61,7 @@ public class RoomManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enemiesAllDead() && playerInRoom)
+        if (enemiesAllDead() && playerInRoom && !roomCleared)
         {
             playerClearedRoom();
         }
@@ -156,6 +161,14 @@ public class RoomManager : MonoBehaviour
                 lockedDoors[i].SetActive(false);
             }
         }
+
+        int powerUpChance = Random.Range(0, 2);
+        if (powerUpChance == 1)
+        {
+            Instantiate(speedUp, powerUpSpawn.transform.position, powerUpSpawn.transform.rotation);
+        }
+
+
     }
 
 
