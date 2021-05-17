@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -138,6 +139,7 @@ public class PlayerController : MonoBehaviour
             PlayerPrefs.SetInt("enemyTime", (int) clientScript.enemyTime);
             PlayerPrefs.SetInt("enemyScore", (int) clientScript.enemyScore);
             PlayerPrefs.SetString("enemyDeath", clientScript.enemyDeath.ToString());
+            SceneManager.LoadScene("GameEnd");
         }
 
         if(playerHealth.GetHealth() <= 0 && canMove)
