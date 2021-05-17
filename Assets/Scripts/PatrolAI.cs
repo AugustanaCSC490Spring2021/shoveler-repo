@@ -23,7 +23,7 @@ public class PatrolAI : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float acceleration;
 
-    [SerializeField] public Transform[] points = new Transform[2];
+    [SerializeField] public Vector3[] points = new Vector3[2];
     [SerializeField] private int destPoint = 0;
     [SerializeField] private NavMeshAgent agent;
 
@@ -37,7 +37,6 @@ public class PatrolAI : MonoBehaviour
 
     [SerializeField] private Vector3 currentPointPosition;
     [SerializeField] private int currentPointIndex;
-    [SerializeField] private bool hasStopped;
 
     [SerializeField] private Health playerHealth;
     [SerializeField] private int patrolDamage;
@@ -47,6 +46,8 @@ public class PatrolAI : MonoBehaviour
     [SerializeField] private float timeLastAttacked;
 
     [SerializeField] private string[] covidFacts;
+
+    [SerializeField] private AudioClip deathNoise;
     #endregion
 
     void Start()
@@ -62,10 +63,7 @@ public class PatrolAI : MonoBehaviour
         covidFactGenerator();
 
         //sets our current point to be the first in the array
-        //currentPointPosition = points[0].position;
-        currentPointIndex = 0;
 
-        hasStopped = false;
         agent.speed = speed;
         agent.acceleration = acceleration;
 
@@ -77,6 +75,8 @@ public class PatrolAI : MonoBehaviour
 
         if (patrolHealth.GetHealth() <= 0)
         {
+            //GetComponentInChildren<AudioSource>().PlayOneShot(deathNoise);
+
             myRoomManager.removeDeadEnemy(gameObject);
             playerObj.GetComponent<PlayerController>().score += 10;
 
@@ -111,23 +111,19 @@ public class PatrolAI : MonoBehaviour
             {
 
                 //checks if we have reached the current patrol point
-                if (reachedPoint() && !hasStopped)
+                if (reachedPoint())
                 {
 
                     changeCurrentPoint();
 
                     //transform.position = Vector3.MoveTowards(transform.position, currentPointPosition, Time.deltaTime * speed);
                     agent.SetDestination(currentPointPosition);
-
-                    hasStopped = true;
                 }
                 else
                 {
                     //moves us towards the next patrol point
                     //transform.position = Vector3.MoveTowards(transform.position, currentPointPosition, Time.deltaTime * speed);
                     agent.SetDestination(currentPointPosition);
-
-                    hasStopped = false;
                 }
 
             }
@@ -160,14 +156,14 @@ public class PatrolAI : MonoBehaviour
         }
 
         //change our current point to be the next in line
-        currentPointPosition = points[currentPointIndex].position;
+        currentPointPosition = points[currentPointIndex];
     }
 
 
     bool reachedPoint()
     {
-        return Mathf.Abs(transform.position.x - currentPointPosition.x) < .1 &&
-                Mathf.Abs(transform.position.z - currentPointPosition.z) < .1;
+        return Mathf.Abs(transform.position.x - currentPointPosition.x) < .2 &&
+                Mathf.Abs(transform.position.z - currentPointPosition.z) < .2;
     }
 
     private void OnCollisionStay(Collision collision)
@@ -187,11 +183,13 @@ public class PatrolAI : MonoBehaviour
         }
     }
 
-    public void setPoints (Transform point1, Transform point2)
+    public void setPoints (Vector3 point1, Vector3 point2)
     {
         points[0] = point1;
         points[1] = point2;
-        
+
+        currentPointIndex = 0;
+        currentPointPosition = points[currentPointIndex];
     }
 
     void covidFactGenerator()

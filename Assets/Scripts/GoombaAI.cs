@@ -32,6 +32,7 @@ public class GoombaAI : MonoBehaviour
     [SerializeField] private float timeLastAttacked;
     [SerializeField] private string[] covidFacts;
 
+    [SerializeField] private AudioClip deathNoise;
 
     #endregion
 
@@ -62,6 +63,8 @@ public class GoombaAI : MonoBehaviour
 
         if (goombaHealth.GetHealth() <= 0)
         {
+            //GetComponentInChildren<AudioSource>().PlayOneShot(deathNoise);
+
             myRoomManager.removeDeadEnemy(gameObject);
             playerObj.GetComponent<PlayerController>().score += 6;
 

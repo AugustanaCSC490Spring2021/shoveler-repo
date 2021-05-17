@@ -37,6 +37,8 @@ public class GuardAI : MonoBehaviour
     [SerializeField] private float timeLastAttacked;
 
     [SerializeField] private string[] covidFacts;
+
+    [SerializeField] private AudioClip deathNoise;
     #endregion
 
 
@@ -66,6 +68,8 @@ public class GuardAI : MonoBehaviour
 
         if (guardHealth.GetHealth() <= 0)
         {
+            //GetComponentInChildren<AudioSource>().PlayOneShot(deathNoise);
+
             myRoomManager.removeDeadEnemy(gameObject);
             playerObj.GetComponent<PlayerController>().score += 8;
 
