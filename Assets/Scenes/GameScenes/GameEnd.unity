@@ -1146,6 +1146,8 @@ MonoBehaviour:
   ResultsText: {fileID: 1000141911}
   YourResultsText: {fileID: 42865503}
   EnemyResultsText: {fileID: 520330607}
+  YourResultsLabel: {fileID: 580121374}
+  EnemyResultsLabel: {fileID: 556398356}
 --- !u!4 &1058855996
 Transform:
   m_ObjectHideFlags: 0
