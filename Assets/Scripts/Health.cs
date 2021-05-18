@@ -16,10 +16,7 @@ public class Health : MonoBehaviour
 
     public void Damage(int damageAmount)
     {
-        if (this.gameObject.tag == "Player") 
-        {
-            health -= damageAmount;
-        }
+        health -= damageAmount;
     }
 
     public int GetHealth()
