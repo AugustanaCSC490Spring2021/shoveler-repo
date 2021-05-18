@@ -254,7 +254,7 @@ public class ClientScript : MonoBehaviour
         clientSocket.Receive(rcvBytes);
         String rcv = System.Text.Encoding.ASCII.GetString(rcvBytes);
 
-        Debug.Log("Message: " + rcv);
+        //Debug.Log("Message: " + rcv);
 
         clientSocket.Close();
 
