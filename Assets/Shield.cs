@@ -21,8 +21,8 @@ public class Shield : MonoBehaviour
     }
 
     // Update is called once per frame
-    void DecreaseShield()
+    public void DecreaseShield(int damageTaken)
     {
-        shield += shieldPerTouch;
+        shield -= damageTaken;
     }
 }
