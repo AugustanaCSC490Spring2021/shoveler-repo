@@ -213,6 +213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18d87d1b67d6f7e4da04909cf0195862, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxShield: 200
+  shield: 200
 --- !u!135 &1750474865
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -511,6 +513,21 @@ PrefabInstance:
       propertyPath: m_text
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 702742254728637614, guid: 6c1daeb326cff5c4ca9a96839d5c7402,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.13207549
+      objectReference: {fileID: 0}
+    - target: {fileID: 702742254728637614, guid: 6c1daeb326cff5c4ca9a96839d5c7402,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 702742254728637614, guid: 6c1daeb326cff5c4ca9a96839d5c7402,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.08045976
+      objectReference: {fileID: 0}
     - target: {fileID: 7262527266055792094, guid: 6c1daeb326cff5c4ca9a96839d5c7402,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -687,7 +704,8 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0.000015258789
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5621822501413129439, guid: 6c1daeb326cff5c4ca9a96839d5c7402, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6c1daeb326cff5c4ca9a96839d5c7402, type: 3}
 --- !u!224 &1586914668781703747 stripped
 RectTransform:

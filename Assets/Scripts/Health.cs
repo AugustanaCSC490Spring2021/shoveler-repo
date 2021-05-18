@@ -4,19 +4,34 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    private HealthBar healthBar;
     private int health = 100;
-    
+public int maxShield = 150;
+public int shield = 0;
+    private bool turn = false;
 
-    // Start is called before the first frame update
+
     void Start()
     {
-        //healthBar.SetMaxHealth(health);
+    //    if (this.gameObject.tag == "player")
+    //    {
+    //        turn = true;
+    //    }
     }
 
     public void Damage(int damageAmount)
     {
-        health -= damageAmount;
+        if (this.gameObject.tag == "Player" && shield > 0)
+        {
+
+            decreaseShield(damageAmount);
+            Debug.Log("are you getting this" + shield);
+
+        }
+        else
+        {
+            health -= damageAmount;
+        }
+        //health -= damageAmount;
     }
 
     public int GetHealth()
@@ -33,4 +48,48 @@ public class Health : MonoBehaviour
     {
         this.health = health;
     }
+    public void setShield(int shieldValue)
+    {
+
+                   shield = shieldValue;
+
+    }
+    public int GetShield()
+    {
+        return shield;
+
+    }
+    public int GetMaxShield()
+    {
+        return maxShield;
+
+    }
+
+    public void increaseShild(int shieldGain)
+    {
+        if (turn)
+        {
+            shield += shieldGain;
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    public void decreaseShield(int damage)
+    {
+        shield -= damage;
+        Debug.Log("decreaseShield" + shield);
+        // if (turn)
+        //{
+        //  shield -= damage;
+        //}
+        //else
+        // {
+        //    return;
+        //}
+
+    }
+
 }

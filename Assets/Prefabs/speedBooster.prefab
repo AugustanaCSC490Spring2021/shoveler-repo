@@ -107,10 +107,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a829649479437b4485fa8bb592e5554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  howManyHealing: 1
+  howManyTouch: 1
   healingPerColide: 0
-  maxHealth: 100
   speedBoostAmount: 100
+  shieldPerTouch: 0
 --- !u!1001 &797532413593781209
 PrefabInstance:
   m_ObjectHideFlags: 0
