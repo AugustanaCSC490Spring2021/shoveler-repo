@@ -139,6 +139,7 @@ public class PlayerController : MonoBehaviour
             PlayerPrefs.SetInt("enemyTime", (int) clientScript.enemyTime);
             PlayerPrefs.SetInt("enemyScore", (int) clientScript.enemyScore);
             PlayerPrefs.SetString("enemyDeath", clientScript.enemyDeath.ToString());
+            PlayerPrefs.SetString("enemyName", clientScript.profile.enemyName);
             SceneManager.LoadScene("GameEnd");
         }
 

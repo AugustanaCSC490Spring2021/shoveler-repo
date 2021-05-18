@@ -12,6 +12,9 @@ public class GameEndUI : MonoBehaviour
     public TMP_Text YourResultsText;
     public TMP_Text EnemyResultsText;
 
+    public TMP_Text YourResultsLabel;
+    public TMP_Text EnemyResultsLabel;
+
     private int enemyScore;
     private int enemyTime;
     private bool enemyDeath;
@@ -71,6 +74,10 @@ public class GameEndUI : MonoBehaviour
         DetermineWinner();
 
         // Display Results
+        YourResultsLabel.text = PlayerPrefs.GetString("name") + " Results:";
+
+        EnemyResultsLabel.text = PlayerPrefs.GetString("enemyName") + " Results:";
+
         YourResultsText.text = "Score: " + yourScore + "\n" +
                                "Time: " + yourTime + "\n" +
                                "Died: " + youDied + "\n";
