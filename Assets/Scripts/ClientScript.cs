@@ -169,11 +169,6 @@ public class ClientScript : MonoBehaviour
         }
         else
         {
-            // TODO: Load level and start game 
-            if (profile.isHost)
-            {
-                profile.enemyName = serverJSONResponse.GetValue("enemyName").ToString();
-            }
             GameObject.Find("DungeonManager").GetComponent<DungeonManager>().beginDungeonGeneration(profile.seed, profile.difficulty);
             PlayerPrefs.SetString("roomCode", "");
             playerController.setMove(true);
