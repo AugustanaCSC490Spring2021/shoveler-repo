@@ -144,7 +144,7 @@ public class PatrolAI : MonoBehaviour
 
         //Debug.Log(currentPointIndex + " Index " + points.Length + " Length");
         //make sure we have not gone beyond the final point
-        if (currentPointIndex < points.Length)
+        if (currentPointIndex < points.Length - 1)
         {
             //move our focus to the next point
             currentPointIndex++;

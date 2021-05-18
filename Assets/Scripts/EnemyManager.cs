@@ -83,10 +83,10 @@ public class EnemyManager : MonoBehaviour
                 //sets the patrol point of the patrol to be bewteen two spawn points
                 if (index == 0)
                 {
-                    enemies[index].GetComponent<PatrolAI>().setPoints(spawnPositions[index].transform.position, enemies[index + 1].transform.position);
+                    enemies[index].GetComponent<PatrolAI>().setPoints(spawnPositions[index].transform.position, spawnPositions[index + 1].transform.position);
                 } else
                 {
-                    enemies[index].GetComponent<PatrolAI>().setPoints(spawnPositions[index].transform.position, enemies[index - 1].transform.position);
+                    enemies[index].GetComponent<PatrolAI>().setPoints(spawnPositions[index].transform.position, spawnPositions[index - 1].transform.position);
                 }
 
 
