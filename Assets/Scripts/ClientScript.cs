@@ -148,10 +148,6 @@ public class ClientScript : MonoBehaviour
             stupidFix2(Message);
         }else
         {
-            if (profile.isHost)
-            {
-                profile.enemyName = serverJSONResponse.GetValue("enemyName").ToString();
-            }
             GameObject.Find("DungeonManager").GetComponent<DungeonManager>().beginDungeonGeneration(profile.seed, profile.difficulty);
             PlayerPrefs.SetString("roomCode", "");
             playerController.setMove(true);
@@ -211,6 +207,7 @@ public class ClientScript : MonoBehaviour
             enemyTime = long.Parse(serverJSONResponse.GetValue("enemyTime").ToString());
             enemyScore = long.Parse(serverJSONResponse.GetValue("enemyScore").ToString());
             enemyDeath = Boolean.Parse(serverJSONResponse.GetValue("enemyDeath").ToString());
+            PlayerPrefs.SetString("enemyName", serverJSONResponse.GetValue("enemyName").ToString());
             PlayerPrefs.SetString("roomCode", "");
             finished = true;
         }
@@ -262,7 +259,7 @@ public class ClientScript : MonoBehaviour
         clientSocket.Receive(rcvBytes);
         String rcv = System.Text.Encoding.ASCII.GetString(rcvBytes);
 
-        //Debug.Log("Message: " + rcv);
+        Debug.Log("Message: " + rcv);
 
         clientSocket.Close();
 
