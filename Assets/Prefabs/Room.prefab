@@ -3769,6 +3769,8 @@ MonoBehaviour:
   difficulty: 0
   powerUpSpawn: {fileID: 1532097928061440643}
   speedUp: {fileID: 7719562204365383346, guid: 873c37f0cfc26ef40accd4c4389a6a20, type: 3}
+  healthPack: {fileID: 4507361909912699186, guid: 7fd733efb66f1f346bb4893bb0d43c68,
+    type: 3}
 --- !u!114 &814481028327067656
 MonoBehaviour:
   m_ObjectHideFlags: 0

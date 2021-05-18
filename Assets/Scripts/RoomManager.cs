@@ -39,6 +39,8 @@ public class RoomManager : MonoBehaviour
     private GameObject powerUpSpawn;
     [SerializeField]
     private GameObject speedUp;
+    [SerializeField]
+    private GameObject healthPack;
 
     private void Awake()
     {
@@ -165,7 +167,14 @@ public class RoomManager : MonoBehaviour
         int powerUpChance = Random.Range(0, 2);
         if (powerUpChance == 1)
         {
-            Instantiate(speedUp, powerUpSpawn.transform.position, powerUpSpawn.transform.rotation);
+            int which = Random.Range(0, 2);
+            if (which == 0)
+            {
+                Instantiate(speedUp, powerUpSpawn.transform.position, powerUpSpawn.transform.rotation);
+            } else
+            {
+                Instantiate(healthPack, powerUpSpawn.transform.position, powerUpSpawn.transform.rotation);
+            }
         }
 
 
