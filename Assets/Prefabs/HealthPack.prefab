@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   howManyHealing: 4
-  healingPerColide: 50
+  healingPerColide: 20
   maxHealth: 100
   speedBoostAmount: 0
 --- !u!1001 &6060383870734412604
