@@ -224,6 +224,8 @@ public class ClientScript : MonoBehaviour
             enemyTime = long.Parse(serverJSONResponse.GetValue("enemyTime").ToString());
             enemyScore = long.Parse(serverJSONResponse.GetValue("enemyScore").ToString());
             enemyDeath = Boolean.Parse(serverJSONResponse.GetValue("enemyDeath").ToString());
+            PlayerPrefs.SetString("enemyName", serverJSONResponse.GetValue("enemyName").ToString());
+            PlayerPrefs.SetString("roomCode", "");
             finished = true;
         }
     }
