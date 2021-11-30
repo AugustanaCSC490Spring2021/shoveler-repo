@@ -27,12 +27,12 @@ Left click - Melee attack
 There are three enemy types
 
 ### Goomba Virus
-![A virus cell with yellow tips](assets_md/goomba.png)
+![A virus cell with yellow tips](assets_md/Goomba.png)
 
 This virus mindlessly runs after the player like a Goomba.
 
 ### Guard Virus
-![A virus cell with red tips](assets_md/guard.png)
+![A virus cell with red tips](assets_md/Guard.png)
 
 This virus stays in one area until it "sees" the player. Once the player is seen, it will chase the player.
 
