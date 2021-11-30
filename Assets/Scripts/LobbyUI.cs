@@ -15,6 +15,8 @@ public class LobbyUI : MonoBehaviour
     public TMP_InputField nameCreate;
     public TMP_InputField roomSeed;
     public TMP_InputField difficulty;
+    public TMP_InputField serverIP;
+    public TMP_InputField serverPort;
 
     public void Awake()
     {
@@ -40,6 +42,8 @@ public class LobbyUI : MonoBehaviour
         PlayerPrefs.SetString("name", nameJoin.text);
         PlayerPrefs.SetString("roomCode", roomCode.text);
         PlayerPrefs.SetString("isHost", "false");
+        PlayerPrefs.SetString("serverIP", serverIP.text);
+        PlayerPrefs.SetString("serverPort", serverPort.text);
         SceneManager.LoadScene("GameStart");
     }
 
@@ -60,6 +64,8 @@ public class LobbyUI : MonoBehaviour
         PlayerPrefs.SetString("isHost", "true");
         PlayerPrefs.SetString("seed", roomSeed.text);
         PlayerPrefs.SetString("difficulty", difficulty.text);
+        PlayerPrefs.SetString("serverIP", serverIP.text);
+        PlayerPrefs.SetString("serverPort", serverPort.text);
         SceneManager.LoadScene("GameStart");
     }
 

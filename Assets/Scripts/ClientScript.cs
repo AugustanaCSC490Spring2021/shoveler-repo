@@ -235,9 +235,11 @@ public class ClientScript : MonoBehaviour
 
     public static String SendServerMessage(String toSend)
     {
-        // Google VM 35.209.36.147
+        // Google VM 35.209.36.147 - Deprecated
         // Local host 127.0.0.1
-        IPEndPoint serverAddress = new IPEndPoint(IPAddress.Parse("35.209.36.147"), 25566);
+        String ServerIP = PlayerPrefs.GetString("serverIP");
+        int ServerPort = Int32.Parse(PlayerPrefs.GetString("serverPort"));
+        IPEndPoint serverAddress = new IPEndPoint(IPAddress.Parse(ServerIP), ServerPort);
 
         Socket clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         clientSocket.Connect(serverAddress);
